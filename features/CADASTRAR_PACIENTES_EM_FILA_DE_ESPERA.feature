@@ -29,4 +29,4 @@ Cenário: Alterar o status de “não atendido” para “atendido” de um paci
 Given Tenho pacientes “Jorge” “David” e “Ramon” e todos estão com com status (switch)  de cor vermelha.
 When Clico no status (switch) de “Jorge”.
 Then  A lista é atualizada “Jorge” desce pro fim da lista, com background-color cinza.
-And O seu status (switch) é alterado pra atendido ficando verde.
+And O seu status (switch) é alterado pra atendido ficando verde
