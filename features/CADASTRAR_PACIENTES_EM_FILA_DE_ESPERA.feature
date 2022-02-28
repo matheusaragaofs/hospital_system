@@ -38,4 +38,10 @@ When Preencho os campos “CPF” “Nome” e seleciono a “Prioridade”: Bai
 Then O paciente não é cadastrado na lista de espera.;
 And  Aparece uma mensagem de erro dizendo que o CPF é inválido
 
+GUI 6 
+Cenário: Cadastar paciente sem escolher a prioridade
+Given Estou no formulário de cadastro de pacientes”
+When Preencho os campos “CPF” “Nome” e não seleciono a “Prioridade"
+Then O paciente não é cadastrado na lista de espera.
+And  Aparece uma mensagem de erro dizendo que o campo prioridade não foi selecionado.
 _______________________________________________________
