@@ -1,7 +1,5 @@
 Responsável: Matheus Aragão
 Feature: Cadastrar pacientes em fila de espera
-Tem como objetivo principal cadastrar e listar os pacientes em fila de espera, onde serão ordenados de acordo com a sua prioridade.
-
 
 GUI 1
 Cenário: Cadastrar paciente na fila de espera
@@ -30,3 +28,14 @@ Given Tenho pacientes “Jorge” “David” e “Ramon” e todos estão com c
 When Clico no status (switch) de “Jorge”.
 Then  A lista é atualizada “Jorge” desce pro fim da lista, com background-color cinza.
 And O seu status (switch) é alterado pra atendido ficando verde
+
+Questão 5 (2 cenários de falha)
+
+GUI 5  
+Cenário: Falha ao cadastrar um paciente com CPF inválido
+Given Estou no formulário de cadastro de pacientes”
+When Preencho os campos “CPF” “Nome” e seleciono a “Prioridade”: Baixa.
+Then O paciente não é cadastrado na lista de espera.;
+And  Aparece uma mensagem de erro dizendo que o CPF é inválido
+
+_______________________________________________________
