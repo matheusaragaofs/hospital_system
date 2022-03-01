@@ -23,3 +23,4 @@ Given eu estou na tela "Dashboard de desempenho médico" após gerar as informa�
 When eu atualizo as informações
 Then eu visualizo uma mensagem informando que as informações foram atualizadas
 And eu volto a visualizar o relatório de desempenho
+And as informações agora estão atualizadas
