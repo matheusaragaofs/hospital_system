@@ -7,7 +7,7 @@ Then eu visualizo uma mensagem de erro dizendo "Médico não encontrado no siste
 Cenário 2: Tentar gerar relatório para período de tempo sem informações disponível para o médico selecionado
 Given eu estou na tela "Dashboard de desempenho médico"
 And o médico Cristiano Ronaldo trabalha no hospital desde o dia 14/02/2022
-When eu preencho o campo de "MÉDICO" com “Cristiano Ronaldo”
+When eu preencho o campo de "MÉDICO" com “Rafael Thyere”
 And eu seleciono como intervalo de tempo “01/01/2021” e “31/12/2021”
 Then eu visualizo uma mensagem de erro dizendo "Não existem informações nessa faixa de tempo"
 
