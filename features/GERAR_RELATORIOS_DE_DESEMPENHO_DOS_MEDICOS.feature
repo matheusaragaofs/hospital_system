@@ -35,9 +35,9 @@ And eu volto a visualizar o relatório de desempenho
 Cenário 6: Comparar o desempenho de dois médicos
 Given eu estou na tela "Dashboard de desempenho médico"
 And o médico Cristiano Ronaldo trabalha no hospital desde o dia 29/08/2020
-And o médico Messi trabalha no hospital desde o dia 14/02/2020
+And o médico Neymar trabalha no hospital desde o dia 14/02/2020
 When eu seleciono a opção de comparação
 And eu preencho o campo "MÉDICO 1" com Cristiano Ronaldo
-And eu preencho o campo "MÉDICO 2" com Messi 
+And eu preencho o campo "MÉDICO 2" com Neymar 
 And eu seleciono como intervalo de tempo “01/01/2021” e “31/12/2021”
 Then eu visualizo o relatório de ambos os médicos simultaneamente
