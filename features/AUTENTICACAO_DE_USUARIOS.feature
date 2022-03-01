@@ -30,4 +30,4 @@ Scenario Cenário teste para o roteiro
 Given teste
 When teste
 Then teste
-And teste
+And teste 2
