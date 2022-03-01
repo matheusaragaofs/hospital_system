@@ -26,7 +26,8 @@ Given teste
 When teste
 Then teste
 
-Scenario Cenário teste para o roteiro
+Scenario Cenário teste para o roteiro com ajuste
 Given teste
 When teste
 Then teste
+And ajuste
