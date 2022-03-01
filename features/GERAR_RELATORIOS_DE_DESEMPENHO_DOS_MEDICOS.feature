@@ -1,4 +1,4 @@
-GUI Scenario 1: Tentar gerar relatório para médico não cadastrado
+Cenário 1: Tentar gerar relatório para médico não cadastrado
 Given eu estou na tela "Dashboard de desempenho médico"
 When eu preencho o campo de "MÉDICO" com um nome não cadastrado no sistema
 And eu seleciono '24/10/21' e '31/12/21' como intervalo de tempo 
