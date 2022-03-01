@@ -18,4 +18,5 @@ Scenario Autenticação processada com erro devido a tentativa de acessar a plat
 Given Qualquer pessoa tentar acessar o sistema por algum link direto para páginas internas
 When Tentar entrar em alguma página interna sem fazer login antes
 Then O usuário recebe uma mensagem de erro na tela de login informando que está tentando acessar a plataforma sem antes fazer o login no sistema.
+And O usuário tem a opção de voltar a tela de logion ou cadastro
 _______________________________________
