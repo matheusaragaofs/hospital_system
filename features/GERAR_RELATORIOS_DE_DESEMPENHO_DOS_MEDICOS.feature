@@ -21,5 +21,5 @@ Then informações sobre o desempenho médico nesse periodo são exibidas
 Cenário 4: Atualizar as informações exibidas com os dados mais atuais
 Given eu estou na tela "Dashboard de desempenho médico" após gerar as informações para um médico 
 When eu atualizo as informações
-Then eu visualizo uma mensagem informando que as informações estão sendo atualizadas
+Then eu visualizo uma mensagem informando que as informações foram atualizadas
 And eu volto a visualizar o relatório de desempenho
