@@ -23,3 +23,10 @@ Given eu estou na tela "Dashboard de desempenho médico" após gerar as informa�
 When eu atualizo as informações
 Then eu visualizo uma mensagem informando que as informações estão sendo atualizadas
 And eu volto a visualizar o relatório de desempenho
+
+Cenário 5: Exportar relatório gerado para um médico cadastrado
+Given eu estou na tela "Dashboard de desempenho médico" após gerar as informações para um médico 
+When eu exporto o relatório 
+Then eu visualizo uma mensagem inforamndo que o relatório está sendo exportado
+And o download do arquivo é feito
+And eu volto a visualizar o relatório de desempenho
