@@ -39,5 +39,5 @@ And o médico Neymar trabalha no hospital desde o dia 14/02/2020
 When eu seleciono a opção de comparação
 And eu preencho o campo "MÉDICO 1" com Cristiano Ronaldo
 And eu preencho o campo "MÉDICO 2" com Neymar 
-And eu seleciono como intervalo de tempo “01/01/2021” e “31/12/2021”
+And eu seleciono como intervalo de tempo “03/01/2021” e “31/12/2021”
 Then eu visualizo o relatório de ambos os médicos simultaneamente
