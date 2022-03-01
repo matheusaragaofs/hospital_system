@@ -23,4 +23,8 @@ Scenario Cenário teste para o roteiro
 Given teste
 When teste
 Then teste
-_______________________________________
+
+Scenario Cenário teste para o roteiro
+Given teste
+When teste
+Then teste
