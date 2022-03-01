@@ -35,7 +35,7 @@ Questão 5 (2 cenários de falha)
 GUI 5  
 Cenário: Falha ao cadastrar um paciente com CPF inválido
 Given Estou no formulário de cadastro de pacientes”
-When Preencho os campos “CPF” “Nome” e seleciono a “Prioridade”: Baixa.
+When Preencho os campos “CPF” “Nome” e seleciono a “Prioridade”: Baixa e clico em criar.
 Then O paciente não é cadastrado na lista de espera.;
 And  Aparece uma mensagem de erro dizendo que o CPF é inválido
 
@@ -46,3 +46,11 @@ When Preencho os campos “CPF” “Nome” e não seleciono a “Prioridade"
 Then O paciente não é cadastrado na lista de espera.
 And  Aparece uma mensagem de erro dizendo que o campo prioridade não foi selecionado.
 _______________________________________________________
+
+Questão 7 - D 
+
+GUI 8
+Cenário: Cadastrar pacientes com os campos obrigatórios vazio
+Given Estou no formulário de cadastro de pacientes”
+When Clico em cadastrar sem preencher os campos obrigatórios
+Then Aparece uma mensagem de erro, dizendo que há campos em branco.
