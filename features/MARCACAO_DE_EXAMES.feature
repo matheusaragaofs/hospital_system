@@ -30,3 +30,9 @@ Scenario: Paciente não existe
 Given: O usuário não estaria cadastrado no banco de dados
 When: O sistema tentar identificar ele
 Then: Retorne uma tela com um botão para redirecionamento ao cadastro do usuário
+
+Scenario: Marcação em agenda indisponível
+Given: O paciente existe
+When: Uma agenda indisponível for escolhida
+Then: Retorne uma mensagem informando a indisponibilidade
+And: Sugira que escolha uma nova agenda dentre as disponíveis
