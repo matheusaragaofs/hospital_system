@@ -1,7 +1,7 @@
 Responsável: Lucas Leonardo
 Feature: Marcação de Exames
 
-Scenario: Identificação de usuários
+Scenario: Identificação de pacientes
 Given: O usuário estaria cadastrado no banco de dados
 When: O sistema tentar identificar ele
 Then: Retornasse suas informações e uma tela para marcação ou listagem de exames
