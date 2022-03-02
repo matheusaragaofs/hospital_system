@@ -49,4 +49,10 @@ Then O sistema retorna para a sala de marcação de exames após 10 segundos
 And A tela do sistema volta para o cenário de marcação de exames com a sala previamente selecionada constando como
 "Confirmada" e com o paciente "Adalberto" constando como o paciente dessa sala 
 
-.
+Cenário: Receber a informação de que o paciente não conseguiu marcar o exame com êxito
+Given estou na tela com as informações do paciente "Adalberto" com um popup informando que ele não conseguiu
+ter seu exame marcado no dia,sala e horário especificados
+When eu fecho o popup
+Then O sistema retorna para a página inicial de marcação de consultas após 10 segundos e remove Adalberto da fila
+And Ainda estão selecionados o mesmo paciente, mesmo exame, mesmo dia e mesmo horários preenchidos
+And Eu observo que a sala em que havia tentado inserir o paciente "Alberto" consta como confirmada para um paciente diferente
