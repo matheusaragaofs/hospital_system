@@ -3,12 +3,12 @@ Feature: Marcação de Exames
 
 Scenario: Identificação de usuários
 Given: O usuário estaria cadastrado no banco de dados
-When: Eu tentasse identificar ele
+When: O sistema tentar identificar ele
 Then: Retornasse suas informações e uma tela para marcação ou listagem de exames
 
 Scenario: Listagem de exames
 Given: O paciente possui exames agendados
-When: Eu tentasse listar eles
+When: O sistema tentar listar eles
 Then: Retornasse uma lista com todos os exames e um botão de cancelar ou editar
 
 Scenario: Alteração a partir da listagem
@@ -25,3 +25,8 @@ Scenario: Marcação de exames
 Given: O paciente existe
 When: Eu vou marcar um exame
 Then: Remove o horário da agenda do médico/especialidade e atribua o agendamento ao paciente
+
+Scenario: Paciente não existe
+Given: O usuário não estaria cadastrado no banco de dados
+When: O sistema tentar identificar ele
+Then: Retorne uma tela com um botão para redirecionamento ao cadastro do usuário
