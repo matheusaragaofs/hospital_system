@@ -12,12 +12,12 @@ When: O sistema tentar listar eles
 Then: Retornasse uma lista com todos os exames e um botão de cancelar ou editar
 
 Scenario: Alteração a partir da listagem
-Given: Eu exiba a listagem de exames de um paciente
+Given: O sistema exiba a listagem de exames de um paciente
 When: O botão editar for clicado
 Then: Abra a tela de alteração permitindo mudar o horário do agendamento
 
 Scenario: Cancelamento a partir da listagem
-Given: Eu exiba a listagem de exames de um paciente
+Given: O sistema exiba a listagem de exames de um paciente
 When: O botão cancelar for clicado
 Then: Abra uma tela solicitando a confirmação do cancelamento
 
@@ -36,3 +36,8 @@ Given: O paciente existe
 When: Uma agenda indisponível for escolhida
 Then: Retorne uma mensagem informando a indisponibilidade
 And: Sugira que escolha uma nova agenda dentre as disponíveis
+
+Scenario: Listagem de exames vazia
+Given: O paciente não possui exames agendados
+When: O sistema tenta listar eles
+Then: Retorne uma mensagem informando que o paciente ainda não possui exames agendados
