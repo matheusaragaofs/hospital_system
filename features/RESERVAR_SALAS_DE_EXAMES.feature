@@ -30,7 +30,12 @@ Given Estou na tela com as informações do paciente "Adalberto" com um popup ab
 When Eu fecho o popup
 Then O sistema muda para o próximo cenário após 10 segundos
 
-.
+Cenário: Receber o erro de que o paciente não conseguiu adentrar na fila
+Given Estou na tela de informações do paciente "Adalberto" com um popup informando que ele não conseguiu entrar na fila
+When Eu fecho o popup
+Then O sistema retorna para a página inicial de consultas após 10 segundos
+And Ainda estão selecionados o mesmo paciente, mesmo exame, mesmo dia e mesmo horários preenchidos
+And Eu observo que a sala em que havia tentado inserir o paciente "Alberto" consta como confirmada para um paciente diferente
 
 GUI 4:
 Cenário: Receber a confirmação do exame para um paciente específico
