@@ -11,6 +11,11 @@ Given: O paciente possui exames agendados
 When: O sistema tentar listar eles
 Then: Retornasse uma lista com todos os exames e um botão de cancelar ou editar
 
+Scenario: Filtro na listagem de exames
+Given: O paciente possui exames agendados de diferentes especialidades
+When: Um filtro for escolhido na listagem
+Then: Retorne uma lista com os agendamentos daquela mesma especialidade
+
 Scenario: Alteração a partir da listagem
 Given: O sistema exiba a listagem de exames de um paciente
 When: O botão editar for clicado
