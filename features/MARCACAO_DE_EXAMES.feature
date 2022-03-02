@@ -29,7 +29,8 @@ Then: Remove o horário da agenda do médico/especialidade e atribua o agendamen
 Scenario: Paciente não existe
 Given: O usuário não estaria cadastrado no banco de dados
 When: O sistema tentar identificar ele
-Then: Retorne uma tela com um botão para redirecionamento ao cadastro do usuário
+Then: Retorne uma mensagem informando que o paciente ainda não está cadastrado no sistema
+And: Dê a opção de efetuar o cadastro do paciente
 
 Scenario: Marcação em agenda indisponível
 Given: O paciente existe
