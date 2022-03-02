@@ -41,9 +41,9 @@ Scenario: Marcação em agenda indisponível
 Given: O paciente existe
 When: Uma agenda indisponível for escolhida
 Then: Retorne uma mensagem informando a indisponibilidade
-And: Sugira que escolha uma nova agenda dentre as disponíveis
+And: Sugira que escolha uma nova agenda dentre as disponíveis.
 
 Scenario: Listagem de exames vazia
 Given: O paciente não possui exames agendados
 When: O sistema tenta listar eles
-Then: Retorne uma mensagem informando que o paciente ainda não possui exames agendados
+Then: Retorne uma mensagem informando que o paciente ainda não possui exames agendados.
