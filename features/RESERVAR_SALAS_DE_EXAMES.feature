@@ -56,3 +56,4 @@ When eu fecho o popup
 Then O sistema retorna para a página inicial de marcação de consultas após 10 segundos e remove Adalberto da fila
 And Ainda estão selecionados o mesmo paciente, mesmo exame, mesmo dia e mesmo horários preenchidos
 And Eu observo que a sala em que havia tentado inserir o paciente "Alberto" consta como confirmada para um paciente diferente
+Then O paciente "Alberto" ainda não tem um horário reservado para o exame solicitado
