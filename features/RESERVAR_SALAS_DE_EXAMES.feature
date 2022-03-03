@@ -57,3 +57,22 @@ Then O sistema retorna para a página inicial de marcação de consultas após 1
 And Ainda estão selecionados o mesmo paciente, mesmo exame, mesmo dia e mesmo horários preenchidos
 And Eu observo que a sala em que havia tentado inserir o paciente "Alberto" consta como confirmada para um paciente diferente
 Then O paciente "Alberto" ainda não tem um horário reservado para o exame solicitado
+
+Cenário: Fazer o sistema reservar a sala de exame para um paciente sem a necessidade de ele entrar na fila
+Given estou na tela de salas disponíveis para marcação do examde de "Radiografia" para o paciente "Adalberto"
+When eu seleciono um dia e um horário específicos
+Then o sistema preenche as salas de acordo com suas disponibilidades
+And eu vejo que a sala "d003" está desocupada
+When eu clico na opção de marcar consulta instantâneamente
+Then o sistema envia a mensagem "o paciente Adalberto teve seu exame de Radiografia para o dia 20/03 às 15:00 marcado com sucesso"
+And eu vejo que seu nome foi preenchido na linha da sala que eu havia escolhido com o o status "Confirmado"
+
+Cenário: Marcar a opção de o paciente ter seu exame remarcado para a data livre mais próxima após entrar na fila com sucesso
+Given estou na tela de informações do usuário com um popup sobre as informações
+And está escrito que o usuário entrou na fila para o exame selecionado no dia e horário especificados
+When eu marco a caixa "remarcar com prioridade máxima esse paciente para data mais próxima caso não consiga o exame no horário e data especificados"
+Then o sistema busca o dia e o horário mais próximos após a data inicialmente especificada em que haja uma sala vazia e sem fila
+And o sistema aloca o paciente para o horário e o dia reservas, impede novos pacientes de entrarem na fila dessa sala
+And altera o status da sala para "Em Espera"
+Then se o paciente não conseguir o exame na data e horário previamente especificados, o sistema confirma seu exame para as datas reservas
+And envia um e-mail para o paciente informando-o que seu exame foi remarcado
