@@ -56,3 +56,12 @@ When eu fecho o popup
 Then O sistema retorna para a página inicial de marcação de consultas após 10 segundos e remove Adalberto da fila
 And Ainda estão selecionados o mesmo paciente, mesmo exame, mesmo dia e mesmo horários preenchidos
 And Eu observo que a sala em que havia tentado inserir o paciente "Alberto" consta como confirmada para um paciente diferente
+
+Cenário: Forçar o sistema a reservar a sala de exame para um paciente sem a necessidade de marcar fila
+Given estou na tela de salas disponíveis para marcação do examde de "Radiografia" para o paciente "Adalberto"
+When eu seleciono um dia e um horário específicos
+Then o sistema preenche as salas de acordo com suas disponibilidades
+And eu vejo que a sala "d003" está desocupada
+When eu clico na opção de marcar consulta instantâneamente
+Then o sistema envia a mensagem "o paciente Adalberto teve seu exame de Radiografia para o dia 20/03 às 15:00 marcado com sucesso"
+And eu vejo que seu nome foi preenchido na linha da sala que eu havia escolhido com o o status "Confirmado"
