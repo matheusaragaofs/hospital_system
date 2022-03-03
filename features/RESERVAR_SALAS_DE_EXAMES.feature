@@ -77,3 +77,4 @@ And altera o status da sala para "Em Espera"
 Then se o paciente não conseguir o exame na data e horário previamente especificados, o sistema confirma seu exame para as datas reservas
 And envia um e-mail para o paciente informando-o que seu exame foi remarcado
 *
+@
