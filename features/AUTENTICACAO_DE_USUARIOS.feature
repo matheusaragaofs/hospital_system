@@ -19,15 +19,3 @@ Given Qualquer pessoa tentar acessar o sistema por algum link direto para págin
 When Tentar entrar em alguma página interna sem fazer login antes
 Then O usuário recebe uma mensagem de erro na tela de login informando que está tentando acessar a plataforma sem antes fazer o login no sistema.
 And O usuário tem a opção de voltar a tela de logion ou cadastro
-_______________________________________
-
-Scenario Cenário teste para o roteiro
-Given teste
-When teste
-Then teste
-
-Scenario Cenário teste para o roteiro
-Given teste
-When teste
-Then teste
-And teste 2
