@@ -29,8 +29,10 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
-  logout() {
+  logout(): boolean {
     this.authEmitter.emit(false)
     this.router.navigate(['/login'])
+
+    return false
   }
 }
