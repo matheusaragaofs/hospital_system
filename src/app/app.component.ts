@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './login/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,18 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'HSE';
 
-  public isAuthenticated: boolean = true;
+  public isAuthenticated: boolean = false;
+
+  constructor(private authService: AuthService) {
+
+  }
 
   logout(): void {
+  }
 
+  ngOnInit() {
+    this.authService.authEmitter.subscribe(
+      (isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated
+    );
   }
 }
