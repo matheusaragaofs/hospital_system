@@ -25,7 +25,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { LoginComponent } from './login/login.component';
 
 import { AuthService } from './login/auth.service';
-import { AuthGuard } from './guard/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
