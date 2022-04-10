@@ -21,13 +21,15 @@ import { MatOptionModule } from '@angular/material/core';
 import { HomeComponent } from './home/home.component';
 import { PatientsComponent } from './patients/patients.component';
 import { BookingComponent } from './booking/booking.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PatientsComponent,
-    BookingComponent
+    BookingComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,
