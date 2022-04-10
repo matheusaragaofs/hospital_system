@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   public loginValid = true;
   public email = '';
   public password = '';
+  public hide_password = true;
 
   constructor(private authService: AuthService) { };
 
