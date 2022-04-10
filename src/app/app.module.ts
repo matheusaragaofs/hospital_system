@@ -19,7 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { HomeComponent } from './home/home.component';
-import { PatientsComponent } from './patients/patients.component';
+import { PatientComponent } from './patient/patient.component';
 import { BookingComponent } from './booking/booking.component';
 import { ReportsComponent } from './reports/reports.component';
 
@@ -27,7 +27,7 @@ import { ReportsComponent } from './reports/reports.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    PatientsComponent,
+    PatientComponent,
     BookingComponent,
     ReportsComponent
   ],
