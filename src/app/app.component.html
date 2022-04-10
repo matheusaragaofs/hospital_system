@@ -3,12 +3,27 @@
         <button mat-button routerLink="/">{{ title }}</button>
         <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
     </span>
-    <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-        <button mat-button routerLink="/game">
-            <mat-icon>gamepad</mat-icon>
-            Play
+    <span>
+        <button mat-button routerLink="/patients">
+            <mat-icon>person</mat-icon>
+            Pacientes
         </button>
-        <button mat-button routerLink="login" *ngIf="!isAuthenticated">
+        <button mat-button routerLink="/booking">
+            <mat-icon>medical_services</mat-icon>
+            Marcação de Exames
+        </button>
+        <button mat-button routerLink="/reports">
+            <mat-icon>table_view</mat-icon>
+            Relatório Médicos
+        </button>
+    </span>
+
+    <span>  
+        <button mat-button routerLink="/profile">
+            <mat-icon>account_circle</mat-icon>
+            Perfil
+        </button>
+        <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
             <mat-icon>power_settings_new</mat-icon>
             Login
         </button>
@@ -16,9 +31,35 @@
             <mat-icon>exit_to_app</mat-icon>
             Logout
         </button>
-    </div>
-
-    <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
-        <mat-icon>Menu</mat-icon>
-    </button>
+        <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </span>  
 </mat-toolbar>
+
+<mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item routerLink="/">
+      <mat-icon>home</mat-icon>
+      Home
+    </button>
+    <button mat-menu-item routerLink="/patients">
+        <mat-icon>person</mat-icon>
+        Pacientes
+    </button>
+    <button mat-menu-item routerLink="/booking">
+        <mat-icon>medical_services</mat-icon>
+        Marcação de Exames
+    </button>
+    <button mat-menu-item routerLink="/reports">
+        <mat-icon>table_view</mat-icon>
+        Relatório Médicos
+    </button>
+    <button mat-menu-item routerLink="/login" *ngIf="!isAuthenticated">
+      <mat-icon>power_settings_new</mat-icon>
+      Login
+    </button>
+    <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+    </button>
+</mat-menu>
