@@ -24,6 +24,8 @@ import { BookingComponent } from './booking/booking.component';
 import { ReportsComponent } from './reports/reports.component';
 import { LoginComponent } from './login/login.component';
 
+import { AuthService } from './login/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,7 @@ import { LoginComponent } from './login/login.component';
     MatSelectModule,
     MatOptionModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
