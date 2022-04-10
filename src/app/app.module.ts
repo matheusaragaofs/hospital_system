@@ -20,12 +20,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { HomeComponent } from './home/home.component';
 import { PatientsComponent } from './patients/patients.component';
+import { BookingComponent } from './booking/booking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PatientsComponent
+    PatientsComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,
