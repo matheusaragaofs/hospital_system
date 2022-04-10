@@ -25,6 +25,7 @@ import { PatientsComponent } from './patients/patients.component';
   declarations: [
     AppComponent,
     HomeComponent,
+    PatientsComponent
   ],
   imports: [
     BrowserModule,
