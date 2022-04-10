@@ -25,6 +25,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { LoginComponent } from './login/login.component';
 
 import { AuthService } from './login/auth.service';
+import { AuthGuard } from './guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,10 @@ import { AuthService } from './login/auth.service';
     MatSelectModule,
     MatOptionModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
