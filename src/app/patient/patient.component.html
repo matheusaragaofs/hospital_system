@@ -1,1 +1,45 @@
-<p>patients works!</p>
+<div  fxLayout="column"  fxLayoutAlign="center center" >
+   <button mat-raised-button color="primary"  onclick="openDialog()"  class="register-btn">Cadastrar</button>
+
+    <patient-register-dialog></patient-register-dialog>
+
+<table mat-table fxFlexFill  [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- CPF Column -->
+    <ng-container matColumnDef="cpf">
+      <th mat-header-cell *matHeaderCellDef> CPF. </th>
+      <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> NOME </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <!-- priority Column -->
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef> PRIORIDADE </th>
+      <td  mat-cell *matCellDef="let element"> 
+        <mat-icon
+        [ngClass]="{
+            'priority-circle-low': element.priority === 'low', 
+            'priority-circle-medium' : element.priority === 'medium', 
+            'priority-circle-high' : element.priority === 'high'
+        }"
+        >circle</mat-icon>
+     </td>
+    </ng-container>
+  
+     <!-- Actions Column -->
+     <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+               <button mat-raised-button color="primary" class="register-btn">Ações</button>
+
+        </td>
+      </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

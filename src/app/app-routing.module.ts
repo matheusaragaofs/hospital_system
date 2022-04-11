@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'patient',
     component: PatientComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'booking',
