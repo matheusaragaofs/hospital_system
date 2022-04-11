@@ -27,6 +27,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { PatientRegisterDialogComponent } from './patient/patient-register-dialog/patient-register-dialog.component';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { ProfileComponent } from './profile/profile.component';
     BookingComponent,
     ReportsComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    PatientRegisterDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,9 @@ import { ProfileComponent } from './profile/profile.component';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    // MatDialogModule,
+    // MatDialog,
+    // MatDialogRef,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
@@ -57,7 +63,8 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   providers: [
     AuthService,
-    AuthGuard
+    AuthGuard,
+    PatientRegisterDialogComponent
   ],
   bootstrap: [AppComponent]
 })
