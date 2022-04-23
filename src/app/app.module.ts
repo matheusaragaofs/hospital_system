@@ -41,6 +41,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
     ProfileComponent,
     PatientRegisterDialogComponent
   ],
+  entryComponents: [PatientRegisterDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -53,7 +54,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    // MatDialogModule,
+    MatDialogModule,
     // MatDialog,
     // MatDialogRef,
     MatTableModule,
