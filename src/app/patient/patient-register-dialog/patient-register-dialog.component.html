@@ -1,41 +1,52 @@
 <div fxFlex fxLayout="row wrap" >
-<mat-form-field appearance="outline">
-    <mat-label>Nome</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-<mat-form-field appearance="outline">
-    <mat-label>CPF</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-<mat-form-field appearance="outline">
-    <mat-label>RG</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-<mat-form-field appearance="outline">
-    <mat-label>Endereço</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-<mat-form-field appearance="outline">
-    <mat-label>CEP</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-<mat-form-field appearance="outline">
-    <mat-label>Complemento</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-<mat-form-field appearance="outline">
-    <mat-label>ID do Plano de Saúde</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-  
-  <div class='footer-buttons' >
-    <button mat-raised-button color="primary" >
-      Confirmar
-    </button>
-    <button class="cancel-btn" mat-raised-button color="warn" >
-      Cancelar
-    </button>
-  </div>
+  <form  fxFlex #patientRegisterForm="ngForm" fxLayout="column" (ngSubmit)="onSubmit()">
+     <h1 style="align-self:flex-start">
+       Registro de Paciente
+     </h1>
+    <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="Nome" [(ngModel)]="name" name="name" required>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>CPF</mat-label>
+          <input matInput placeholder="" [(ngModel)]="cpf" name="cpf" required  >
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>RG</mat-label>
+          <input matInput placeholder="" [(ngModel)]="rg" name="rg" required>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Endereço</mat-label>
+          <input matInput placeholder="" [(ngModel)]="address" name="address" required>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput placeholder="" [(ngModel)]="cep" name="cep" required>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Complemento</mat-label>
+          <input matInput placeholder="" [(ngModel)]="complement" name="complement" required>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>ID do Plano de Saúde </mat-label>
+          <input matInput placeholder="" [(ngModel)]="health_insurance_id" name="health_insurance_id" required>
+        </mat-form-field>
+        
+        <div class='footer-buttons' >
+          <button mat-raised-button color="primary" type='submit'>
+            Confirmar
+          </button>
+          <button class="cancel-btn" mat-raised-button color="warn" type="button" (click)="closeDialog()" >
+            Cancelar
+          </button>
+        </div>
+        </form>
 </div>
 
     

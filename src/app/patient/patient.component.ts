@@ -52,6 +52,14 @@ export class PatientComponent implements OnInit {
     })
   }
 
+  openViewPatientModal(): void {
+    this.matDialog.open(PatientRegisterDialogComponent, {
+      width: '600px',
+      height: '400px'
+    })
+  }
+
+
 
   ngOnInit(): void {
   }
