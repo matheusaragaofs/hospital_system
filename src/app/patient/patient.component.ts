@@ -125,6 +125,7 @@ export class PatientComponent implements OnInit {
     complement: 'Atrás do Viaduto',
     health_insurance_id: '1',
     priority: 'high',
+    age: '20'
   };
 
   constructor(public matDialog: MatDialog) {}

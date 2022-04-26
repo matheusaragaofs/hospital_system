@@ -10,7 +10,6 @@ type PriorityOptions = { label: string; value: 'high' | 'medium' | 'low' };
   styleUrls: ['./patient-register-dialog.component.sass'],
 })
 export class PatientRegisterDialogComponent implements OnInit {
-  
   public name = '';
   public cpf = '';
   public rg = '';
@@ -19,6 +18,7 @@ export class PatientRegisterDialogComponent implements OnInit {
   public cep = '';
   public health_insurance_id = '';
   public priority = {};
+  public age: number = 0;
 
   public priorityOptions: PriorityOptions[] = [
     { label: 'Alta', value: 'high' },
@@ -27,11 +27,12 @@ export class PatientRegisterDialogComponent implements OnInit {
   ];
 
   getPrioritySelected(event: MatSelectChange): void {
-    this.priority = event.value
+    this.priority = event.value;
   }
 
   onSubmit(): void {
-    const { name, cpf, rg, address, cep, health_insurance_id, priority } = this;
+    const { name, cpf, rg, address, cep, health_insurance_id, priority, age } =
+      this;
 
     const registerData = {
       name,
@@ -41,6 +42,7 @@ export class PatientRegisterDialogComponent implements OnInit {
       cep,
       health_insurance_id,
       priority,
+      age,
     };
 
     console.log(registerData);
@@ -54,6 +56,5 @@ export class PatientRegisterDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
