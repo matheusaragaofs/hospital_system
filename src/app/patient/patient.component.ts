@@ -131,8 +131,8 @@ export class PatientComponent implements OnInit {
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
-      width: '600px',
-      height: '400px',
+      width: '800px',
+      // height: '400px',
     });
   }
   openEditPatientDialog(): void {
@@ -141,15 +141,13 @@ export class PatientComponent implements OnInit {
         edit: true,
         patient: this.patient,
       },
-      width: '600px',
-      height: '400px',
+      width: '800px',
     });
   }
 
   openViewPatientDialog(): void {
     this.matDialog.open(PatientViewDialogComponent, {
-      width: '300px',
-      height: '400px',
+      width: '600px',
       data: {
         patient: this.patient,
       },

@@ -22,12 +22,12 @@ const routes: Routes = [
   {
     path: 'patient',
     component: PatientComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'medicalExams',
     component: MedicalExamsComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'reports',
