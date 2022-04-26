@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
+
+type PriorityOptions = { label: string; value: 'high' | 'medium' | 'low' };
 
 @Component({
   selector: 'patient-register-dialog',
   templateUrl: './patient-register-dialog.component.html',
-  styleUrls: ['./patient-register-dialog.component.sass']
+  styleUrls: ['./patient-register-dialog.component.sass'],
 })
 export class PatientRegisterDialogComponent implements OnInit {
+  
   public name = '';
   public cpf = '';
   public rg = '';
@@ -14,34 +18,42 @@ export class PatientRegisterDialogComponent implements OnInit {
   public complement = '';
   public cep = '';
   public health_insurance_id = '';
+  public priority = {};
 
+  public priorityOptions: PriorityOptions[] = [
+    { label: 'Alta', value: 'high' },
+    { label: 'Média', value: 'medium' },
+    { label: 'Baixa', value: 'low' },
+  ];
+
+  getPrioritySelected(event: MatSelectChange): void {
+    this.priority = event.value
+  }
 
   onSubmit(): void {
-    const { name, cpf, rg, address, cep, health_insurance_id} = this;
+    const { name, cpf, rg, address, cep, health_insurance_id, priority } = this;
 
-    const registerData = { 
+    const registerData = {
       name,
       cpf,
       rg,
       address,
       cep,
-      health_insurance_id
-    }
+      health_insurance_id,
+      priority,
+    };
 
-    console.log(registerData)
+    console.log(registerData);
   }
-  
+
   constructor(
-    public dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
-    // @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    ) {}
-    
-    closeDialog(): void {
-      this.dialogRef.close()
-  
-    }
-      
+    public dialogRef: MatDialogRef<PatientRegisterDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {}
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
   ngOnInit(): void {
   }
- 
 }

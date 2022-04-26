@@ -29,6 +29,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PatientRegisterDialogComponent } from './patient/patient-register-dialog/patient-register-dialog.component';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { PatientViewDialogComponent } from './patient/patient-view-dialog/patient-view-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
     ReportsComponent,
     LoginComponent,
     ProfileComponent,
-    PatientRegisterDialogComponent
+    PatientRegisterDialogComponent,
+    PatientViewDialogComponent
   ],
   entryComponents: [PatientRegisterDialogComponent],
   imports: [

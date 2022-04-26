@@ -38,6 +38,18 @@
           <input matInput placeholder="" [(ngModel)]="health_insurance_id" name="health_insurance_id" required>
         </mat-form-field>
         
+
+
+        <mat-form-field appearance="fill">
+          <mat-label>Prioridade</mat-label>
+          <mat-select #priorityValue (selectionChange)="getPrioritySelected($event)">
+            <mat-option *ngFor="let priority of priorityOptions" [value]="priority.value">
+              {{priority.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
         <div class='footer-buttons' >
           <button mat-raised-button color="primary" type='submit'>
             Confirmar
@@ -46,6 +58,10 @@
             Cancelar
           </button>
         </div>
+
+
+
+
         </form>
 </div>
 
