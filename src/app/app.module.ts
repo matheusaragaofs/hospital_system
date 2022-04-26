@@ -20,7 +20,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { HomeComponent } from './home/home.component';
 import { PatientComponent } from './patient/patient.component';
-import { BookingComponent } from './booking/booking.component';
 import { ReportsComponent } from './reports/reports.component';
 import { LoginComponent } from './login/login.component';
 
@@ -28,20 +27,21 @@ import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PatientRegisterDialogComponent } from './patient/patient-register-dialog/patient-register-dialog.component';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {  MatDialogModule } from '@angular/material/dialog';
 import { PatientViewDialogComponent } from './patient/patient-view-dialog/patient-view-dialog.component';
+import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PatientComponent,
-    BookingComponent,
     ReportsComponent,
     LoginComponent,
     ProfileComponent,
     PatientRegisterDialogComponent,
-    PatientViewDialogComponent
+    PatientViewDialogComponent,
+    MedicalExamsComponent
   ],
   entryComponents: [PatientRegisterDialogComponent],
   imports: [
