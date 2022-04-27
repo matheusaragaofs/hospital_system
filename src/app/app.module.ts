@@ -18,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+
 import { HomeComponent } from './home/home.component';
 import { PatientComponent } from './patient/patient.component';
 import { ReportsComponent } from './reports/reports.component';
@@ -27,9 +28,11 @@ import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PatientRegisterDialogComponent } from './patient/patient-register-dialog/patient-register-dialog.component';
-import {  MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { PatientViewDialogComponent } from './patient/patient-view-dialog/patient-view-dialog.component';
 import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
+
+import { OktaAuth } from '@okta/okta-auth-js';
 
 @NgModule({
   declarations: [
@@ -63,11 +66,19 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthService,
     AuthGuard,
-    PatientRegisterDialogComponent
+    PatientRegisterDialogComponent,
+    {
+      provide: OktaAuth,
+      useValue: new OktaAuth({
+        issuer: 'https://dev-85301456.okta.com/oauth2/default',
+        clientId: '0oa4u21kmfotH8WSa5d7',
+      })
+    }
   ],
   bootstrap: [AppComponent]
 })
