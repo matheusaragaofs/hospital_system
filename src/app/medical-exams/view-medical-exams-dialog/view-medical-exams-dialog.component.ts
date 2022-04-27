@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ViewMedicalExamsDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  public patient_name = this.data.patient.patient_name;
+  public name = this.data.patient.name;
   public cpf = this.data.patient.cpf;
   public phone_number = this.data.patient.phone_number;
   public birthday_date = this.data.patient.birthday_date;
