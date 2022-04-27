@@ -61,11 +61,14 @@
           Ações
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openViewPatientDialog()">
+          <button mat-menu-item (click)="openViewMedicalExamDialog()">
             Visualizar
           </button>
-          <button mat-menu-item (click)="openEditPatientDialog()">
+          <button mat-menu-item (click)="openEditMedicalExamDialog()">
             Editar
+          </button>
+          <button mat-menu-item (click)="openDeleteMedicalExamDialog()">
+            Deletar
           </button>
         </mat-menu>
       </td>

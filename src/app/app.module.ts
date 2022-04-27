@@ -34,12 +34,14 @@ import { CreateMedicalExamsDialogComponent } from './medical-exams/create-medica
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
-
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
-  NgxMatTimepickerModule
+  NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
+import { EditMedicalExamsDialogComponent } from './medical-exams/edit-medical-exams-dialog/edit-medical-exams-dialog.component';
+import { DeleteMedicalExamsDialogComponent } from './medical-exams/delete-medical-exams-dialog/delete-medical-exams-dialog.component';
+import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-exams-dialog/view-medical-exams-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +54,9 @@ import {
     PatientViewDialogComponent,
     MedicalExamsComponent,
     CreateMedicalExamsDialogComponent,
+    EditMedicalExamsDialogComponent,
+    DeleteMedicalExamsDialogComponent,
+    ViewMedicalExamsDialogComponent,
   ],
   entryComponents: [PatientRegisterDialogComponent],
   imports: [
@@ -75,7 +80,7 @@ import {
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [AuthService, AuthGuard, PatientRegisterDialogComponent],
   bootstrap: [AppComponent],

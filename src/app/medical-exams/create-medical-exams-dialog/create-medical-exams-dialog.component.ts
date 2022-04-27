@@ -16,20 +16,20 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   public patientFound: boolean = false;
   public exams: { label: string; id: string }[] = [
     {
-      label: 'Glicemia',
-      id: 'glucose',
+      label: 'Raio X',
+      id: '1',
     },
     {
-      label: 'Cardio',
-      id: 'cardio',
+      label: 'Tomografia',
+      id: '2',
     },
     {
       label: 'Hemograma',
-      id: 'blood',
+      id: '3',
     },
     {
-      label: 'Colesterol',
-      id: 'cholesterol',
+      label: 'Eletrocardiograma',
+      id: '4',
     },
   ];
   public doctors: { label: string; id: string }[] = [
