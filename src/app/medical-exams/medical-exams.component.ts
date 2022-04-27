@@ -2,78 +2,140 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PatientRegisterDialogComponent } from '../patient/patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from '../patient/patient-view-dialog/patient-view-dialog.component';
+import { CreateMedicalExamsDialogComponent } from './create-medical-exams-dialog/create-medical-exams-dialog.component';
 
 export interface PeriodicElement {
-  name: string;
+  patient_name: string;
   schedule_date: string;
+  exam_type: string;
+  doctor_name: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
-  },
-
-  {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    schedule_date: '24/07/2022 22:44',
-  },
-
-  {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    schedule_date: '24/07/2022 22:44',
-  },
-
-  {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
   {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
     schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
+  },
+  {
+    patient_name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    schedule_date: '24/07/2022 22:44',
+    exam_type: 'Cardio',
+    doctor_name: 'Dr. Paulo Gustavo',
   },
 ];
 
@@ -83,7 +145,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./medical-exams.component.sass'],
 })
 export class MedicalExamsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'schedule_date', 'actions'];
+  displayedColumns: string[] = [
+    'patient_name',
+    'schedule_date',
+    'exam_type',
+    'doctor_name',
+    'actions',
+  ];
   dataSource = ELEMENT_DATA;
   patient = {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
@@ -96,10 +164,10 @@ export class MedicalExamsComponent implements OnInit {
   };
 
   constructor(public matDialog: MatDialog) {}
-  openCreatePatientDialog(): void {
-    this.matDialog.open(PatientRegisterDialogComponent, {
+
+  openCreateMedicalExamDialog(): void {
+    this.matDialog.open(CreateMedicalExamsDialogComponent, {
       width: '600px',
-      height: '400px',
     });
   }
   openEditPatientDialog(): void {

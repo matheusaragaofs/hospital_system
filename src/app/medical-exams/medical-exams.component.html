@@ -1,6 +1,7 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="column" fxFill fxLayoutAlign="center center">
   <div
     fxFill
+    style="padding: 0 20px;"
     class="header-container"
     fxLayout="row"
     fxLayoutAlign="start center"
@@ -8,17 +9,18 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="openCreatePatientDialog()"
+      (click)="openCreateMedicalExamDialog()"
       class="register-btn"
     >
       Novo Exame
     </button>
-    <input
-      class="search-patient"
-      matInput
-      placeholder="Pesquisar por Nome, CPF..."
-      type="search"
-    />
+    <mat-form-field class="search-patient"  fxFlex="100" appearance="outline">
+      <mat-label>Pesquisar paciente por CPF</mat-label>
+      <input
+        placeholder="Pesquisar por CPF..."
+        matInput
+      />
+    </mat-form-field>
   </div>
 
   <table
@@ -28,9 +30,9 @@
     class="mat-elevation-z8"
   >
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nome</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    <ng-container matColumnDef="patient_name">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">{{ element.patient_name }}</td>
     </ng-container>
 
     <!-- Schedule Column -->
@@ -39,11 +41,22 @@
       <td mat-cell *matCellDef="let element">{{ element.schedule_date }}</td>
     </ng-container>
 
+    <!-- Exam Column -->
+    <ng-container matColumnDef="exam_type">
+      <th mat-header-cell *matHeaderCellDef>Exame</th>
+      <td mat-cell *matCellDef="let element">{{ element.exam_type }}</td>
+    </ng-container>
+
+    <!-- Doctor Column -->
+    <ng-container matColumnDef="doctor_name">
+      <th mat-header-cell *matHeaderCellDef>Doutor</th>
+      <td mat-cell *matCellDef="let element">{{ element.doctor_name }}</td>
+    </ng-container>
+
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <!-- <button mat-raised-button color="primary" class="register-btn">Ações</button> -->
         <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
           Ações
         </button>

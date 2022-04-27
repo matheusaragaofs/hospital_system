@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'medicalExams',
     component: MedicalExamsComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'reports',

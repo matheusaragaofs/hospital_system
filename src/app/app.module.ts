@@ -27,10 +27,19 @@ import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PatientRegisterDialogComponent } from './patient/patient-register-dialog/patient-register-dialog.component';
-import {  MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { PatientViewDialogComponent } from './patient/patient-view-dialog/patient-view-dialog.component';
 import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
+import { CreateMedicalExamsDialogComponent } from './medical-exams/create-medical-exams-dialog/create-medical-exams-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
+
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +50,8 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
     ProfileComponent,
     PatientRegisterDialogComponent,
     PatientViewDialogComponent,
-    MedicalExamsComponent
+    MedicalExamsComponent,
+    CreateMedicalExamsDialogComponent,
   ],
   entryComponents: [PatientRegisterDialogComponent],
   imports: [
@@ -57,18 +67,17 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
-    // MatDialog,
-    // MatDialogRef,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [
-    AuthService,
-    AuthGuard,
-    PatientRegisterDialogComponent
-  ],
-  bootstrap: [AppComponent]
+  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
