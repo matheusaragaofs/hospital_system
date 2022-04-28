@@ -1,7 +1,7 @@
-<div class='login-container' fxLayoutAlign="center center" >
-    <mat-card class='login-card' >
-        <div class="hospital-text"> Hospital System</div>
-        <mat-toolbar color="primary">Entre com sua conta</mat-toolbar>
+<div class='login-container' fxFlexAlign="center center" >
+    <mat-card >
+        <mat-toolbar class="header-title" color="primary">HSE</mat-toolbar>
+        <mat-toolbar class="header-title" color="primary">Entre com sua conta</mat-toolbar>
         <mat-card-content>
             <form #loginForm="ngForm" fxLayout="column" fxLayoutAlign="stretch" (ngSubmit)="onSubmit()">
                 <mat-error *ngIf="!loginValid">
@@ -39,3 +39,4 @@
         </mat-card-content>
     </mat-card>
 </div>
+
