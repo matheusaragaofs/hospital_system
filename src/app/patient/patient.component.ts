@@ -120,12 +120,11 @@ export class PatientComponent implements OnInit {
   patient = {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '101.234.673-45',
-    rg: '564456111',
+    phone_number: '81 9 8214-2312',
     address: 'Rua Santo Carmo 1',
-    complement: 'Atrás do Viaduto',
-    health_insurance_id: '1',
     priority: 'high',
-    age: '20'
+    birthday_date: '20/01/2001',
+    health_insurance_id: '1',
   };
 
   constructor(public matDialog: MatDialog) {}

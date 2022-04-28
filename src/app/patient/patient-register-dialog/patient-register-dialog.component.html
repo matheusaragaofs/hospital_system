@@ -1,75 +1,80 @@
-<div fxFlex fxLayout="row wrap" >
-  <form  fxFlex #patientRegisterForm="ngForm" fxLayout="column" (ngSubmit)="onSubmit()">
-     <h1 style="align-self:flex-start">
-       Registro de Paciente
-     </h1>
-     <!-- <mat-form-field appearance="fill">
-      <mat-label>Prioridade</mat-label>
-      <mat-select #priorityValue (selectionChange)="getPrioritySelected($event)">
-        <mat-option *ngFor="let priority of priorityOptions" [value]="priority.value">
-          {{priority.label}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field> -->
-
+<div fxFlex fxLayout="row wrap">
+  <form
+    fxFlex
+    #patientRegisterForm="ngForm"
+    fxLayout="column"
+    (ngSubmit)="onSubmit()"
+  >
+    <h1 style="align-self: flex-start">Registro de Paciente na Fila de Espera</h1>
     <mat-form-field appearance="outline">
-          <mat-label>Nome</mat-label>
-          <input matInput placeholder="Nome" [(ngModel)]="name" name="name" required>
+      <mat-label>Pesquisar Paciente por CPF</mat-label>
+      <input
+        matInput
+        placeholder="Digite o CPF..."
+        [(ngModel)]="cpf"
+        name="cpf"
+        required
+      />
+    </mat-form-field>
+    <button
+      (click)="togglePatientFound()"
+      mat-raised-button
+      style="width: 100px"
+      color="primary"
+      type="button"
+    >
+      Pesquisar
+    </button>
+  
+    <div style="padding-top: 30px;"*ngIf="patientFound">
+      <div >
+        <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput disabled value='Antonio Forgeras'>
         </mat-form-field>
-
-      <mat-form-field appearance="outline">
-          <mat-label>CPF</mat-label>
-          <input matInput placeholder="" [(ngModel)]="cpf" name="cpf" required  >
+  
+        <mat-form-field appearance="outline">
+        <mat-label>CPF</mat-label>
+        <input matInput disabled value='123.213.512-12'>
         </mat-form-field>
-      <mat-form-field appearance="outline">
-          <mat-label>Idade</mat-label>
-          <input matInput placeholder=""  [(ngModel)]="age" name="age" required    >
+  
+        <mat-form-field appearance="outline">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput disabled value='23/12/2002'>
         </mat-form-field>
-
-      <mat-form-field appearance="outline">
-          <mat-label>RG</mat-label>
-          <input matInput placeholder="" [(ngModel)]="rg" name="rg" required>
+  
+        <mat-form-field appearance="outline">
+        <mat-label>Telefone</mat-label>
+        <input matInput disabled value='(81) 9 8457-9127'>
         </mat-form-field>
+  
+      </div>
 
-      <mat-form-field appearance="outline">
-          <mat-label>Endereço</mat-label>
-          <input matInput placeholder="" [(ngModel)]="address" name="address" required>
-        </mat-form-field>
-
-      <mat-form-field appearance="outline">
-          <mat-label>CEP</mat-label>
-          <input matInput placeholder="" [(ngModel)]="cep" name="cep" required>
-        </mat-form-field>
-
-      <mat-form-field appearance="outline">
-          <mat-label>Complemento</mat-label>
-          <input matInput placeholder="" [(ngModel)]="complement" name="complement" required>
-        </mat-form-field>
-
-      <mat-form-field appearance="outline">
-          <mat-label>ID do Plano de Saúde </mat-label>
-          <input matInput placeholder="" [(ngModel)]="health_insurance_id" name="health_insurance_id" required>
-        </mat-form-field>
-        
+      <mat-form-field appearance="fill">
+        <mat-label>Prioridade</mat-label>
+        <mat-select #priorityValue (selectionChange)="getPrioritySelected($event)">
+          <mat-option *ngFor="let priority of priorityOptions" [value]="priority.value">
+            {{priority.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
 
 
- 
-
-        <div class='footer-buttons' >
-          <button mat-raised-button color="primary" type='submit'>
-            Confirmar
-          </button>
-          <button class="cancel-btn" mat-raised-button color="warn" type="button" (click)="closeDialog()" >
-            Cancelar
-          </button>
-        </div>
-
-
-
-
-        </form>
+      <div class="footer-buttons" style="margin-top: 1rem">
+        <button mat-raised-button color="primary" type="submit">
+          Confirmar
+        </button>
+        <button
+          class="cancel-btn"
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="closeDialog()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
-
-    
-    
-    

@@ -52,6 +52,12 @@ export class PatientRegisterDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PatientRegisterDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
 
+  public patientFound = false;
+  togglePatientFound() {
+    this.patientFound = !this.patientFound
+  }
+
+
   closeDialog(): void {
     this.dialogRef.close();
   }

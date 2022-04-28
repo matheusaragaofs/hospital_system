@@ -1,7 +1,28 @@
-<div class="patient-container"  fxLayout="column"  fxLayoutAlign="center center" >
-   <button mat-raised-button color="primary"  (click)="openCreatePatientDialog()"  class="register-btn">Cadastrar</button>
-
-    <!-- <patient-register-dialog></patient-register-dialog> -->
+<div  fxLayout="column" fxLayoutAlign="center center" >
+   
+  <div
+  fxFill
+  class="header-container"
+  fxLayout="row"
+  fxLayoutAlign="start center"
+>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="openCreatePatientDialog()"
+    class="register-btn"
+  >
+    Novo Exame
+  </button>
+  <mat-form-field class="search-input"  fxFlex="100" appearance="outline">
+    <mat-label>Pesquisar paciente por CPF</mat-label>
+    <input
+      placeholder="Pesquisar por CPF..."
+      matInput
+    />
+  </mat-form-field>
+</div>
+<div class="table-responsive">
 
 <table mat-table fxFlexFill  [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -47,4 +68,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+</div>
 </div>
