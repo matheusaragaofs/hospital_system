@@ -1,0 +1,81 @@
+<div fxLayout="column" fxFill fxLayoutAlign="center center">
+  <div
+    fxFill
+    class="header-container"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openCreateMedicalExamDialog()"
+      class="register-btn"
+    >
+      Novo Exame
+    </button>
+    <mat-form-field class="search-input"  fxFlex="100" appearance="outline">
+      <mat-label>Pesquisar paciente por CPF</mat-label>
+      <input
+        placeholder="Pesquisar por CPF..."
+        matInput
+      />
+    </mat-form-field>
+  </div>
+  
+  <div class="table-responsive">
+  <table 
+    mat-table
+    fxFill
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+  >
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Schedule Column -->
+    <ng-container matColumnDef="schedule_date">
+      <th mat-header-cell *matHeaderCellDef>Horário</th>
+      <td mat-cell *matCellDef="let element">{{ element.schedule_date }}</td>
+    </ng-container>
+
+    <!-- Exam Column -->
+    <ng-container matColumnDef="exam_type">
+      <th mat-header-cell *matHeaderCellDef>Exame</th>
+      <td mat-cell *matCellDef="let element">{{ element.exam_type }}</td>
+    </ng-container>
+
+    <!-- Doctor Column -->
+    <ng-container matColumnDef="doctor_name">
+      <th mat-header-cell *matHeaderCellDef>Doutor</th>
+      <td mat-cell *matCellDef="let element">{{ element.doctor_name }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+          Ações
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openViewMedicalExamDialog()">
+            Visualizar
+          </button>
+          <button mat-menu-item (click)="openEditMedicalExamDialog()">
+            Editar
+          </button>
+          <button mat-menu-item (click)="openDeleteMedicalExamDialog()">
+            Deletar
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+</div>

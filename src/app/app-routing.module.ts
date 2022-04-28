@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { PatientComponent } from './patient/patient.component';
-import { BookingComponent } from './booking/booking.component';
+import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
 import { ReportsComponent } from './reports/reports.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -25,9 +25,9 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'booking',
-    component: BookingComponent,
-    canActivate: [AuthGuard]
+    path: 'medicalExams',
+    component: MedicalExamsComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path: 'reports',

@@ -1,5 +1,5 @@
-<div  fxLayout="column"  fxLayoutAlign="center center" >
-   <button mat-raised-button color="primary"  onclick="openDialog()"  class="register-btn">Cadastrar</button>
+<div class="patient-container"  fxLayout="column"  fxLayoutAlign="center center" >
+   <button mat-raised-button color="primary"  (click)="openCreatePatientDialog()"  class="register-btn">Cadastrar</button>
 
     <!-- <patient-register-dialog></patient-register-dialog> -->
 
@@ -35,7 +35,12 @@
      <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">
-               <button mat-raised-button color="primary" class="register-btn">Ações</button>
+               <!-- <button mat-raised-button color="primary" class="register-btn">Ações</button> -->
+               <button mat-raised-button  color="primary"   [matMenuTriggerFor]="menu">Ações</button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="openViewPatientDialog()" > Visualizar</button>
+                  <button mat-menu-item (click)="openEditPatientDialog()"  >Editar</button>
+                </mat-menu>
 
         </td>
       </ng-container>

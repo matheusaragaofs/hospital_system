@@ -20,7 +20,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { HomeComponent } from './home/home.component';
 import { PatientComponent } from './patient/patient.component';
-import { BookingComponent } from './booking/booking.component';
 import { ReportsComponent } from './reports/reports.component';
 import { LoginComponent } from './login/login.component';
 
@@ -28,19 +27,38 @@ import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PatientRegisterDialogComponent } from './patient/patient-register-dialog/patient-register-dialog.component';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PatientViewDialogComponent } from './patient/patient-view-dialog/patient-view-dialog.component';
+import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
+import { CreateMedicalExamsDialogComponent } from './medical-exams/create-medical-exams-dialog/create-medical-exams-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+import { EditMedicalExamsDialogComponent } from './medical-exams/edit-medical-exams-dialog/edit-medical-exams-dialog.component';
+import { DeleteMedicalExamsDialogComponent } from './medical-exams/delete-medical-exams-dialog/delete-medical-exams-dialog.component';
+import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-exams-dialog/view-medical-exams-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PatientComponent,
-    BookingComponent,
     ReportsComponent,
     LoginComponent,
     ProfileComponent,
-    PatientRegisterDialogComponent
+    PatientRegisterDialogComponent,
+    PatientViewDialogComponent,
+    MedicalExamsComponent,
+    CreateMedicalExamsDialogComponent,
+    EditMedicalExamsDialogComponent,
+    DeleteMedicalExamsDialogComponent,
+    ViewMedicalExamsDialogComponent,
   ],
+  entryComponents: [PatientRegisterDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -53,19 +71,18 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    // MatDialogModule,
-    // MatDialog,
-    // MatDialogRef,
+    MatDialogModule,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
-  providers: [
-    AuthService,
-    AuthGuard,
-    PatientRegisterDialogComponent
-  ],
-  bootstrap: [AppComponent]
+  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
