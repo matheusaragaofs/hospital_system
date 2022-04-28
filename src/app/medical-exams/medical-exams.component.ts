@@ -177,7 +177,6 @@ export class MedicalExamsComponent implements OnInit {
   openEditMedicalExamDialog(): void {
     this.matDialog.open(EditMedicalExamsDialogComponent, {
       data: {
-        edit: true,
         patient: this.patient,
       },
       width: '600px',
@@ -187,11 +186,10 @@ export class MedicalExamsComponent implements OnInit {
   openDeleteMedicalExamDialog(): void {
     this.matDialog.open(DeleteMedicalExamsDialogComponent, {
       data: {
-        edit: true,
         patient: this.patient,
       },
-      width: '600px',
-      height: '400px',
+      width: '300px',
+      height: '120px',
     });
   }
 

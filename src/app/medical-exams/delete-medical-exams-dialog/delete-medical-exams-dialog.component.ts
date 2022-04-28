@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-medical-exams-dialog',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteMedicalExamsDialogComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit(): void {
   }
+  constructor(
+    public dialogRef: MatDialogRef<DeleteMedicalExamsDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {}
 
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }

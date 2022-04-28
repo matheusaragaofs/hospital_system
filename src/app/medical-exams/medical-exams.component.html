@@ -1,7 +1,6 @@
 <div fxLayout="column" fxFill fxLayoutAlign="center center">
   <div
     fxFill
-    style="padding: 0 20px;"
     class="header-container"
     fxLayout="row"
     fxLayoutAlign="start center"
@@ -14,7 +13,7 @@
     >
       Novo Exame
     </button>
-    <mat-form-field class="search-patient"  fxFlex="100" appearance="outline">
+    <mat-form-field class="search-input"  fxFlex="100" appearance="outline">
       <mat-label>Pesquisar paciente por CPF</mat-label>
       <input
         placeholder="Pesquisar por CPF..."
@@ -22,10 +21,11 @@
       />
     </mat-form-field>
   </div>
-
-  <table
+  
+  <div class="table-responsive">
+  <table 
     mat-table
-    fxFlexFill
+    fxFill
     [dataSource]="dataSource"
     class="mat-elevation-z8"
   >
@@ -76,4 +76,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+</div>
+
 </div>
