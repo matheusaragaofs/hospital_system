@@ -1,1 +1,72 @@
-<p>reports works!</p>
+<div fxLayout="column" fxLayoutAlign="center center">
+    <div fxFill class="header-container" fxLayout="row" fxLayoutAlign="start center">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione o médico</mat-label>
+            <mat-select matNativeControl required>
+                <mat-option value="João">João</mat-option>
+                <mat-option value="Wesley">Wesley</mat-option>
+                <mat-option value="Matheus">Matheus</mat-option>
+                <mat-option value="Lucas">Lucas</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngIf="selectSecondDoctor">
+            <mat-label>Selecione o médico</mat-label>
+            <mat-select matNativeControl required>
+                <mat-option value="João">João</mat-option>
+                <mat-option value="Wesley">Wesley</mat-option>
+                <mat-option value="Matheus">Matheus</mat-option>
+                <mat-option value="Lucas">Lucas</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+
+        <div fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-raised-button color="primary">
+                Gerar relatório
+            </button>
+            <button mat-raised-button color="primary" (click)="toggleCompareDoctor()" style="margin-left: 10px">
+                Comparar
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<mat-grid-list cols="2" rowHeight="2:1" class="grid-layout-custom" [gutterSize]="'50px'">
+    <mat-grid-tile>
+        <div id="chart-1" fxLayout="row" fxLayoutAlign="space-around stretch" fxFill>
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis" [fill]="chartOptions.fill"
+                [title]="chartOptions.title"></apx-chart>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div id="chart-2" fxLayout="row" fxLayoutAlign="space-around stretch" fxFill>
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis" [fill]="chartOptions.fill"
+                [title]="chartOptions.title"></apx-chart>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div id="chart-3" fxLayout="row" fxLayoutAlign="space-around stretch" fxFill>
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis" [fill]="chartOptions.fill"
+                [title]="chartOptions.title"></apx-chart>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div id="chart-2" fxLayout="row" fxLayoutAlign="space-around stretch" fxFill>
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis" [fill]="chartOptions.fill"
+                [title]="chartOptions.title"></apx-chart>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
