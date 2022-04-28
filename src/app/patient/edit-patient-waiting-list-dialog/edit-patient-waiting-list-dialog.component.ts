@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { PatientRegisterDialogComponent } from '../patient-register-dialog/patient-register-dialog.component';
+
 
 type PriorityOptions = { label: string; value: 'high' | 'medium' | 'low' };
 
+
 @Component({
-  selector: 'patient-register-dialog',
-  templateUrl: './patient-register-dialog.component.html',
-  styleUrls: ['./patient-register-dialog.component.sass'],
+  selector: 'app-edit-patient-waiting-list-dialog',
+  templateUrl: './edit-patient-waiting-list-dialog.component.html',
+  styleUrls: ['./edit-patient-waiting-list-dialog.component.sass']
 })
-export class PatientRegisterDialogComponent implements OnInit {
+export class EditPatientWaitingListDialogComponent implements OnInit {
   public name = '';
   public cpf = '';
   public address = '';
@@ -22,13 +25,11 @@ export class PatientRegisterDialogComponent implements OnInit {
     { label: 'Média', value: 'medium' },
     { label: 'Baixa', value: 'low' },
   ];
-
-  getPrioritySelected(event: MatSelectChange): void {
-    this.priority = event.value;
-  }
-
+  constructor(
+    public dialogRef: MatDialogRef<PatientRegisterDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) { }
   onSubmit(): void {
-    const { name, cpf,  address, cep, health_insurance_id, priority } =
+    const { name, cpf, address, cep, health_insurance_id, priority  } =
       this;
 
     const registerData = {
@@ -43,19 +44,15 @@ export class PatientRegisterDialogComponent implements OnInit {
     console.log(registerData);
   }
 
-  constructor(
-    public dialogRef: MatDialogRef<PatientRegisterDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
 
-  public patientFound = false;
-  togglePatientFound() {
-    this.patientFound = !this.patientFound
+  getPrioritySelected(event: MatSelectChange): void {
+    this.priority = event.value;
   }
-
-
+  
   closeDialog(): void {
     this.dialogRef.close();
   }
+  ngOnInit(): void {
+  }
 
-  ngOnInit(): void {}
 }

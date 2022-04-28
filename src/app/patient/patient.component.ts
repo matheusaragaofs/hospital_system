@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DeletePatientWaitingListDialogComponent } from './delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
+import { EditPatientWaitingListDialogComponent } from './edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
 import { PatientRegisterDialogComponent } from './patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
 
@@ -131,12 +133,12 @@ export class PatientComponent implements OnInit {
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
-      width: '800px',
-      // height: '400px',
+      width: '600px',
+      maxHeight: '500px',
     });
   }
   openEditPatientDialog(): void {
-    this.matDialog.open(PatientRegisterDialogComponent, {
+    this.matDialog.open(EditPatientWaitingListDialogComponent, {
       data: {
         edit: true,
         patient: this.patient,
@@ -144,10 +146,21 @@ export class PatientComponent implements OnInit {
       width: '800px',
     });
   }
+  openDeletePatientDialog(): void {
+    this.matDialog.open(DeletePatientWaitingListDialogComponent, {
+      data: {
+        edit: true,
+        patient: this.patient,
+      },
+      width: '300px',
+      height: '135px',
+    });
+  }
 
   openViewPatientDialog(): void {
     this.matDialog.open(PatientViewDialogComponent, {
       width: '600px',
+      maxHeight: '500px',
       data: {
         patient: this.patient,
       },
