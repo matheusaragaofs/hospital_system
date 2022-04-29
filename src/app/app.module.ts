@@ -44,6 +44,11 @@ import { DeleteMedicalExamsDialogComponent } from './medical-exams/delete-medica
 import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-exams-dialog/view-medical-exams-dialog.component';
 import { EditPatientWaitingListDialogComponent } from './patient/edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
 import { DeletePatientWaitingListDialogComponent } from './patient/delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
+import { PatientsListComponent } from './patients-list/patients-list.component';
+import { CreatePatientDialogComponent } from './patients-list/create-patient-dialog/create-patient-dialog.component';
+import { EditPatientDialogComponent } from './patients-list/edit-patient-dialog/edit-patient-dialog.component';
+import { ViewPatientDialogComponent } from './patients-list/view-patient-dialog/view-patient-dialog.component';
+import { DeletePatientDialogComponent } from './patients-list/delete-patient-dialog/delete-patient-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +66,11 @@ import { DeletePatientWaitingListDialogComponent } from './patient/delete-patien
     ViewMedicalExamsDialogComponent,
     EditPatientWaitingListDialogComponent,
     DeletePatientWaitingListDialogComponent,
+    PatientsListComponent,
+    CreatePatientDialogComponent,
+    EditPatientDialogComponent,
+    ViewPatientDialogComponent,
+    DeletePatientDialogComponent,
   ],
   entryComponents: [PatientRegisterDialogComponent],
   imports: [
