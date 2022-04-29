@@ -1,4 +1,4 @@
-<div class='login-container' fxLayoutAlign="center center" >
+<div [ngClass]="{'blur':!isAuthenticated}" class='login-container' fxLayoutAlign="center center" >
     <mat-card class='login-card' >
         <div class="hospital-text"> Hospital System</div>
         <mat-toolbar color="primary">Entre com sua conta</mat-toolbar>
@@ -7,7 +7,7 @@
                 <mat-error *ngIf="!loginValid">
                     O email ou a senha não foram reconhecidos.
                 </mat-error>
-                
+
                 <mat-form-field>
                     <mat-label>Digite seu e-mail</mat-label>
 
@@ -21,7 +21,7 @@
                     <mat-label>Digite sua senha</mat-label>
 
                     <input matInput placeholder="Senha" type="password" [(ngModel)]="password" name="password" [type]="hide_password ? 'password' : 'text'" required>
-                    
+
                     <button mat-icon-button matSuffix (click)="hide_password = !hide_password" [attr.aria-label]="'hide_password password'" [attr.aria-pressed]="hide_password">
                       <mat-icon>{{hide_password ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
@@ -30,7 +30,7 @@
                         Por favor, digite uma senha válida.
                     </mat-error>
                 </mat-form-field>
-                
+
                 <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid" >
                     Login
                 </button>
@@ -39,7 +39,7 @@
         </mat-card-content>
     </mat-card>
 </div>
-<!-- 
+
 <div class='spinner' *ngIf="!isAuthenticated" fxLayoutAlign="center center" fxFill>
     <mat-spinner></mat-spinner>
-</div> -->
+</div>

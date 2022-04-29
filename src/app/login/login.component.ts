@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   hide_password = true;
   email = '';
   password = '';
-  isAuthenticated = false;
+  isAuthenticated = true;
 
   private _destroySub$ = new Subject<void>();
   private readonly returnUrl: string;
@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   };
 
   onSubmit(): void {
+    this.isAuthenticated=false
     this._authService.login(this.email, this.password).pipe(
       take(1)
     ).subscribe({
@@ -35,7 +36,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loginValid = true;
         this._router.navigateByUrl('/');
       },
-      error: _ => this.loginValid = false
+      error: _ => {
+        this.loginValid = false;
+        this.isAuthenticated = true;
+      }
     });
   }
 
