@@ -9,106 +9,35 @@ export interface PeriodicElement {
   name: string;
   cpf: string;
   priority: 'low' | 'medium' | 'high';
+  isServed: boolean
 }
-export interface DialogData {
-  animal: 'panda' | 'unicorn' | 'lion';
-}
+
 const ELEMENT_DATA: PeriodicElement[] = [
   {
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'low',
+    isServed: false
   },
   {
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'medium',
+    isServed: true
   },
   {
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'low',
+    isServed: false
   },
   {
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'medium',
+    isServed: true
   },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'high',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
+
 ];
 
 @Component({
@@ -117,7 +46,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./patient.component.sass'],
 })
 export class PatientComponent implements OnInit {
-  displayedColumns: string[] = ['cpf', 'name', 'priority', 'actions'];
+  displayedColumns: string[] = ['cpf', 'name', 'priority', 'served', 'actions'];
   dataSource = ELEMENT_DATA;
   patient = {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
@@ -126,10 +55,14 @@ export class PatientComponent implements OnInit {
     address: 'Rua Santo Carmo 1',
     priority: 'high',
     birthday_date: '20/01/2001',
-    health_insurance_id: '1',
   };
 
-  constructor(public matDialog: MatDialog) {}
+  public isServed: boolean = false;
+
+  onToggle(event: any): void {
+    console.log(event)
+  }
+  constructor(public matDialog: MatDialog) { }
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
@@ -167,5 +100,5 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
