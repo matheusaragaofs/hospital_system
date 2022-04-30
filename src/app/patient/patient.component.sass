@@ -33,12 +33,31 @@ mat-table
     color: #f73e3e 
 
 
+
 th.mat-header-cell, td.mat-cell, td.mat-footer-cell
     text-align: center
-    padding: 0 !important
+    padding: 10px 20px
+
+
+th.mat-header-cell.cdk-header-cell.cdk-column-name.mat-column-name.ng-star-inserted,
+td.mat-cell.cdk-cell.cdk-column-name.mat-column-name.ng-star-inserted
+    text-align: start
+
 
 .search-input
     transform: translateY(10px)
 
 .header-container
     padding: 0 20px
+
+@media (max-width: 362px) 
+  .header-container
+    margin-top: 5px
+    flex-direction: column !important
+    .register-btn
+          width: 100%
+          margin: 0
+    .search-input
+          margin-top: 5px
+          width: 100%
+          transform: translateY(0px)
