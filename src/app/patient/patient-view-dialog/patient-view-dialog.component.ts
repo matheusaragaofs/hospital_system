@@ -21,11 +21,12 @@ export class PatientViewDialogComponent implements OnInit {
   };
   
   public name = this.data.patient.name;
+  public gender = this.data.patient.gender;
+  public cep = this.data.patient.cep;
   public cpf = this.data.patient.cpf;
   public address = this.data.patient.address;
   public birthday_date = this.data.patient.birthday_date
   public phone_number = this.data.patient.phone_number
-  public health_insurance_id = this.data.patient.health_insurance_id;
   public priority = this.priorityValue[this.data.patient.priority];
 
   ngOnInit(): void {
