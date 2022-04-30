@@ -9,10 +9,9 @@ export interface PeriodicElement {
   name: string;
   cpf: string;
   cep?: string;
-  gender: string;
+  gender: 'male' | 'famale ' | 'other';
   address: string;
   birthday_date: string;
-  health_insurance_id: string;
   phone_number: string;
 }
 
@@ -20,38 +19,39 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '103.702.204-53',
-    gender: 'Masculin',
+    cep: '51160213',
+    gender: 'male',
     phone_number: '81 9 8214-2312',
     address: 'Rua Santo Carmo 1',
     birthday_date: '20/01/2001',
-    health_insurance_id: '1',
+
   },
   {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '103.702.204-53',
-    gender: 'Masculin',
+    gender: 'male',
     phone_number: '81 9 8214-2312',
     address: 'Rua Santo Carmo 1',
     birthday_date: '20/01/2001',
-    health_insurance_id: '1',
+
   },
   {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '103.702.204-53',
-    gender: 'Masculin',
+    gender: 'male',
     phone_number: '81 9 8214-2312',
     address: 'Rua Santo Carmo 1',
     birthday_date: '20/01/2001',
-    health_insurance_id: '1',
+
   },
   {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '103.702.204-53',
-    gender: 'Masculin',
+    gender: 'male',
     phone_number: '81 9 8214-2312',
     address: 'Rua Santo Carmo 1',
     birthday_date: '20/01/2001',
-    health_insurance_id: '1',
+
   },
 ];
 
@@ -64,8 +64,8 @@ export class PatientsListComponent implements OnInit {
   displayedColumns: string[] = ['cpf', 'name', 'actions'];
   dataSource = ELEMENT_DATA;
 
-  constructor(public matDialog: MatDialog) {}
-  ngOnInit(): void {}
+  constructor(public matDialog: MatDialog) { }
+  ngOnInit(): void { }
 
   openCreatePatientDialog(): void {
     this.matDialog.open(CreatePatientDialogComponent, {

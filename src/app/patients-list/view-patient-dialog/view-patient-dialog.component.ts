@@ -6,14 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-patient-dialog.component.sass'],
 })
 export class ViewPatientDialogComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
-  public name = '';
-  public cpf = '';
-  public phone_number = '';
-  public birthday_date = '';
-  public schedule_date = '';
-  public doctor_name = '';
-  public exam_type = '';
+  ngOnInit(): void { }
+  public cpf = '103.702.204-53	';
+  public name = 'JORGE AUGUSTO ALMEIDA FILHO';
+  public phone_number = '81984549123';
+  public birthday_date = '22/02/2002';
+  public cep = '1150231'
+  public address = 'Rua X'
+  public gender = 'Masculino'
+
 }

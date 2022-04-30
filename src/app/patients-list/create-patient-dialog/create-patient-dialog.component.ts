@@ -14,9 +14,8 @@ export class CreatePatientDialogComponent implements OnInit {
   public gender = '';
   public address = '';
   public birthday_date = '';
-  public health_insurance_id = '';
   public phone_number = '';
-  public selectedSex = '';
+  // public selectedSex = '';
   public sexOptions: { label: string; id: string }[] = [
     {
       label: 'Masculino',
@@ -33,7 +32,7 @@ export class CreatePatientDialogComponent implements OnInit {
   ];
 
   setSelectedSexId(event: MatSelectChange): void {
-    this.selectedSex = event.value;
+    this.gender = event.value;
   }
 
   onSubmit(): void {
@@ -42,9 +41,8 @@ export class CreatePatientDialogComponent implements OnInit {
       cpf,
       cep,
       address,
-      health_insurance_id,
       birthday_date,
-      selectedSex,
+      gender,
       phone_number,
     } = this;
     console.log('this', this);
@@ -52,10 +50,9 @@ export class CreatePatientDialogComponent implements OnInit {
       name,
       cpf,
       address,
-      health_insurance_id,
       birthday_date,
       cep,
-      gender: selectedSex,
+      gender,
       phone_number,
     };
 
