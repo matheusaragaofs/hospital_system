@@ -46,7 +46,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./patient.component.sass'],
 })
 export class PatientComponent implements OnInit {
-  displayedColumns: string[] = ['cpf', 'name', 'priority', 'served', 'actions'];
+  displayedColumns: string[] = ['position','cpf', 'name', 'priority', 'served', 'actions'];
   dataSource = ELEMENT_DATA;
   patient = {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
