@@ -4,7 +4,7 @@ import { DeletePatientWaitingListDialogComponent } from './delete-patient-waitin
 import { EditPatientWaitingListDialogComponent } from './edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
 import { PatientRegisterDialogComponent } from './patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
-
+import { PatientService } from '../patient.service'
 export interface PeriodicElement {
   name: string;
   cpf: string;
@@ -60,11 +60,13 @@ export class PatientComponent implements OnInit {
   };
   public color: any = ''
   public isServed: boolean = false;
+  constructor(public matDialog: MatDialog, public patientService: PatientService) { }
 
   onToggle(event: any): void {
     console.log(event)
   }
-  constructor(public matDialog: MatDialog) { }
+
+  
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
@@ -102,5 +104,8 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.patientService.getPatients()
+    this.patientService.addPatient({cpf: '2132134', priority: 'low'})
+  }
 }
