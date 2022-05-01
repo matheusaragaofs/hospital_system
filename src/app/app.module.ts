@@ -33,6 +33,8 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
 import { CreateMedicalExamsDialogComponent } from './medical-exams/create-medical-exams-dialog/create-medical-exams-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import {
   NgxMatDatetimePickerModule,
@@ -73,9 +75,11 @@ import { DeletePatientWaitingListDialogComponent } from './patient/delete-patien
     MatInputModule,
     MatCardModule,
     MatMenuModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatRadioModule,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,

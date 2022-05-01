@@ -52,13 +52,13 @@ export class PatientComponent implements OnInit {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '101.234.673-45',
     phone_number: '81 9 8214-2312',
-    gender:'Masculino',
-    cep:"2312312",
+    gender: 'Masculino',
+    cep: "2312312",
     address: 'Rua Santo Carmo 1',
     priority: 'high',
     birthday_date: '20/01/2001',
   };
-
+  public color: any = ''
   public isServed: boolean = false;
 
   onToggle(event: any): void {

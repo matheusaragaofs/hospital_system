@@ -1,5 +1,17 @@
 mat-table
     width: 95% !important
+.priority-filter-container
+    font-size: 14px
+    font-weight: 500
+    color:#fff
+    border: 1px solid #dfdfdf
+    font-weight: b
+    width: 80px
+    border-radius: 6px 0 0 6px
+    border-right: 0
+    background: #303f9f
+    padding: 15.5px 0px 12.5px 10px
+   
 
 .table-responsive 
   display: block
@@ -45,25 +57,49 @@ td.mat-cell.cdk-cell.cdk-column-name.mat-column-name.ng-star-inserted
 
 
 .search-input
+    width: 100% !important
     transform: translateY(10px)
 
 .header-container
     padding: 0 20px
 
-@media (max-width: 362px) 
+.priority-search-container
+    width: 100px important
+
+@media (max-width: 690px)
+    .search-input
+        transform: translateY(5px) !important
+@media (max-width: 562px)
+    .priority-search-container
+        flex-direction: column !important
+    .search-input
+        width: 95vw !important
+    .priority-filter-container
+        width: 60px !important
+        font-size: 12px !important
+        padding-right: 6px !important
+ 
+@media (max-width: 690px) 
   .header-container
     margin-top: 5px
     flex-direction: column !important
-    .register-btn
-          width: 100%
-          margin: 0
-    .search-input
-          margin-top: 5px
-          width: 100%
-          transform: translateY(0px)
+  .priority-filter-container
+    margin: 10px 0
+    border: 1px solid
+  .priority-container
+    width:100%
+  .register-btn
+    width: 100%
+    margin: 0
+  .search-input
+    margin-top: 5px
+    width: 100%
+    transform: translateY(0px)
+    
 .patient-served
     background: #dbd9d3
     button 
         background: #b5b3b0
     td 
         color: #7b7874
+        

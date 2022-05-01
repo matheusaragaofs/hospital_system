@@ -4,10 +4,28 @@
     <button mat-raised-button color="primary" (click)="openCreatePatientDialog()" class="register-btn">
       Cadastrar
     </button>
-    <mat-form-field class="search-input" fxFlex="100" appearance="outline">
+
+
+  <div class="priority-search-container" fxFlex="95" fxLayoutAlign="center center">
+
+    <div fxLayout='row'  fxLayoutAlign="center center" >
+      <div class="priority-filter-container">Prioridades</div>
+      <mat-button-toggle-group   style="margin-right:14px" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="bold">Todas</mat-button-toggle>
+        <mat-button-toggle value="bold">Baixa</mat-button-toggle>
+        <mat-button-toggle value="italic">Média</mat-button-toggle>
+        <mat-button-toggle value="underline">Alta</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+
+    <mat-form-field class="search-input" appearance="outline">
       <mat-label>Pesquisar paciente por CPF</mat-label>
       <input placeholder="Pesquisar por CPF..." matInput />
     </mat-form-field>
+  </div>
+
+
   </div>
   <div class="table-responsive">
 
