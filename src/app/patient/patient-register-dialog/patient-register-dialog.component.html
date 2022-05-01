@@ -9,19 +9,22 @@
     <mat-form-field appearance="outline">
       <mat-label>Pesquisar Paciente por CPF</mat-label>
       <input
+        maxlength="11"
+        minlength="11"
         matInput
+        [formControl]="cpf"
         placeholder="Digite o CPF..."
-        [(ngModel)]="cpf"
         name="cpf"
         required
       />
+      <mat-error *ngIf="cpf.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
     <button
       (click)="togglePatientFound()"
       mat-raised-button
       style="width: 100px"
       color="primary"
-      type="button"
+      type="submit"
     >
       Pesquisar
     </button>

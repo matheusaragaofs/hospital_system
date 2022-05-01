@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { FormControl, Validators } from '@angular/forms';
 
 type PriorityOptions = { label: string; value: 'high' | 'medium' | 'low' };
 
@@ -11,11 +12,22 @@ type PriorityOptions = { label: string; value: 'high' | 'medium' | 'low' };
 })
 export class PatientRegisterDialogComponent implements OnInit {
   public name = '';
-  public cpf = '';
+  // public cpf = '';
   public address = '';
   public cep = '';
   public health_insurance_id = '';
   public priority = {};
+
+  public cpf = new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]);
+
+  getErrorMessage() {
+    if (this.cpf.hasError('required')) {
+      return 'CPF obrigatório.';
+    }
+    return 'Não é um CPF válido';
+  }
+
+
 
   public priorityOptions: PriorityOptions[] = [
     { label: 'Alta', value: 'high' },
@@ -28,7 +40,7 @@ export class PatientRegisterDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const { name, cpf,  address, cep, health_insurance_id, priority } =
+    const { name, cpf, address, cep, health_insurance_id, priority } =
       this;
 
     const registerData = {
@@ -45,11 +57,12 @@ export class PatientRegisterDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<PatientRegisterDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+  ) { }
 
   public patientFound = false;
   togglePatientFound() {
-    this.patientFound = !this.patientFound
+    if (this.cpf.valid) return this.patientFound = true
+    return this.patientFound = false
   }
 
 
@@ -57,5 +70,5 @@ export class PatientRegisterDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

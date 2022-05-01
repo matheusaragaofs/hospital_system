@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
@@ -72,6 +72,7 @@ import { DeletePatientWaitingListDialogComponent } from './patient/delete-patien
     FlexLayoutModule,
     FormsModule,
     MatToolbarModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
     MatMenuModule,
