@@ -16,7 +16,8 @@ export class PatientRegisterDialogComponent implements OnInit {
   public address = '';
   public cep = '';
   public health_insurance_id = '';
-  public priority = {};
+  public priority = "";
+
 
   public cpf = new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]);
 
@@ -27,7 +28,16 @@ export class PatientRegisterDialogComponent implements OnInit {
     return 'Não é um CPF válido';
   }
 
-
+  keyPressNumbers(event: any) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   public priorityOptions: PriorityOptions[] = [
     { label: 'Alta', value: 'high' },
