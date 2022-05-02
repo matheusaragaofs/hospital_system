@@ -17,21 +17,66 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   public exams: { label: string; id: string }[] = [
     {
       label: 'Raio X',
-      id: '1',
+      id: 'x_ray',
     },
     {
       label: 'Tomografia',
-      id: '2',
+      id: 'tomography',
     },
     {
       label: 'Hemograma',
-      id: '3',
+      id: 'blood_count',
     },
     {
       label: 'Eletrocardiograma',
-      id: '4',
+      id: 'electrocardiogram',
     },
   ];
+  public doctors2 = { 
+    x_ray: [
+    {
+      label: 'Dra. Tatiana Noronha',
+      id: 1,
+    },
+    {
+      label: 'Dr. Jair Malta ',
+      id: 2,
+    },
+    {
+      label: 'Dra. Celeste Bessa ',
+      id: 3,
+    },
+  ],
+    tomography:[
+      {
+      label: 'Dra. Priscila Almeida',
+      id: 4,
+       },
+      {
+      label: 'Dr. Denilson  Abelho ',
+      id: 5,
+       },
+      {
+      label: 'Dra. Emily  Zagalo',
+      id: 6,
+       }
+  ],
+  blood_count:[
+    {
+      label: 'Dra. Céline Ramires ',
+      id: 7,
+    },
+    {
+      label: 'Dra. Ana Catarina ',
+      id: 8,
+    }
+  ]
+  }
+  
+  
+  
+  
+  
   public doctors: { label: string; id: string }[] = [
     {
       label: 'Dr. Miguel Arraes',
