@@ -51,7 +51,7 @@
       </div>
       <mat-form-field appearance="outline" style="margin-top: 1rem">
         <mat-label>Exame</mat-label>
-        <mat-select #typeExams (selectionChange)="setSelectedExam($event)">
+        <mat-select required  #typeExams (selectionChange)="setSelectedExam($event)">
           <mat-option *ngFor="let exam of exams" [value]="exam.id">
             {{ exam.label }}
           </mat-option>
@@ -60,8 +60,8 @@
 
       <mat-form-field appearance="outline" style="margin-top: 1rem">
         <mat-label>Médico</mat-label>
-        <mat-select #typeExams (selectionChange)="setSelectedDoctorId($event)">
-          <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+        <mat-select required [disabled]="!selectedExamId" #typeDoctors (selectionChange)="setSelectedDoctorId($event)">
+          <mat-option *ngFor="let doctor of doctors[selectedExamId]" [value]="doctor.id">
             {{ doctor.label }}
           </mat-option>
         </mat-select>
@@ -71,6 +71,7 @@
         <input
           matInput
           readonly
+          required
           [ngxMatDatetimePicker]="picker"
           placeholder="Dia/Horário"
           [(ngModel)]="scheduledDate"
