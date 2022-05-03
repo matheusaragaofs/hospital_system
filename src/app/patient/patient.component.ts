@@ -109,20 +109,18 @@ export class PatientComponent implements OnInit {
   openDeletePatientDialog(cpf: string): void {
     this.matDialog.open(DeletePatientWaitingListDialogComponent, {
       data: {
-          cpf,
+        cpf,
       },
       width: '300px',
       height: '170px',
     });
   }
 
-  openViewPatientDialog(): void {
+  openViewPatientDialog(data: WaitingListPatient): void {
     this.matDialog.open(PatientViewDialogComponent, {
       width: '600px',
       maxHeight: '500px',
-      data: {
-        patient: [],
-      },
+      data
     });
   }
 

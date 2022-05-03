@@ -104,7 +104,7 @@
             Ações
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openViewPatientDialog()">
+            <button mat-menu-item (click)="openViewPatientDialog(element)">
               Visualizar
             </button>
             <button mat-menu-item (click)="openDeletePatientDialog(element.patient_cpf)">

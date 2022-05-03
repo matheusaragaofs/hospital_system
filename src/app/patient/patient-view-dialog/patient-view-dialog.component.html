@@ -3,30 +3,30 @@
 <div class="container">
 
     <mat-label>Nome</mat-label>
-    <p>{{name}}</p>
+    <p>{{patientData.patient.name}}</p>
     
     <mat-label>CPF</mat-label>
-    <p>{{cpf}}</p>
+    <p>{{patientData.patient_cpf}}</p>
 
     <div>
         <mat-label  >Prioridade</mat-label>
-        <p>{{priority}}</p> 
+        <p>{{priorityValue[patientData.priority]}}</p> 
     </div>
 
     <mat-label>Sexo</mat-label>
-    <p>{{gender}}</p>
+    <p>{{genders[patientData.patient.gender]}}</p>
 
     <mat-label>Data de Nascimento</mat-label>
-    <p>{{birthday_date}}</p>
+    <p>{{formatDate(patientData.patient.date_of_birth)}}</p>
 
     <mat-label>Telefone</mat-label>
-    <p>{{phone_number}}</p>
+    <p>{{patientData.patient.phone_number}}</p>
 
     <mat-label>Endereço</mat-label>
-    <p>{{address}}</p>
+    <p>{{patientData.patient.address}}</p>
 
     <mat-label>CEP</mat-label>
-    <p>{{cep}}</p>
+    <p>{{patientData.patient.cep}}</p>
 
 
 </div>
