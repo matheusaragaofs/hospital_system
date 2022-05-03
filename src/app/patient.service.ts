@@ -1,54 +1,115 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
-
+interface Response {
+  data?: any;
+  error: boolean;
+}
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PatientService {
-  public patients = []
-  url: string = 'https://pokeapi.co/api/v2/pokemon/ditto'
+  constructor(private http: HttpClient) {}
+  api_url: string = 'localhost:3333';
 
-  addPatient(data: any): void {
-    axios.post(this.url, {
-      cpf: data.cpf,
-      priority: data.priority
-
-    })
+  testeGETPatient(): void {
+    this.http
+      .get<any>('http://127.0.0.1:3333/waiting-list')
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
-  editPatient(data: any): void {
-    axios.put(`${this.url}/${data.id}`, {
-      priority: data.priority
-    })
-  }
-  
-  deletePatient(data: any): void {
-    axios.delete(`${this.url}/${data.id}`)
-  }
-  
-  toggleServedPatient(data: any): void {
-    axios.put(`${this.url}/${data.id}`, {
-      served: data.served
-    })
-  }
-
-  getPatients(data?: any): void {
-    axios.get(this.url, {params: {filterByCpf: data?.cpf, priority: data?.priority}}).then(res => {
-      console.log('data', res)
-    }).catch((err) => {
-      console.log('err', err)
-    })
-    console.log('fetchando')
+  addPatient({ cpf, priority }: { cpf: number; priority: number }): void {
+    axios
+      .post(this.api_url, {
+        cpf,
+        priority,
+      })
+      .then((res) => {
+        return {
+          message: 'Adição feita com sucesso',
+          error: null,
+        };
+      })
+      .catch((err) => {
+        return {
+          message: 'Adição não foi realizada com sucesso',
+          error: true,
+        };
+      });
   }
 
-  getPatient(data:any): void {
-    axios.get(`${this.url}/${data.id}`).then(res => {
-      console.log('data', res)
-    }).catch((err) => {
-      console.log('err', err)
-    })
-    console.log('fetchando')
+  editPatient({ cpf, attended }: { cpf: number; attended: boolean }): void {
+    axios
+      .put(`${this.api_url}/${cpf}`, {
+        attended,
+      })
+      .then((res) => {
+        return {
+          error: null,
+        };
+      })
+      .catch((err) => {
+        return {
+          error: true,
+        };
+      });
   }
 
-  constructor() { }
+  deletePatient({ cpf }: { cpf: number }): void {
+    axios
+      .delete(`${this.api_url}/${cpf}`)
+      .then((res) => {
+        return {
+          error: null,
+          message: 'Deleção realizada com sucesso',
+        };
+      })
+      .catch((err) => {
+        return {
+          error: true,
+          message: 'Falha na deleção.',
+        };
+      });
+  }
+
+  async getPatients({
+    cpf,
+    priority,
+  }: {
+    cpf?: number;
+    priority?: number;
+  }): Promise<Response> {
+    return await axios
+      .get('http://localhost:3333/waiting-list', {
+      })
+      .then((res) => {
+        return {
+          data: res.data,
+          error: false,
+        };
+      })
+      .catch((err) => {
+        return {
+          error: err,
+        };
+      });
+  }
+
+  getPatient({ cpf }: { cpf: number }): void {
+    axios
+      .get(`${this.api_url}/${cpf}`)
+      .then((res) => {
+        return {
+          data: res.data,
+          error: false,
+        };
+      })
+      .catch((err) => {
+        return {
+          error: true,
+        };
+      });
+  }
 }

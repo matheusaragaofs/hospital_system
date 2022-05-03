@@ -4,12 +4,12 @@ import { DeletePatientWaitingListDialogComponent } from './delete-patient-waitin
 import { EditPatientWaitingListDialogComponent } from './edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
 import { PatientRegisterDialogComponent } from './patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
-import { PatientService } from '../patient.service'
+import { PatientService } from '../patient.service';
 export interface PeriodicElement {
   name: string;
   cpf: string;
   priority: 'low' | 'medium' | 'high';
-  isServed: boolean
+  isServed: boolean;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -17,27 +17,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'low',
-    isServed: false
+    isServed: false,
   },
   {
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'medium',
-    isServed: true
+    isServed: true,
   },
   {
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'low',
-    isServed: false
+    isServed: false,
   },
   {
     cpf: '103.702.204-53',
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     priority: 'medium',
-    isServed: true
+    isServed: true,
   },
-
 ];
 
 @Component({
@@ -46,27 +45,35 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./patient.component.sass'],
 })
 export class PatientComponent implements OnInit {
-  displayedColumns: string[] = ['position','cpf', 'name', 'priority', 'served', 'actions'];
+  displayedColumns: string[] = [
+    'position',
+    'cpf',
+    'name',
+    'priority',
+    'served',
+    'actions',
+  ];
   dataSource = ELEMENT_DATA;
   patient = {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '101.234.673-45',
     phone_number: '81 9 8214-2312',
     gender: 'Masculino',
-    cep: "2312312",
+    cep: '2312312',
     address: 'Rua Santo Carmo 1',
     priority: 'high',
     birthday_date: '20/01/2001',
   };
-  public color: any = ''
+  public color: any = '';
   public isServed: boolean = false;
-  constructor(public matDialog: MatDialog, public patientService: PatientService) { }
+  constructor(
+    public matDialog: MatDialog,
+    public patientService: PatientService
+  ) {}
 
   onToggle(event: any): void {
-    console.log(event)
+    console.log(event);
   }
-
-  
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
@@ -104,8 +111,15 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { 
-    this.patientService.getPatients()
-    this.patientService.addPatient({cpf: '2132134', priority: 'low'})
+  ngOnInit(): void {
+    // console.log(
+    //   'this.patientService.testeGETPatient()',
+    //   this.patientService.testeGETPatient()
+    // );
+    const data = this.patientService.getPatients({});
+    console.log(
+      'this.patientService.getPatients({})',
+      data.then((data2) => console.log(data2.data))
+    );
   }
 }

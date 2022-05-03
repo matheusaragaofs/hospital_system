@@ -35,6 +35,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { HttpClientModule} from '@angular/common/http';
 
 import {
   NgxMatDatetimePickerModule,
@@ -72,6 +73,7 @@ import { DeletePatientWaitingListDialogComponent } from './patient/delete-patien
     FlexLayoutModule,
     FormsModule,
     MatToolbarModule,
+    HttpClientModule,
     ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
