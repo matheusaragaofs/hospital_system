@@ -6,6 +6,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PatientRegisterDialogComponent } from './patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
 import { PatientsService } from './patients.service';
+import { DeletePatientWaitingListDialogComponent } from './delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
 
 export type WaitingListPatient = {
   id: string;
@@ -58,10 +59,36 @@ export class PatientComponent implements OnInit {
   onToggle(event: any): void {
     console.log(event);
   }
+  keyPressSearchPacient(event: any) {
+    console.log('event', event);
+  }
+  searchPatientByCpf(cpf: string) {
+    const url = `waiting-list/${cpf}`;
+    console.log(cpf.length);
+    if (cpf.length === 11) {
+      console.log('entrou aqui 111111');
+      this.patientsService.findPatientByCpf(url).subscribe(
+        (data: Response) => {
+          console.log(data);
+        },
+        (err: any) => console.log('Erro ao listar os pacientes', err)
+      );
+    }
+  }
+
+  setPatientAttended(cpf: string) {
+    this.patientsService.setPatientAttended(cpf).subscribe(
+      (data: any) => {
+        console.log(data);
+      },
+      (err: any) => console.log('Erro ao setar o paciente como atendido', err)
+    );
+    window.location.reload();
+  }
 
   setPriority(event: any): void {
     const priority = Number(event.value);
-    this.patientsService.findAllPatients({ filter:priority }).subscribe(
+    this.patientsService.findAllPatients({ filter: priority }).subscribe(
       (data: Response) => (this.dataSource = data.body),
       (err: any) => console.log('Erro ao listar os pacientes', err)
     );
@@ -78,25 +105,16 @@ export class PatientComponent implements OnInit {
       maxHeight: '500px',
     });
   }
-  // openEditPatientDialog(): void {
-  //   this.matDialog.open(EditPatientWaitingListDialogComponent, {
-  //     data: {
-  //       edit: true,
-  //       patient: this.patient,
-  //     },
-  //     width: '800px',
-  //   });
-  // }
-  // openDeletePatientDialog(): void {
-  //   this.matDialog.open(DeletePatientWaitingListDialogComponent, {
-  //     data: {
-  //       edit: true,
-  //       patient: this.patient,
-  //     },
-  //     width: '300px',
-  //     height: '135px',
-  //   });
-  // }
+
+  openDeletePatientDialog(cpf: string): void {
+    this.matDialog.open(DeletePatientWaitingListDialogComponent, {
+      data: {
+          cpf,
+      },
+      width: '300px',
+      height: '170px',
+    });
+  }
 
   openViewPatientDialog(): void {
     this.matDialog.open(PatientViewDialogComponent, {

@@ -24,7 +24,28 @@ export class PatientsService {
       headers: this.getSimpleHeader(),
     });
   }
+  setPatientAttended(cpf: string): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'PATCH',
+      relativeUrl: `${this.relativeUrl}/${cpf}`,
+      headers: this.getSimpleHeader(),
+    });
+  }
+  deletePatient(cpf: string): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'DELETE',
+      relativeUrl: `${this.relativeUrl}/${cpf}`,
+      headers: this.getSimpleHeader(),
+    });
+  }
 
+  findPatientByCpf(url: string): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'GET',
+      relativeUrl: url,
+      headers: this.getSimpleHeader(),
+    });
+  }
   getSimpleHeader() {
     return new HttpHeaders({
       'Content-Type': 'application/json',

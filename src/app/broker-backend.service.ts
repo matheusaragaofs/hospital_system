@@ -33,16 +33,14 @@ export class BrokerBackendService {
     params,
   }: IRequest): Observable<any> {
     const url = environment.apiBaseUrl + relativeUrl;
-    let parameters = {filter: 1};
-    console.log('parameters', parameters)
-    console.log('params???',params )
-    let queryParams = new HttpParams({ fromObject: params });
+    let parameters = params;
+    let queryParams = new HttpParams({ fromObject: parameters });
 
     return this.http
       .request(
         new HttpRequest(httpMethod, url, {
           headers,
-          params: queryParams,
+          params: queryParams? queryParams: null,
           body,
         })
       )
