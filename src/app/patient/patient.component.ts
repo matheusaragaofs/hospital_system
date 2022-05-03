@@ -12,10 +12,12 @@ export interface PeriodicElement {
   isServed: boolean;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA: any[] = [
   {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    patient_cpf: '103.702.204-53',
+    patient: {
+      name: 'JORGE AUGUSTO ALMEIDA FILHO',
+    },
     priority: 'low',
     isServed: false,
   },
@@ -53,7 +55,6 @@ export class PatientComponent implements OnInit {
     'served',
     'actions',
   ];
-  dataSource = ELEMENT_DATA;
   patient = {
     name: 'JORGE AUGUSTO ALMEIDA FILHO',
     cpf: '101.234.673-45',
@@ -66,6 +67,7 @@ export class PatientComponent implements OnInit {
   };
   public color: any = '';
   public isServed: boolean = false;
+  public dataSource = []
   constructor(
     public matDialog: MatDialog,
     public patientService: PatientService
@@ -74,6 +76,7 @@ export class PatientComponent implements OnInit {
   onToggle(event: any): void {
     console.log(event);
   }
+  public patients: any = [];
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
@@ -111,15 +114,8 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // console.log(
-    //   'this.patientService.testeGETPatient()',
-    //   this.patientService.testeGETPatient()
-    // );
-    const data = this.patientService.getPatients({});
-    console.log(
-      'this.patientService.getPatients({})',
-      data.then((data2) => console.log(data2.data))
-    );
+  async ngOnInit(): Promise<any> {
+    const response  = await this.patientService.getPatients({});
+    this.dataSource = response?.data
   }
 }
