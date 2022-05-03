@@ -1,16 +1,23 @@
 import { Component, OnInit, Inject } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { PatientRegisterDialogComponent } from './patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
+import { PatientsService } from './patients.service';
+
 
 export interface PeriodicElement {
   name: string;
   cpf: string;
   priority: 'low' | 'medium' | 'high';
 }
+
 export interface DialogData {
   animal: 'panda' | 'unicorn' | 'lion';
 }
+
 const ELEMENT_DATA: PeriodicElement[] = [
   {
     cpf: '103.702.204-53',
@@ -128,7 +135,7 @@ export class PatientComponent implements OnInit {
     age: '20'
   };
 
-  constructor(public matDialog: MatDialog) {}
+  constructor(public matDialog: MatDialog, private patientsService: PatientsService) {}
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
@@ -155,5 +162,10 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.patientsService.findAllPatients().subscribe(
+      data => console.log(data.body),
+      err => console.log("Erro ao listar os pacientes", err)
+    )
+  }
 }
