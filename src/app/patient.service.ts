@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 interface Response {
   data?: any;
+  message?: string;
   error: boolean;
 }
 @Injectable({
@@ -10,7 +11,7 @@ interface Response {
 })
 export class PatientService {
   constructor(private http: HttpClient) {}
-  api_url: string = 'localhost:3333';
+  api_url: string = 'http://localhost:3333';
 
   testeGETPatient(): void {
     this.http
@@ -20,16 +21,23 @@ export class PatientService {
       });
   }
 
-  addPatient({ cpf, priority }: { cpf: number; priority: number }): void {
-    axios
-      .post(this.api_url, {
+  async addPatient({
+    cpf,
+    priority,
+  }: {
+    cpf: string;
+    priority: number;
+  }): Promise<Response> {
+    return await axios
+      .post(`http://localhost:3333/waiting-list`, {
         cpf,
         priority,
       })
       .then((res) => {
         return {
+          data:res.data,
           message: 'Adição feita com sucesso',
-          error: null,
+          error: false,
         };
       })
       .catch((err) => {
@@ -82,8 +90,7 @@ export class PatientService {
     priority?: number;
   }): Promise<Response> {
     return await axios
-      .get('http://localhost:3333/waiting-list', {
-      })
+      .get(`${this.api_url}/waiting-list`, {})
       .then((res) => {
         return {
           data: res.data,
@@ -97,9 +104,9 @@ export class PatientService {
       });
   }
 
-  getPatient({ cpf }: { cpf: number }): void {
-    axios
-      .get(`${this.api_url}/${cpf}`)
+  async getPatient({ cpf }: { cpf: string }): Promise<Response> {
+    return await axios
+      .get(`http://localhost:3333/patients/${cpf}`)
       .then((res) => {
         return {
           data: res.data,
@@ -108,7 +115,23 @@ export class PatientService {
       })
       .catch((err) => {
         return {
+          message: 'Paciente não encontrado',
           error: true,
+        };
+      });
+  }
+  async checkPatientInWaitingList({ cpf }: { cpf: string }): Promise<Response | any> {
+    return await axios
+      .get(`http://localhost:3333/waiting-list/${cpf}`)
+      .then((res) => {
+        return {
+          message: 'Paciente já cadastrado na fila de espera',
+          exist: true,
+        };
+      })
+      .catch((err) => {
+        return {
+          exist: false
         };
       });
   }
