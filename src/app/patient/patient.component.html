@@ -22,15 +22,15 @@
       <div fxLayout="row" fxLayoutAlign="center center">
         <div class="priority-filter-container">Prioridades</div>
         <mat-button-toggle-group
-          (change)="getPrioritySelected($event)"
+          (change)="setPriority($event)"
           style="margin-right: 14px"
           name="fontStyle"
           aria-label="Font Style"
         >
-          <mat-button-toggle value={null}>Todas</mat-button-toggle>
-          <mat-button-toggle value={0}>Baixa</mat-button-toggle>
-          <mat-button-toggle value={1}>Média</mat-button-toggle>
-          <mat-button-toggle value={2}>Alta</mat-button-toggle>
+          <mat-button-toggle value=-1>Todas</mat-button-toggle>
+          <mat-button-toggle value=0>Baixa</mat-button-toggle>
+          <mat-button-toggle value=1>Média</mat-button-toggle>
+          <mat-button-toggle value=2>Alta</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 
@@ -108,12 +108,9 @@
             <button mat-menu-item (click)="openViewPatientDialog()">
               Visualizar
             </button>
-            <button mat-menu-item (click)="openEditPatientDialog()">
-              Editar
-            </button>
-            <button mat-menu-item (click)="openDeletePatientDialog()">
+            <!-- <button mat-menu-item (click)="openDeletePatientDialog()">
               Deletar
-            </button>
+            </button> -->
           </mat-menu>
         </td>
       </ng-container>

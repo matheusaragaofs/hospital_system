@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -35,7 +37,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { HttpClientModule} from '@angular/common/http';
+
+import { BrokerBackendService } from './broker-backend.service';
 
 import {
   NgxMatDatetimePickerModule,
@@ -92,8 +95,9 @@ import { DeletePatientWaitingListDialogComponent } from './patient/delete-patien
     NgxMatNativeDateModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    HttpClientModule
   ],
-  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent],
+  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent, HttpClientModule, BrokerBackendService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

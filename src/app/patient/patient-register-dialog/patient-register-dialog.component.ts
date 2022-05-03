@@ -42,7 +42,6 @@ export class PatientRegisterDialogComponent implements OnInit {
 
   keyPressNumbers(event: any) {
     this.errors = {};
-    console.log('errors', this.errors);
     var charCode = event.which ? event.which : event.keyCode;
     // Only Numbers 0-9
     if (charCode < 48 || charCode > 57) {
@@ -61,11 +60,11 @@ export class PatientRegisterDialogComponent implements OnInit {
 
   getPrioritySelected(event: MatSelectChange): void {
     this.priority = event.value;
+    
   }
 
   async onSubmit(): Promise<any> {
     const { cpf, priority } = this;
-    console.log(cpf, priority);
     const response = await this.patientService.addPatient({
       cpf: cpf.value,
       priority,

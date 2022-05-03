@@ -1,45 +1,39 @@
 import { Component, OnInit, Inject } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DeletePatientWaitingListDialogComponent } from './delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
-import { EditPatientWaitingListDialogComponent } from './edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
+
 import { PatientRegisterDialogComponent } from './patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
-import { PatientService } from '../patient.service';
+import { PatientsService } from './patients.service';
+
+export type WaitingListPatient = {
+  id: string;
+  patient_cpf: string;
+  attended: boolean;
+  priority: number;
+  created_at: Date;
+  patient: {
+    name: string;
+    date_of_birth: Date;
+    phone_number: string;
+    cep: string;
+    address: string;
+    gender: 'male' | 'female' | 'others';
+  };
+};
+export interface Response {
+  body: WaitingListPatient;
+}
 export interface PeriodicElement {
   name: string;
   cpf: string;
   priority: 'low' | 'medium' | 'high';
   isServed: boolean;
 }
-
-const ELEMENT_DATA: any[] = [
-  {
-    patient_cpf: '103.702.204-53',
-    patient: {
-      name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    },
-    priority: 'low',
-    isServed: false,
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'medium',
-    isServed: true,
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-    isServed: false,
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'medium',
-    isServed: true,
-  },
-];
+export interface DialogData {
+  animal: 'panda' | 'unicorn' | 'lion';
+}
 
 @Component({
   selector: 'app-patients',
@@ -55,28 +49,28 @@ export class PatientComponent implements OnInit {
     'served',
     'actions',
   ];
-  patient = {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    cpf: '101.234.673-45',
-    phone_number: '81 9 8214-2312',
-    gender: 'Masculino',
-    cep: '2312312',
-    address: 'Rua Santo Carmo 1',
-    priority: 'high',
-    birthday_date: '20/01/2001',
-  };
+
   public color: any = '';
   public isServed: boolean = false;
-  public dataSource = []
-  constructor(
-    public matDialog: MatDialog,
-    public patientService: PatientService
-  ) {}
+
+  public dataSource: WaitingListPatient | any = [];
 
   onToggle(event: any): void {
     console.log(event);
   }
+
+  setPriority(event: any): void {
+    const priority = Number(event.value);
+    this.patientsService.findAllPatients({ filter:priority }).subscribe(
+      (data: Response) => (this.dataSource = data.body),
+      (err: any) => console.log('Erro ao listar os pacientes', err)
+    );
+  }
   public patients: any = [];
+  constructor(
+    public matDialog: MatDialog,
+    private patientsService: PatientsService
+  ) {}
 
   openCreatePatientDialog(): void {
     this.matDialog.open(PatientRegisterDialogComponent, {
@@ -84,38 +78,40 @@ export class PatientComponent implements OnInit {
       maxHeight: '500px',
     });
   }
-  openEditPatientDialog(): void {
-    this.matDialog.open(EditPatientWaitingListDialogComponent, {
-      data: {
-        edit: true,
-        patient: this.patient,
-      },
-      width: '800px',
-    });
-  }
-  openDeletePatientDialog(): void {
-    this.matDialog.open(DeletePatientWaitingListDialogComponent, {
-      data: {
-        edit: true,
-        patient: this.patient,
-      },
-      width: '300px',
-      height: '135px',
-    });
-  }
+  // openEditPatientDialog(): void {
+  //   this.matDialog.open(EditPatientWaitingListDialogComponent, {
+  //     data: {
+  //       edit: true,
+  //       patient: this.patient,
+  //     },
+  //     width: '800px',
+  //   });
+  // }
+  // openDeletePatientDialog(): void {
+  //   this.matDialog.open(DeletePatientWaitingListDialogComponent, {
+  //     data: {
+  //       edit: true,
+  //       patient: this.patient,
+  //     },
+  //     width: '300px',
+  //     height: '135px',
+  //   });
+  // }
 
   openViewPatientDialog(): void {
     this.matDialog.open(PatientViewDialogComponent, {
       width: '600px',
       maxHeight: '500px',
       data: {
-        patient: this.patient,
+        patient: [],
       },
     });
   }
 
-  async ngOnInit(): Promise<any> {
-    const response  = await this.patientService.getPatients({});
-    this.dataSource = response?.data
+  ngOnInit(): void {
+    this.patientsService.findAllPatients({}).subscribe(
+      (data: Response) => (this.dataSource = data.body),
+      (err: any) => console.log('Erro ao listar os pacientes', err)
+    );
   }
 }
