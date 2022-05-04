@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { lastValueFrom } from 'rxjs';
+import { PatientsListService } from '../patients-list.service';
 
 @Component({
   selector: 'app-create-patient-dialog',
@@ -11,13 +13,11 @@ export class CreatePatientDialogComponent implements OnInit {
   public name = '';
   public cpf = '';
   public cep = '';
-  public gender = '';
   public address = '';
-  public birthday_date = '';
-  public health_insurance_id = '';
+  public date_of_birth = '';
   public phone_number = '';
-  public selectedSex = '';
-  public sexOptions: { label: string; id: string }[] = [
+  public gender = '';
+  public genders: { label: string; id: string }[] = [
     {
       label: 'Masculino',
       id: 'male',
@@ -32,37 +32,44 @@ export class CreatePatientDialogComponent implements OnInit {
     },
   ];
 
-  setSelectedSexId(event: MatSelectChange): void {
-    this.selectedSex = event.value;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private patientsService: PatientsListService,
+    public dialogRef: MatDialogRef<CreatePatientDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {}
+
+  setGender(event: MatSelectChange): void {
+    this.gender = event.value;
   }
 
-  onSubmit(): void {
-    const {
-      name,
-      cpf,
-      cep,
-      address,
-      health_insurance_id,
-      birthday_date,
-      selectedSex,
-      phone_number,
-    } = this;
-    console.log('this', this);
-    const registerData = {
+  async onSubmit(): Promise<void> {
+    const { name, cpf, cep, address, gender, date_of_birth, phone_number } =
+      this;
+
+    const patientData = {
       name,
       cpf,
       address,
-      health_insurance_id,
-      birthday_date,
+      date_of_birth,
       cep,
-      gender: selectedSex,
+      gender,
       phone_number,
     };
 
-    console.log('registerData', registerData);
-  }
+    console.log('registerData', patientData);
 
-  constructor(public dialogRef: MatDialogRef<CreatePatientDialogComponent>) {}
+    try {
+      await lastValueFrom(
+        this.patientsService.addPatient(patientData)
+      ).then((result) =>
+        console.log('Adição de paciente realizada com sucesso')
+      ).catch(error=> console.log('cade o erro', error));
+    } catch (error) {
+      console.log('error', error);
+    }
+
+    window.location.reload();
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
