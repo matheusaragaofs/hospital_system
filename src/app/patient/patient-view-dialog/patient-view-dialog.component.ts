@@ -13,21 +13,22 @@ import {
 })
 export class PatientViewDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
-  
-  public priorityValue: any = {
-    high: 'Alta',
-    medium: 'Média',
-    low: 'Baixa',
-  };
-  
-  public name = this.data.patient.name;
-  public cpf = this.data.patient.cpf;
-  public address = this.data.patient.address;
-  public birthday_date = this.data.patient.birthday_date
-  public phone_number = this.data.patient.phone_number
-  public health_insurance_id = this.data.patient.health_insurance_id;
-  public priority = this.priorityValue[this.data.patient.priority];
-
-  ngOnInit(): void {
+  formatDate(date: string) {
+    const formatedDate = date,
+      [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
+    return `${dd}/${mm}/${yyyy}`;
   }
+  public priorityValue: any = {
+    2: 'Alta',
+    1: 'Média',
+    0: 'Baixa',
+  };
+  public genders: any = {
+    male: 'Masculino',
+    female: 'Feminino',
+    others: 'Outros',
+  };
+  public patientData = this.data;
+
+  ngOnInit(): void {}
 }

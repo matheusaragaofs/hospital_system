@@ -6,7 +6,9 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
@@ -33,6 +35,10 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
 import { CreateMedicalExamsDialogComponent } from './medical-exams/create-medical-exams-dialog/create-medical-exams-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+import { BrokerBackendService } from './broker-backend.service';
 
 import {
   NgxMatDatetimePickerModule,
@@ -80,12 +86,16 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     FlexLayoutModule,
     FormsModule,
     MatToolbarModule,
+    HttpClientModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
     MatMenuModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatRadioModule,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
@@ -95,8 +105,9 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     NgxMatNativeDateModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    HttpClientModule
   ],
-  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent],
+  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent, HttpClientModule, BrokerBackendService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
