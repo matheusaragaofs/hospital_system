@@ -25,7 +25,6 @@ export class PatientsService {
     });
   }
 
-
   addPatient({
     cpf,
     priority,
@@ -37,13 +36,12 @@ export class PatientsService {
       httpMethod: 'POST',
       body: {
         cpf,
-        priority
+        priority,
       },
       relativeUrl: this.relativeUrl,
       headers: this.getSimpleHeader(),
     });
   }
-
 
   setPatientAttended(cpf: string): Observable<any> {
     return this.brokerBackend.request({
@@ -60,14 +58,14 @@ export class PatientsService {
     });
   }
 
-  findPatientByCpf(cpf: string): Observable<any> {
+  findPatientByCpf({ cpf }: { cpf: string }): Observable<any> {
     return this.brokerBackend.request({
       httpMethod: 'GET',
       relativeUrl: `${this.relativeUrl}/${cpf}`,
       headers: this.getSimpleHeader(),
     });
   }
-  findPatientRegisterByCpf(cpf: string): Observable<any> {
+  findPatientRegisterByCpf({ cpf }: { cpf: string }): Observable<any> {
     return this.brokerBackend.request({
       httpMethod: 'GET',
       relativeUrl: `/patients/${cpf}`,

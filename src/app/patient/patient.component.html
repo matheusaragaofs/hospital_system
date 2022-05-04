@@ -22,21 +22,39 @@
       <div fxLayout="row" fxLayoutAlign="center center">
         <div class="priority-filter-container">Prioridades</div>
         <mat-button-toggle-group
+          value={{patientFound?.priority}}
           (change)="setPriority($event)"
           style="margin-right: 14px"
           name="fontStyle"
           aria-label="Font Style"
         >
-          <mat-button-toggle value=-1>Todas</mat-button-toggle>
-          <mat-button-toggle value=0>Baixa</mat-button-toggle>
-          <mat-button-toggle value=1>Média</mat-button-toggle>
-          <mat-button-toggle value=2>Alta</mat-button-toggle>
+          <mat-button-toggle (click)="resetData()" value="-1">Todas</mat-button-toggle>
+          <mat-button-toggle value="0">Baixa</mat-button-toggle>
+          <mat-button-toggle value="1">Média</mat-button-toggle>
+          <mat-button-toggle value="2">Alta</mat-button-toggle>
+          <mat-button-toggle value="1">Alta</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 
       <mat-form-field class="search-input" appearance="outline">
         <mat-label>Pesquisar paciente por CPF</mat-label>
-        <input maxlength="11"  #txtVal (keydown)="searchPatientByCpf(txtVal.value)"  placeholder="Pesquisar por CPF..." matInput />
+        <input
+          maxlength="11"
+          [(ngModel)]="searchByCpf"
+          placeholder="Pesquisar por CPF"
+          matInput
+          type="search"
+        />
+
+        <button
+          mat-button
+          matSuffix
+          (click)="searchPatientByCpf()"
+          aria-label="search"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+        <mat-error *ngIf="searchError">{{ searchError }}</mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -84,7 +102,7 @@
         <th mat-header-cell *matHeaderCellDef>ATENDIDO</th>
         <td mat-cell *matCellDef="let element">
           <mat-slide-toggle
-          [disabled]="element.attended"
+            [disabled]="element.attended"
             color="primary"
             (change)="setPatientAttended(element.patient_cpf)"
             [(ngModel)]="element.attended"
@@ -96,18 +114,17 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button
-            mat-raised-button
-            color="primary"
-            [matMenuTriggerFor]="menu"
-          >
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
             Ações
           </button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="openViewPatientDialog(element)">
               Visualizar
             </button>
-            <button mat-menu-item (click)="openDeletePatientDialog(element.patient_cpf)">
+            <button
+              mat-menu-item
+              (click)="openDeletePatientDialog(element.patient_cpf)"
+            >
               Deletar
             </button>
           </mat-menu>

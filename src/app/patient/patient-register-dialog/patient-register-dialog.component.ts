@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { FormControl, Validators } from '@angular/forms';
-import { PatientService } from 'src/app/patient.service';
 import { PatientsService } from '../patients.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 type PriorityOptions = { label: string; value: string };
@@ -20,7 +19,6 @@ export class PatientRegisterDialogComponent implements OnInit {
   };
   constructor(
     public dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
-    public patientService: PatientService,
     private patientsService: PatientsService
   ) {}
 
@@ -78,19 +76,19 @@ export class PatientRegisterDialogComponent implements OnInit {
 
     try {
       await lastValueFrom(
-        this.patientsService.addPatient({cpf: cpf.value, priority: priorityMap[priority]})
-      ).then((result) => console.log('Adição de paciente na fila de espera realizada com sucesso'));
+        this.patientsService.addPatient({
+          cpf: cpf.value,
+          priority: priorityMap[priority],
+        })
+      ).then((result) =>
+        console.log(
+          'Adição de paciente na fila de espera realizada com sucesso'
+        )
+      );
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
 
-
-    const response = await this.patientService.addPatient({
-      cpf: cpf.value,
-      priority: priorityMap[priority],
-    });
-
-  
     window.location.reload();
   }
 
@@ -102,16 +100,16 @@ export class PatientRegisterDialogComponent implements OnInit {
 
     try {
       await lastValueFrom(
-        this.patientsService.findPatientRegisterByCpf(cpf.value)
+        this.patientsService.findPatientRegisterByCpf({cpf: cpf.value})
       ).then((result) => (patientFound = result.body));
     } catch (error) {
       this.errors.patientNotFound = '';
     }
 
     try {
-      await lastValueFrom(
-        this.patientsService.findPatientByCpf(cpf.value)
-      ).then((result) => (patientInWaitingList = result.body));
+      await lastValueFrom(this.patientsService.findPatientByCpf({ cpf: cpf.value })).then(
+        (result) => (patientInWaitingList = result.body)
+      );
     } catch (error) {
       this.errors.patientAlreadyExist = '';
     }

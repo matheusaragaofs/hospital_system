@@ -7,6 +7,8 @@ import { PatientRegisterDialogComponent } from './patient-register-dialog/patien
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
 import { PatientsService } from './patients.service';
 import { DeletePatientWaitingListDialogComponent } from './delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
+import { lastValueFrom } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
 
 export type WaitingListPatient = {
   id: string;
@@ -50,30 +52,46 @@ export class PatientComponent implements OnInit {
     'served',
     'actions',
   ];
-
+  searchError: string = '';
   public color: any = '';
   public isServed: boolean = false;
-
   public dataSource: WaitingListPatient | any = [];
+  public patientFound: any = '';
 
-  onToggle(event: any): void {
-    console.log(event);
-  }
-  keyPressSearchPacient(event: any) {
-    console.log('event', event);
-  }
-  searchPatientByCpf(cpf: string) {
-    const url = `waiting-list/${cpf}`;
-    console.log(cpf.length);
-    if (cpf.length === 11) {
-      console.log('entrou aqui 111111');
-      this.patientsService.findPatientByCpf(url).subscribe(
-        (data: Response) => {
-          console.log(data);
-        },
-        (err: any) => console.log('Erro ao listar os pacientes', err)
-      );
+  keyPressNumbers(event: any) {
+    this.searchError = '';
+    var charCode = event.which ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
     }
+  }
+  public searchByCpf: string = '';
+
+  async searchPatientByCpf(): Promise<any> {
+    console.log(this.searchByCpf);
+    if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11)
+      return (this.searchError = 'Digite um Cpf válido');
+
+    try {
+      await lastValueFrom(
+        this.patientsService.findPatientByCpf({ cpf: this.searchByCpf })
+      ).then((result) => {
+        this.patientFound = result.body;
+        return (this.dataSource = [result.body]);
+      });
+    } catch (err) {
+      console.log('error aqui entrou');
+      return (this.searchError = 'Paciente não encontrado, tente outro Cpf...');
+    }
+  }
+
+  resetData(): void {
+    this.getPatients();
+    window.location.reload();
   }
 
   setPatientAttended(cpf: string) {
@@ -87,6 +105,9 @@ export class PatientComponent implements OnInit {
   }
 
   setPriority(event: any): void {
+    console.log('event', event);
+
+    this.searchByCpf = '';
     const priority = Number(event.value);
     this.patientsService.findAllPatients({ filter: priority }).subscribe(
       (data: Response) => (this.dataSource = data.body),
@@ -120,14 +141,23 @@ export class PatientComponent implements OnInit {
     this.matDialog.open(PatientViewDialogComponent, {
       width: '600px',
       maxHeight: '500px',
-      data
+      data,
     });
   }
 
+  async getPatients(): Promise<any> {
+    try {
+      await lastValueFrom(this.patientsService.findAllPatients({})).then(
+        (result) => {
+          this.dataSource = result.body;
+        }
+      );
+    } catch (err) {
+      console.log('Erro ao listar os pacientes', err);
+    }
+  }
+
   ngOnInit(): void {
-    this.patientsService.findAllPatients({}).subscribe(
-      (data: Response) => (this.dataSource = data.body),
-      (err: any) => console.log('Erro ao listar os pacientes', err)
-    );
+    this.getPatients();
   }
 }
