@@ -24,6 +24,27 @@ export class PatientsService {
       headers: this.getSimpleHeader(),
     });
   }
+
+
+  addPatient({
+    cpf,
+    priority,
+  }: {
+    cpf: string;
+    priority: number;
+  }): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'POST',
+      body: {
+        cpf,
+        priority
+      },
+      relativeUrl: this.relativeUrl,
+      headers: this.getSimpleHeader(),
+    });
+  }
+
+
   setPatientAttended(cpf: string): Observable<any> {
     return this.brokerBackend.request({
       httpMethod: 'PATCH',

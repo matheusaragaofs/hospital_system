@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { PatientService } from 'src/app/patient.service';
 import { PatientsService } from '../patients.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
-type PriorityOptions = { label: string; value: number };
+type PriorityOptions = { label: string; value: string };
 
 @Component({
   selector: 'patient-register-dialog',
@@ -59,9 +59,9 @@ export class PatientRegisterDialogComponent implements OnInit {
   }
 
   public priorityOptions: PriorityOptions[] = [
-    { label: 'Alta', value: 2 },
-    { label: 'Média', value: 1 },
-    { label: 'Baixa', value: 0 },
+    { label: 'Alta', value: 'high' },
+    { label: 'Média', value: 'medium' },
+    { label: 'Baixa', value: 'low' },
   ];
 
   getPrioritySelected(event: MatSelectChange): void {
@@ -70,16 +70,28 @@ export class PatientRegisterDialogComponent implements OnInit {
 
   async onSubmit(): Promise<any> {
     const { cpf, priority } = this;
+    const priorityMap: any = {
+      high: 2,
+      medium: 1,
+      low: 0,
+    };
+
+    try {
+      await lastValueFrom(
+        this.patientsService.addPatient({cpf: cpf.value, priority: priorityMap[priority]})
+      ).then((result) => console.log('Adição de paciente na fila de espera realizada com sucesso'));
+    } catch (error) {
+      console.log('error', error)
+    }
+
+
     const response = await this.patientService.addPatient({
       cpf: cpf.value,
-      priority,
+      priority: priorityMap[priority],
     });
 
-    if (response.data) {
-      console.log('response.data', response.data);
-    }
-    console.log(response.error);
-    window.location.reload()
+  
+    window.location.reload();
   }
 
   async findPatientByCpf(): Promise<any> {
@@ -105,7 +117,6 @@ export class PatientRegisterDialogComponent implements OnInit {
     }
 
     if (patientFound && patientInWaitingList) {
-      console.log('entrou aqui no patient ja existe');
       this.errors.patientNotFound = '';
       this.errors.patientAlreadyExist = 'Paciente já existe';
       return (this.showPatientInfo = false);
@@ -118,8 +129,8 @@ export class PatientRegisterDialogComponent implements OnInit {
     }
 
     if (patientFound && !patientInWaitingList) {
-      console.log('ENTROU AQUI', patientFound)
-      this.showPatientInfo= true
+      console.log('ENTROU AQUI', patientFound);
+      this.showPatientInfo = true;
       return (this.patient = patientFound);
     }
   }
