@@ -3,7 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { FormControl, Validators } from '@angular/forms';
 import { PatientService } from 'src/app/patient.service';
-
+import { PatientsService } from '../patients.service';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 type PriorityOptions = { label: string; value: number };
 
 @Component({
@@ -17,6 +18,11 @@ export class PatientRegisterDialogComponent implements OnInit {
     patientAlreadyExist: '',
     patientNotFound: '',
   };
+  constructor(
+    public dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
+    public patientService: PatientService,
+    private patientsService: PatientsService
+  ) {}
 
   public errorMessage: string | undefined = '';
   public priority!: number;
@@ -60,7 +66,6 @@ export class PatientRegisterDialogComponent implements OnInit {
 
   getPrioritySelected(event: MatSelectChange): void {
     this.priority = event.value;
-    
   }
 
   async onSubmit(): Promise<any> {
@@ -74,38 +79,48 @@ export class PatientRegisterDialogComponent implements OnInit {
       console.log('response.data', response.data);
     }
     console.log(response.error);
+    window.location.reload()
   }
-
-  constructor(
-    public dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
-    public patientService: PatientService
-  ) {}
 
   async findPatientByCpf(): Promise<any> {
     const { cpf } = this;
 
-    const patientInWaitingList =
-      await this.patientService.checkPatientInWaitingList({ cpf: cpf.value });
+    let patientFound: any = '';
+    let patientInWaitingList: any = '';
 
-    const patiendFound = await this.patientService.getPatient({
-      cpf: cpf.value,
-    });
-
-    if (patiendFound.data && patientInWaitingList.exist) {
-      this.showPatientInfo = false;
-
-      return (this.errors.patientAlreadyExist = patientInWaitingList.message);
+    try {
+      await lastValueFrom(
+        this.patientsService.findPatientRegisterByCpf(cpf.value)
+      ).then((result) => (patientFound = result.body));
+    } catch (error) {
+      this.errors.patientNotFound = '';
     }
 
-    if (patiendFound.error) {
-      this.showPatientInfo = false;
-
-      return (this.errors.patientNotFound = patiendFound.message);
+    try {
+      await lastValueFrom(
+        this.patientsService.findPatientByCpf(cpf.value)
+      ).then((result) => (patientInWaitingList = result.body));
+    } catch (error) {
+      this.errors.patientAlreadyExist = '';
     }
 
-    if (patiendFound.data && !patientInWaitingList.exist) {
-      this.showPatientInfo = true;
-      return (this.patient = patiendFound.data);
+    if (patientFound && patientInWaitingList) {
+      console.log('entrou aqui no patient ja existe');
+      this.errors.patientNotFound = '';
+      this.errors.patientAlreadyExist = 'Paciente já existe';
+      return (this.showPatientInfo = false);
+    }
+
+    if (!patientFound) {
+      this.errors.patientAlreadyExist = '';
+      this.errors.patientNotFound = 'Paciente não encontrado';
+      return (this.showPatientInfo = false);
+    }
+
+    if (patientFound && !patientInWaitingList) {
+      console.log('ENTROU AQUI', patientFound)
+      this.showPatientInfo= true
+      return (this.patient = patientFound);
     }
   }
 

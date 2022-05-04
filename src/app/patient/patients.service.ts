@@ -39,10 +39,17 @@ export class PatientsService {
     });
   }
 
-  findPatientByCpf(url: string): Observable<any> {
+  findPatientByCpf(cpf: string): Observable<any> {
     return this.brokerBackend.request({
       httpMethod: 'GET',
-      relativeUrl: url,
+      relativeUrl: `${this.relativeUrl}/${cpf}`,
+      headers: this.getSimpleHeader(),
+    });
+  }
+  findPatientRegisterByCpf(cpf: string): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'GET',
+      relativeUrl: `/patients/${cpf}`,
       headers: this.getSimpleHeader(),
     });
   }
