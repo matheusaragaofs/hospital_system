@@ -59,15 +59,10 @@ export class CreatePatientDialogComponent implements OnInit {
     console.log('registerData', patientData);
 
     try {
-      await lastValueFrom(
-        this.patientsService.addPatient(patientData)
-      ).then((result) =>
-        console.log('Adição de paciente realizada com sucesso')
-      ).catch(error=> console.log('cade o erro', error));
+      await this.patientsService.addPatient(patientData);
     } catch (error) {
       console.log('error', error);
     }
-
     window.location.reload();
   }
 
