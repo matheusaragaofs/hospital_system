@@ -4,7 +4,8 @@ import { ViewPatientDialogComponent } from './view-patient-dialog/view-patient-d
 import { CreatePatientDialogComponent } from './create-patient-dialog/create-patient-dialog.component';
 import { DeletePatientDialogComponent } from './delete-patient-dialog/delete-patient-dialog.component';
 import { EditPatientDialogComponent } from './edit-patient-dialog/edit-patient-dialog.component';
-
+import { PatientsListService } from './patients-list.service';
+import { lastValueFrom } from 'rxjs';
 export interface PeriodicElement {
   name: string;
   cpf: string;
@@ -62,10 +63,28 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class PatientsListComponent implements OnInit {
   displayedColumns: string[] = ['cpf', 'name', 'actions'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [];
 
-  constructor(public matDialog: MatDialog) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getPatients();
+  }
+
+  constructor(
+    public matDialog: MatDialog,
+    private patientsListService: PatientsListService
+  ) {}
+
+  async getPatients(): Promise<any> {
+    try {
+      await lastValueFrom(this.patientsListService.findAllPatients()).then(
+        (result) => {
+          this.dataSource = result.body;
+        }
+      );
+    } catch (err) {
+      console.log('Erro ao listar os pacientes', err);
+    }
+  }
 
   openCreatePatientDialog(): void {
     this.matDialog.open(CreatePatientDialogComponent, {
@@ -79,15 +98,19 @@ export class PatientsListComponent implements OnInit {
       maxHeight: '500px',
     });
   }
-  openDeletePatientDialog(): void {
+  openDeletePatientDialog({ cpf }: { cpf: string }): void {
     this.matDialog.open(DeletePatientDialogComponent, {
+      data: {
+        cpf
+      },
       width: '300px',
-      height: '135px',
+      height: '170px',
     });
   }
 
-  openViewPatientDialog(): void {
+  openViewPatientDialog(data: any): void {
     this.matDialog.open(ViewPatientDialogComponent, {
+      data,
       width: '600px',
       maxHeight: '500px',
     });

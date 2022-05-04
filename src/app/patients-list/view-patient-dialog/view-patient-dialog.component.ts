@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-view-patient-dialog',
@@ -6,14 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-patient-dialog.component.sass'],
 })
 export class ViewPatientDialogComponent implements OnInit {
-  constructor() {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  formatDate(date: string) {
+    const formatedDate = date,
+      [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
+    return `${dd}/${mm}/${yyyy}`;
+  }
+  
+  public genders: any = {
+    male: 'Masculino',
+    female: 'Feminino',
+    others: 'Outros',
+  };
+
+
 
   ngOnInit(): void {}
-  public name = '';
-  public cpf = '';
-  public phone_number = '';
-  public birthday_date = '';
-  public schedule_date = '';
-  public doctor_name = '';
-  public exam_type = '';
+
+  public patient = this.data
 }
