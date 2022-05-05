@@ -4,6 +4,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { BrokerBackendService } from '../broker-backend.service';
+import axios from 'axios';
 
 type findAllPatientsParams = {
   priority?: number;
@@ -25,23 +26,53 @@ export class PatientsService {
     });
   }
 
-  addPatient({
+  // addPatient({
+  //   cpf,
+  //   priority,
+  // }: {
+  //   cpf: string;
+  //   priority: number;
+  // }): Observable<any> {
+  //   return this.brokerBackend.request({
+  //     httpMethod: 'POST',
+  //     body: {
+  //       cpf,
+  //       priority,
+  //     },
+  //     relativeUrl: this.relativeUrl,
+  //     headers: this.getSimpleHeader(),
+  //   });
+  // }
+
+  async addPatient({
     cpf,
     priority,
   }: {
     cpf: string;
     priority: number;
-  }): Observable<any> {
-    return this.brokerBackend.request({
-      httpMethod: 'POST',
-      body: {
+  }): Promise<any> {
+    console.log('Body PATIENT SERVICE', cpf, priority);
+    return await axios
+      .post('http://localhost:3333/waiting-list', {
         cpf,
         priority,
-      },
-      relativeUrl: this.relativeUrl,
-      headers: this.getSimpleHeader(),
-    });
+      })
+      .then((res) => {
+        return {
+          data: res.data,
+          message: 'Adição feita com sucesso',
+          error: false,
+        };
+      })
+      .catch(() => {
+        return {
+          message: 'Adição não foi realizada com sucesso',
+          error: true,
+        };
+      });
   }
+
+
 
   setPatientAttended(cpf: string): Observable<any> {
     return this.brokerBackend.request({

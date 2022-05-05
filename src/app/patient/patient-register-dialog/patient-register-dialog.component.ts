@@ -75,16 +75,10 @@ export class PatientRegisterDialogComponent implements OnInit {
     };
 
     try {
-      await lastValueFrom(
-        this.patientsService.addPatient({
-          cpf: cpf.value,
-          priority: priorityMap[priority],
-        })
-      ).then((result) =>
-        console.log(
-          'Adição de paciente na fila de espera realizada com sucesso'
-        )
-      );
+      await this.patientsService.addPatient({
+        cpf: cpf.value,
+        priority: priorityMap[priority],
+      });
     } catch (error) {
       console.log('error', error);
     }
@@ -100,16 +94,16 @@ export class PatientRegisterDialogComponent implements OnInit {
 
     try {
       await lastValueFrom(
-        this.patientsService.findPatientRegisterByCpf({cpf: cpf.value})
+        this.patientsService.findPatientRegisterByCpf({ cpf: cpf.value })
       ).then((result) => (patientFound = result.body));
     } catch (error) {
       this.errors.patientNotFound = '';
     }
 
     try {
-      await lastValueFrom(this.patientsService.findPatientByCpf({ cpf: cpf.value })).then(
-        (result) => (patientInWaitingList = result.body)
-      );
+      await lastValueFrom(
+        this.patientsService.findPatientByCpf({ cpf: cpf.value })
+      ).then((result) => (patientInWaitingList = result.body));
     } catch (error) {
       this.errors.patientAlreadyExist = '';
     }
