@@ -5,9 +5,13 @@
     </span>
     <span  fxLayout="row" fxShow="false" fxShow.gt-sm>
         
+        <button mat-button routerLink="/patients-list">
+            <mat-icon>person</mat-icon>
+            Lista de Pacientes
+        </button>
         <button mat-button routerLink="/patient">
             <mat-icon>person</mat-icon>
-            Pacientes
+            Fila de Espera
         </button>
         <button mat-button routerLink="/medicalExams">
             <mat-icon>medical_services</mat-icon>
@@ -47,9 +51,13 @@
       <mat-icon>account_circle</mat-icon>
       Perfil
     </button>
+    <button mat-menu-item routerLink="/patients-list">
+        <mat-icon>person</mat-icon>
+        Lista de Pacientes
+    </button>
     <button mat-menu-item routerLink="/patient">
         <mat-icon>person</mat-icon>
-        Pacientes
+        Fila de Espera
     </button>
     <button mat-menu-item routerLink="/medicalExams">
         <mat-icon>medical_services</mat-icon>

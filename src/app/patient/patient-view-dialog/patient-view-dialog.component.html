@@ -1,21 +1,32 @@
 <h1>Ficha do Paciente</h1>
-<mat-label>Nome</mat-label>
-<p>{{name}}</p> 
 
-<mat-label  >Prioridade</mat-label>
-<p>{{priority}}</p> 
+<div class="container">
 
-<mat-label>CPF</mat-label>
-<p>{{cpf}}</p> 
+    <mat-label>Nome</mat-label>
+    <p>{{patientData.patient.name}}</p>
+    
+    <mat-label>CPF</mat-label>
+    <p>{{patientData.patient_cpf}}</p>
 
-<mat-label>RG</mat-label>
-<p>{{rg}}</p>
+    <div>
+        <mat-label  >Prioridade</mat-label>
+        <p>{{priorityValue[patientData.priority]}}</p> 
+    </div>
 
-<mat-label>Endereço</mat-label>
-<p>{{address}}</p>
+    <mat-label>Sexo</mat-label>
+    <p>{{genders[patientData.patient.gender]}}</p>
 
-<mat-label>Complemento</mat-label>
-<p>{{complement}}</p>
+    <mat-label>Data de Nascimento</mat-label>
+    <p>{{formatDate(patientData.patient.date_of_birth)}}</p>
 
-<mat-label>Seguro de Vida</mat-label>
-<p>{{health_insurance_id}}</p>
+    <mat-label>Telefone</mat-label>
+    <p>{{patientData.patient.phone_number}}</p>
+
+    <mat-label>Endereço</mat-label>
+    <p>{{patientData.patient.address}}</p>
+
+    <mat-label>CEP</mat-label>
+    <p>{{patientData.patient.cep}}</p>
+
+
+</div>

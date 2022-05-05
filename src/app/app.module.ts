@@ -6,7 +6,9 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
@@ -33,6 +35,11 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
 import { CreateMedicalExamsDialogComponent } from './medical-exams/create-medical-exams-dialog/create-medical-exams-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+import { BrokerBackendService } from './broker-backend.service';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import {
   NgxMatDatetimePickerModule,
@@ -42,6 +49,13 @@ import {
 import { EditMedicalExamsDialogComponent } from './medical-exams/edit-medical-exams-dialog/edit-medical-exams-dialog.component';
 import { DeleteMedicalExamsDialogComponent } from './medical-exams/delete-medical-exams-dialog/delete-medical-exams-dialog.component';
 import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-exams-dialog/view-medical-exams-dialog.component';
+import { EditPatientWaitingListDialogComponent } from './patient/edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
+import { DeletePatientWaitingListDialogComponent } from './patient/delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
+import { PatientsListComponent } from './patients-list/patients-list.component';
+import { CreatePatientDialogComponent } from './patients-list/create-patient-dialog/create-patient-dialog.component';
+import { EditPatientDialogComponent } from './patients-list/edit-patient-dialog/edit-patient-dialog.component';
+import { ViewPatientDialogComponent } from './patients-list/view-patient-dialog/view-patient-dialog.component';
+import { DeletePatientDialogComponent } from './patients-list/delete-patient-dialog/delete-patient-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +71,13 @@ import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-ex
     EditMedicalExamsDialogComponent,
     DeleteMedicalExamsDialogComponent,
     ViewMedicalExamsDialogComponent,
+    EditPatientWaitingListDialogComponent,
+    DeletePatientWaitingListDialogComponent,
+    PatientsListComponent,
+    CreatePatientDialogComponent,
+    EditPatientDialogComponent,
+    ViewPatientDialogComponent,
+    DeletePatientDialogComponent,
   ],
   entryComponents: [PatientRegisterDialogComponent],
   imports: [
@@ -66,12 +87,16 @@ import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-ex
     FlexLayoutModule,
     FormsModule,
     MatToolbarModule,
+    HttpClientModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
     MatMenuModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatRadioModule,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
@@ -81,8 +106,16 @@ import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-ex
     NgxMatNativeDateModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    HttpClientModule,
   ],
-  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent],
+  providers: [
+    AuthService,
+    AuthGuard,
+    PatientRegisterDialogComponent,
+    HttpClientModule,
+    BrokerBackendService,
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
