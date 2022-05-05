@@ -6,8 +6,9 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,  ReactiveFormsModule} from '@angular/forms';
 
+import {MatGridListModule} from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -30,6 +31,8 @@ import { PatientRegisterDialogComponent } from './patient/patient-register-dialo
 import {  MatDialogModule } from '@angular/material/dialog';
 import { PatientViewDialogComponent } from './patient/patient-view-dialog/patient-view-dialog.component';
 import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
+
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   declarations: [
@@ -55,14 +58,18 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
     MatCardModule,
     MatMenuModule,
     MatIconModule,
+    FormsModule,
     MatButtonModule,
     MatDialogModule,
+    MatGridListModule,
+    ReactiveFormsModule,
     // MatDialog,
     // MatDialogRef,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    NgApexchartsModule,
   ],
   providers: [
     AuthService,
