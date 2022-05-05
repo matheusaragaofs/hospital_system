@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MedicalExam } from 'src/types';
 
 @Component({
   selector: 'app-view-medical-exams-dialog',
@@ -7,15 +8,23 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./view-medical-exams-dialog.component.sass'],
 })
 export class ViewMedicalExamsDialogComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: MedicalExam) {}
+
+  formatDate({ date, showTime }: { date: string; showTime?: boolean }) {
+    const formatedDate = date,
+      [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
+
+    if (showTime) return `${dd}/${mm}/${yyyy} ${hh}:${mi}`;
+    return `${dd}/${mm}/${yyyy}`;
+  }
 
   public name = this.data.patient.name;
-  public cpf = this.data.patient.cpf;
+  public cpf = this.data.patient_cpf;
   public phone_number = this.data.patient.phone_number;
-  public birthday_date = this.data.patient.birthday_date;
-  public schedule_date = this.data.patient.schedule_date;
-  public doctor_name = this.data.patient.doctor_name;
-  public exam_type = this.data.patient.exam_type;
-  
+  public date_of_birth = this.data.patient.date_of_birth;
+  public scheduled_date = this.data.scheduled_at;
+  public doctor_name = this.data.doctor_name;
+  public exam_type = this.data.exam;
+
   ngOnInit(): void {}
 }

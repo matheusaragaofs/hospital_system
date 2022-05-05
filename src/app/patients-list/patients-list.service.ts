@@ -26,8 +26,6 @@ export class PatientsListService {
   getSimpleHeader() {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT',
-      'Access-Control-Request-Headers': 'Accept, Authorization',
     });
   }
   findAllPatients(): Observable<any> {
