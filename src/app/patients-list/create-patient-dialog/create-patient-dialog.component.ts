@@ -56,14 +56,12 @@ export class CreatePatientDialogComponent implements OnInit {
       phone_number,
     };
 
-    console.log('registerData', patientData);
-
     try {
       await this.patientsService.addPatient(patientData);
     } catch (error) {
       console.log('error', error);
     }
-    window.location.reload();
+   this.closeDialog()
   }
 
   closeDialog(): void {

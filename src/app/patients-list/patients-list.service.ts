@@ -20,6 +20,15 @@ export class PatientsListService {
   constructor(private brokerBackend: BrokerBackendService) {}
   relativeUrl = '/patients';
 
+
+  findPatientByCpf({ cpf }: { cpf: string }): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'GET',
+      relativeUrl: `${this.relativeUrl}/${cpf}`,
+      headers: this.getSimpleHeader(),
+    });
+  }
+
   getSimpleHeader() {
     return new HttpHeaders({
       'Content-Type': 'application/json',

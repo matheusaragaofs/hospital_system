@@ -5,7 +5,8 @@ import { CreatePatientDialogComponent } from './create-patient-dialog/create-pat
 import { DeletePatientDialogComponent } from './delete-patient-dialog/delete-patient-dialog.component';
 import { EditPatientDialogComponent } from './edit-patient-dialog/edit-patient-dialog.component';
 import { PatientsListService } from './patients-list.service';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
+import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 export interface PeriodicElement {
   name: string;
   cpf: string;
@@ -62,19 +63,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./patients-list.component.sass'],
 })
 export class PatientsListComponent implements OnInit {
-  displayedColumns: string[] = ['cpf', 'name', 'actions'];
-  dataSource = [];
-
-  ngOnInit(): void {
-    this.getPatients();
-  }
-
   constructor(
     public matDialog: MatDialog,
     private patientsListService: PatientsListService
   ) {}
+  displayedColumns: string[] = ['cpf', 'name', 'actions'];
+  dataSource: any = [];
+  searchError: string = '';
+  public patientFound:boolean = false;
+  public searchByCpf: string = '';
 
-  async getPatients(): Promise<any> {
+  async refreshData(): Promise<any> {
     try {
       await lastValueFrom(this.patientsListService.findAllPatients()).then(
         (result) => {
@@ -86,26 +85,61 @@ export class PatientsListComponent implements OnInit {
     }
   }
 
-  openCreatePatientDialog(): void {
-    this.matDialog.open(CreatePatientDialogComponent, {
-      width: '600px',
-      maxHeight: '500px',
-    });
+  cleanSearch(): void {
+    this.searchByCpf = '';
+    this.refreshData();
+    this.patientFound = false;
   }
-  openEditPatientDialog(): void {
-    this.matDialog.open(EditPatientDialogComponent, {
+
+  async searchPatientByCpf(): Promise<any> {
+    console.log(this.searchByCpf);
+    if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11)
+      return (this.searchError = 'Digite um Cpf válido');
+
+    try {
+      await lastValueFrom(
+        this.patientsListService.findPatientByCpf({ cpf: this.searchByCpf })
+      ).then((result) => {
+         this.patientFound = true;
+        return (this.dataSource = [result.body]);
+      });
+    } catch (err) {
+      console.log('error aqui entrou');
+      return (this.searchError = 'Paciente não encontrado, tente outro Cpf...');
+    }
+  }
+
+  ngOnInit(): void {
+    this.refreshData();
+  }
+
+  openCreatePatientDialog(): any {
+    const dialogRef = this.matDialog.open(CreatePatientDialogComponent, {
       width: '600px',
       maxHeight: '500px',
     });
+
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
+  }
+
+  openEditPatientDialog(): void {
+    const dialogRef =  this.matDialog.open(EditPatientDialogComponent, {
+      width: '600px',
+      maxHeight: '500px',
+    });
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
+
   }
   openDeletePatientDialog({ cpf }: { cpf: string }): void {
-    this.matDialog.open(DeletePatientDialogComponent, {
+    const dialogRef =this.matDialog.open(DeletePatientDialogComponent, {
       data: {
-        cpf
+        cpf,
       },
       width: '300px',
       height: '170px',
     });
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
+
   }
 
   openViewPatientDialog(data: any): void {

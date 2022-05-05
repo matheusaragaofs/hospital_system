@@ -21,7 +21,7 @@ export class DeletePatientDialogComponent implements OnInit {
       (data: Response) => console.log('Usuário deletado com sucecsso!'),
       (err: any) => console.log('Erro ao deletar paciente', err)
     );
-    window.location.reload();
+    this.closeDialog()
   }
 
   ngOnInit(): void {}
