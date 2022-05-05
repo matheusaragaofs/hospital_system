@@ -1,19 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
-
+import { MedicalExam } from 'src/types';
+import { formatDate } from '../../utils/formatDate';
 @Component({
   selector: 'app-edit-medical-exams-dialog',
   templateUrl: './edit-medical-exams-dialog.component.html',
-  styleUrls: ['./edit-medical-exams-dialog.component.sass']
+  styleUrls: ['./edit-medical-exams-dialog.component.sass'],
 })
 export class EditMedicalExamsDialogComponent implements OnInit {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: MedicalExam,
+    public dialogRef: MatDialogRef<EditMedicalExamsDialogComponent>
+  ) {}
+  public name = this.data.patient.name;
+  public cpf = this.data.patient_cpf;
+  public exam = this.data.exam;
+  public doctor_name = this.data.doctor_name;
+  public phone_number = this.data.patient.phone_number;
+  public date_of_birth = formatDate({
+    date: this.data.patient.date_of_birth,
+    showTime: true,
+  });
+  public scheduled_at = this.data.scheduled_at
 
-
-  public selectedExamId: string = '';
-  public selectedDoctorId: string = '';
   public scheduledDate: string = '';
-  public patientName: string = ''
   public patientFound: boolean = false;
 
   public exams: { label: string; id: string }[] = [
@@ -53,35 +64,27 @@ export class EditMedicalExamsDialogComponent implements OnInit {
     },
   ];
 
-  public cpf: string = '';
   setSelectedExam(event: MatSelectChange): void {
-    this.selectedExamId = event.value;
+    this.exam = event.value;
   }
   setSelectedDoctorId(event: MatSelectChange): void {
-    this.selectedDoctorId = event.value;
+    this.doctor_name = event.value;
   }
-  ngOnInit(): void {
-  }
-  
+  ngOnInit(): void {}
+
   onSubmit(): void {
-    const { scheduledDate, selectedExamId, patientName, selectedDoctorId} = this;
-  
+    const { scheduledDate, exam, doctor_name} = this;
+
     const registerData = {
-     patientName,
-     selectedExamId,
-     selectedDoctorId,
-     scheduledDate
+      exam,
+      doctor_name,
+      scheduledDate,
     };
 
     console.log(registerData);
   }
 
-  constructor(
-    public dialogRef: MatDialogRef<EditMedicalExamsDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
-
   closeDialog(): void {
     this.dialogRef.close();
   }
-
 }

@@ -1,9 +1,16 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BrokerBackendService } from '../broker-backend.service';
 
+interface MedicalExam {
+    cpf: string;
+    exam: string;
+    doctor_name: string;
+    scheduled_at: string
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +27,24 @@ export class MedicalExamsService {
     });
   }
 
+  async scheduleExam(data: MedicalExam): Promise<any> {
+    return await axios
+      .post(this.url, data)
+      .then((res) => {
+        return {
+          data: res.data,
+          message: 'Marcação de exam feita com sucesso',
+          error: false,
+        };
+      })
+      .catch(() => {
+        return {
+          message: 'Marcação de exame não foi realizada com sucesso',
+          error: true,
+        };
+      });
+  }
+
   findAllExams(): Observable<any> {
     return this.brokerBackend.request({
       httpMethod: 'GET',
@@ -27,15 +52,13 @@ export class MedicalExamsService {
       headers: this.getSimpleHeader(),
     });
   }
-  findExamByPatientCpf({cpf}: {cpf: string}): Observable<any> {
+  findExamByPatientCpf({ cpf }: { cpf: string }): Observable<any> {
     return this.brokerBackend.request({
       httpMethod: 'GET',
       relativeUrl: `${this.relativeUrl}/${cpf}`,
       headers: this.getSimpleHeader(),
     });
   }
-
-  
 
   deleteExamAppointment({ cpf }: { cpf: string }): Observable<any> {
     return this.brokerBackend.request({

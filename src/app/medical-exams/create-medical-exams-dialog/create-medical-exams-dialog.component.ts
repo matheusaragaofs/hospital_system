@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { lastValueFrom } from 'rxjs';
+import { PatientsListService } from 'src/app/patients-list/patients-list.service';
 import { MedicalExamsComponent } from '../medical-exams.component';
-
+import { MedicalExamsService } from '../medical-exams.service';
+import { formatDate } from '../../utils/formatDate';
 @Component({
   selector: 'app-create-medical-exams-dialog',
   templateUrl: './create-medical-exams-dialog.component.html',
   styleUrls: ['./create-medical-exams-dialog.component.sass'],
 })
 export class CreateMedicalExamsDialogComponent implements OnInit {
-  public selectedExamId: string = '';
-  public selectedDoctorId: string = '';
-  public scheduledDate: string = '';
-  public patientName: string = '';
+  public exam: string = '';
+  public doctor_name: string = '';
+  public scheduled_at = '';
+
+  public patient: any = false;
   public patientFound: boolean = false;
   public exams: { label: string; id: string }[] = [
     {
@@ -53,7 +58,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
         id: 4,
       },
       {
-        label: 'Dr. Marcelino  Abelho ',
+        label: 'Dr. Marcelino Abelho',
         id: 5,
       },
       {
@@ -72,7 +77,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       },
       {
         label: 'Dra. Branca Marques ',
-        id: 9
+        id: 9,
       },
     ],
     electrocardiogram: [
@@ -90,35 +95,110 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       },
     ],
   };
+  public cpf = new FormControl('', [
+    Validators.required,
+    Validators.minLength(11),
+    Validators.maxLength(11),
+  ]);
 
-  public cpf: string = '';
-  onSubmit(): void {
-    const { scheduledDate, selectedExamId, patientName, selectedDoctorId } =
-      this;
-
-    const registerData = {
-      patientName,
-      selectedExamId,
-      selectedDoctorId,
-      scheduledDate,
-    };
-
-    console.log(registerData);
+  getErrorMessage() {
+    if (this.cpf.hasError('required')) {
+      return 'CPF obrigatório.';
+    }
+    return 'Não é um CPF válido';
   }
 
-  togglePatientFound() {
-    this.patientFound = !this.patientFound;
+  public errors: any = {
+    patientAlreadyExist: '',
+    patientNotFound: '',
+  };
+  keyPressNumbers(event: any) {
+    this.errors = {};
+    var charCode = event.which ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  public showPatientInfo: boolean = false;
+
+  async findPatientByCpf(): Promise<any> {
+    const { cpf } = this;
+
+    let patientFound: any = '';
+    let examAppointment: any = '';
+
+    try {
+      await lastValueFrom(
+        this.patientsService.findPatientByCpf({ cpf: cpf.value })
+      ).then((result) => (patientFound = result.body));
+    } catch (error) {
+      this.errors.patientNotFound = '';
+    }
+
+    try {
+      await lastValueFrom(
+        this.medicalExamService.findExamByPatientCpf({ cpf: cpf.value })
+      ).then((result) => (examAppointment = result.body));
+    } catch (error) {
+      this.errors.patientAlreadyExist = '';
+    }
+
+    if (patientFound && examAppointment) {
+      this.errors.patientNotFound = '';
+      this.errors.patientAlreadyExist = 'Paciente com exame já marcado';
+      return (this.showPatientInfo = false);
+    }
+
+    if (!patientFound) {
+      this.errors.patientAlreadyExist = '';
+      this.errors.patientNotFound = 'Paciente não encontrado';
+      return (this.showPatientInfo = false);
+    }
+
+    if (patientFound && !examAppointment) {
+      this.showPatientInfo = true;
+      this.patient = patientFound;
+      this.patient.date_of_birth = formatDate({
+        date: this.patient?.date_of_birth,
+      });
+      return;
+    }
+  }
+
+  async onSubmit(): Promise<void> {
+    const { scheduled_at, doctor_name, exam } = this;
+
+    const parsedExam = this.exams.find((el) => el.id === exam)?.label ?? '';
+
+    const data = {
+      cpf: this.patient.cpf,
+      exam: parsedExam,
+      doctor_name,
+      scheduled_at,
+    };
+    console.log('data', data)
+    await this.medicalExamService.scheduleExam(data);
+    this.closeDialog()
   }
 
   setSelectedExam(event: MatSelectChange): void {
-    this.selectedExamId = event.value;
+    console.log('selected Exam', event.value);
+    this.exam = event.value;
   }
   setSelectedDoctorId(event: MatSelectChange): void {
-    this.selectedDoctorId = event.value;
+    console.log('selected doctor', event.value);
+    this.doctor_name = event.value;
   }
 
   constructor(
-    public dialogRef: MatDialogRef<CreateMedicalExamsDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private patientsService: PatientsListService,
+    private medicalExamService: MedicalExamsService,
+    public dialogRef: MatDialogRef<CreateMedicalExamsDialogComponent>
   ) {}
 
   closeDialog(): void {

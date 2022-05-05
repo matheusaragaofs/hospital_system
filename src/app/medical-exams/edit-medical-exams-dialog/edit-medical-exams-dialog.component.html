@@ -10,22 +10,22 @@
         <div >
           <mat-form-field  appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput disabled value='Antonio Forgeras'>
+          <input matInput disabled [(ngModel)]="name" name="name">
           </mat-form-field>
     
           <mat-form-field   appearance="outline">
           <mat-label>CPF</mat-label>
-          <input matInput disabled value='123.213.512-12'>
+          <input matInput disabled [(ngModel)]="cpf" name="cpf">
           </mat-form-field>
     
           <mat-form-field  appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
-          <input matInput disabled value='23/12/2002'>
+          <input matInput disabled [(ngModel)]="date_of_birth" name="date_of_birth">
           </mat-form-field>
     
           <mat-form-field  appearance="outline">
           <mat-label>Telefone</mat-label>
-          <input matInput disabled value='(81) 9 8457-9127'>
+          <input matInput disabled [(ngModel)]="phone_number" name="phone_number">
           </mat-form-field>
     
         </div>

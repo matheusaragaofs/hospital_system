@@ -67,8 +67,6 @@ export class MedicalExamsComponent implements OnInit {
     this.patientFound = false;
   }
 
-
-
   formatDate(date: string) {
     const formatedDate = date,
       [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
@@ -76,16 +74,15 @@ export class MedicalExamsComponent implements OnInit {
   }
 
   openCreateMedicalExamDialog(): void {
-    this.matDialog.open(CreateMedicalExamsDialogComponent, {
+    const dialogRef = this.matDialog.open(CreateMedicalExamsDialogComponent, {
       width: '600px',
       maxHeight: '600px',
     });
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
-  openEditMedicalExamDialog(): void {
+  openEditMedicalExamDialog(data: MedicalExam): void {
     this.matDialog.open(EditMedicalExamsDialogComponent, {
-      data: {
-        patient: this.patient,
-      },
+      data,
       width: '600px',
       height: '400px',
     });
