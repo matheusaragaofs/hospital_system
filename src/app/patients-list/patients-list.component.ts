@@ -18,44 +18,6 @@ export interface PeriodicElement {
   phone_number: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    cpf: '103.702.204-53',
-    gender: 'Masculin',
-    phone_number: '81 9 8214-2312',
-    address: 'Rua Santo Carmo 1',
-    birthday_date: '20/01/2001',
-    health_insurance_id: '1',
-  },
-  {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    cpf: '103.702.204-53',
-    gender: 'Masculin',
-    phone_number: '81 9 8214-2312',
-    address: 'Rua Santo Carmo 1',
-    birthday_date: '20/01/2001',
-    health_insurance_id: '1',
-  },
-  {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    cpf: '103.702.204-53',
-    gender: 'Masculin',
-    phone_number: '81 9 8214-2312',
-    address: 'Rua Santo Carmo 1',
-    birthday_date: '20/01/2001',
-    health_insurance_id: '1',
-  },
-  {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    cpf: '103.702.204-53',
-    gender: 'Masculin',
-    phone_number: '81 9 8214-2312',
-    address: 'Rua Santo Carmo 1',
-    birthday_date: '20/01/2001',
-    health_insurance_id: '1',
-  },
-];
 
 @Component({
   selector: 'app-patients-list',
@@ -67,11 +29,17 @@ export class PatientsListComponent implements OnInit {
     public matDialog: MatDialog,
     private patientsListService: PatientsListService
   ) {}
-  displayedColumns: string[] = ['cpf', 'name', 'actions'];
+  displayedColumns: string[] = ['cpf', 'name', 'date_of_birth', 'actions'];
   dataSource: any = [];
   searchError: string = '';
   public patientFound:boolean = false;
   public searchByCpf: string = '';
+
+  formatDate(date: string) {
+    const formatedDate = date,
+      [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
+    return `${dd}/${mm}/${yyyy}`;
+  }
 
   async refreshData(): Promise<any> {
     try {
