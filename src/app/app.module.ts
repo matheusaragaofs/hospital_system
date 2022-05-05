@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -35,10 +35,11 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
 import { CreateMedicalExamsDialogComponent } from './medical-exams/create-medical-exams-dialog/create-medical-exams-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { BrokerBackendService } from './broker-backend.service';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import {
   NgxMatDatetimePickerModule,
@@ -105,9 +106,16 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     NgxMatNativeDateModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [AuthService, AuthGuard, PatientRegisterDialogComponent, HttpClientModule, BrokerBackendService],
+  providers: [
+    AuthService,
+    AuthGuard,
+    PatientRegisterDialogComponent,
+    HttpClientModule,
+    BrokerBackendService,
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

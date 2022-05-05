@@ -35,11 +35,29 @@ mat-table
 
 th.mat-header-cell, td.mat-cell, td.mat-footer-cell
     text-align: center
-    padding: 0 !important
+    padding: 10px 20px
 
+
+
+
+    
 .search-input
-    width: 100% !important
+    width: 100%
     transform: translateY(10px)
 
 .header-container
     padding: 0 20px
+
+@media (max-width: 446px) 
+  .header-container
+    margin-top: 12px
+    flex-direction: column !important
+    .register-btn
+          width: 100%
+          margin: 0
+    .search-input
+          margin-top:10px
+          width: 100%
+          transform: translateY(0px)
+
+    

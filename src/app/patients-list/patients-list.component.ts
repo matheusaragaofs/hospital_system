@@ -115,7 +115,7 @@ export class PatientsListComponent implements OnInit {
 
   openCreatePatientDialog(): any {
     const dialogRef = this.matDialog.open(CreatePatientDialogComponent, {
-      width: '600px',
+      width: '700px',
       maxHeight: '500px',
     });
 
