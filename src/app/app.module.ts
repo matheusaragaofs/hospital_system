@@ -46,7 +46,6 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
-import { EditMedicalExamsDialogComponent } from './medical-exams/edit-medical-exams-dialog/edit-medical-exams-dialog.component';
 import { DeleteMedicalExamsDialogComponent } from './medical-exams/delete-medical-exams-dialog/delete-medical-exams-dialog.component';
 import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-exams-dialog/view-medical-exams-dialog.component';
 import { EditPatientWaitingListDialogComponent } from './patient/edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
@@ -68,7 +67,6 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     PatientViewDialogComponent,
     MedicalExamsComponent,
     CreateMedicalExamsDialogComponent,
-    EditMedicalExamsDialogComponent,
     DeleteMedicalExamsDialogComponent,
     ViewMedicalExamsDialogComponent,
     EditPatientWaitingListDialogComponent,

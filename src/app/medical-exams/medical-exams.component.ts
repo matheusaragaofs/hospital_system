@@ -5,7 +5,6 @@ import { PatientRegisterDialogComponent } from '../patient/patient-register-dial
 import { PatientViewDialogComponent } from '../patient/patient-view-dialog/patient-view-dialog.component';
 import { CreateMedicalExamsDialogComponent } from './create-medical-exams-dialog/create-medical-exams-dialog.component';
 import { DeleteMedicalExamsDialogComponent } from './delete-medical-exams-dialog/delete-medical-exams-dialog.component';
-import { EditMedicalExamsDialogComponent } from './edit-medical-exams-dialog/edit-medical-exams-dialog.component';
 import { MedicalExamsService } from './medical-exams.service';
 import { ViewMedicalExamsDialogComponent } from './view-medical-exams-dialog/view-medical-exams-dialog.component';
 import { MedicalExam } from 'src/types';
@@ -79,13 +78,6 @@ export class MedicalExamsComponent implements OnInit {
       maxHeight: '600px',
     });
     dialogRef.afterClosed().subscribe(() => this.refreshData());
-  }
-  openEditMedicalExamDialog(data: MedicalExam): void {
-    this.matDialog.open(EditMedicalExamsDialogComponent, {
-      data,
-      width: '600px',
-      height: '400px',
-    });
   }
   openDeleteMedicalExamDialog(cpf: string): void {
     const dialogRef = this.matDialog.open(DeleteMedicalExamsDialogComponent, {
