@@ -27,6 +27,15 @@ export class MedicalExamsService {
       headers: this.getSimpleHeader(),
     });
   }
+  findExamByPatientCpf({cpf}: {cpf: string}): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'GET',
+      relativeUrl: `${this.relativeUrl}/${cpf}`,
+      headers: this.getSimpleHeader(),
+    });
+  }
+
+  
 
   deleteExamAppointment({ cpf }: { cpf: string }): Observable<any> {
     return this.brokerBackend.request({

@@ -13,12 +13,35 @@
     >
       Novo Exame
     </button>
-    <mat-form-field class="search-input"  fxFlex="100" appearance="outline">
+    <mat-form-field class="search-input" appearance="outline">
       <mat-label>Pesquisar paciente por CPF</mat-label>
       <input
-        placeholder="Pesquisar por CPF..."
+        maxlength="11"
+        [(ngModel)]="searchByCpf"
+        placeholder="Pesquisar por CPF"
         matInput
+        type="search"
       />
+
+      <button
+        mat-button
+        matSuffix
+        (click)="searchPatientByCpf()"
+        aria-label="search"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      
+      <button
+        mat-button
+        matSuffix
+        *ngIf="searchByCpf || patientFound"  
+        (click)="cleanSearch()"
+        aria-label="search"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="searchError">{{ searchError }}</mat-error>
     </mat-form-field>
   </div>
   

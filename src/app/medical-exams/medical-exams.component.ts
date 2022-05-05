@@ -34,16 +34,46 @@ export class MedicalExamsComponent implements OnInit {
     exam_type: 'Hemograma',
   };
 
-  constructor(public matDialog: MatDialog,
-  private medicalExamsService: MedicalExamsService
-    
-    ) {}
+  constructor(
+    public matDialog: MatDialog,
+    private medicalExamsService: MedicalExamsService
+  ) {}
 
-    formatDate(date: string) {
-      const formatedDate = date,
-        [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
-      return `${dd}/${mm}/${yyyy} ${hh}:${mi}`;
+  public searchByCpf: string = '';
+  searchError: string = '';
+  public patientFound: any = '';
+
+  async searchPatientByCpf(): Promise<any> {
+    console.log(this.searchByCpf);
+    if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11)
+      return (this.searchError = 'Digite um Cpf válido');
+
+    try {
+      await lastValueFrom(
+        this.medicalExamsService.findExamByPatientCpf({ cpf: this.searchByCpf })
+      ).then((result: any) => {
+        this.patientFound = result.body;
+        return (this.dataSource = [result.body]);
+      });
+    } catch (err) {
+      console.log('error aqui entrou');
+      return (this.searchError = 'Paciente não encontrado, tente outro Cpf...');
     }
+  }
+
+  cleanSearch(): void {
+    this.searchByCpf = '';
+    this.refreshData();
+    this.patientFound = false;
+  }
+
+
+
+  formatDate(date: string) {
+    const formatedDate = date,
+      [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
+    return `${dd}/${mm}/${yyyy} ${hh}:${mi}`;
+  }
 
   openCreateMedicalExamDialog(): void {
     this.matDialog.open(CreateMedicalExamsDialogComponent, {
@@ -69,15 +99,14 @@ export class MedicalExamsComponent implements OnInit {
       height: '120px',
     });
 
-    dialogRef.afterClosed().subscribe(() => this.refreshData())
-
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
 
   openViewMedicalExamDialog(data: MedicalExam): void {
     this.matDialog.open(ViewMedicalExamsDialogComponent, {
       width: '400px',
       height: '490px',
-      data
+      data,
     });
   }
   async refreshData(): Promise<any> {
