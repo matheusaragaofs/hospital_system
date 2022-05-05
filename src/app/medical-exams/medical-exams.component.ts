@@ -60,14 +60,17 @@ export class MedicalExamsComponent implements OnInit {
       height: '400px',
     });
   }
-  openDeleteMedicalExamDialog(): void {
-    this.matDialog.open(DeleteMedicalExamsDialogComponent, {
+  openDeleteMedicalExamDialog(cpf: string): void {
+    const dialogRef = this.matDialog.open(DeleteMedicalExamsDialogComponent, {
       data: {
-        patient: this.patient,
+        cpf,
       },
       width: '300px',
       height: '120px',
     });
+
+    dialogRef.afterClosed().subscribe(() => this.refreshData())
+
   }
 
   openViewMedicalExamDialog(data: MedicalExam): void {

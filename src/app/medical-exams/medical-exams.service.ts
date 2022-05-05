@@ -9,7 +9,7 @@ import { BrokerBackendService } from '../broker-backend.service';
 })
 export class MedicalExamsService {
   constructor(private brokerBackend: BrokerBackendService) {}
-  
+
   apiUrl = environment.apiBaseUrl;
   relativeUrl = '/exams';
   url = this.apiUrl + this.relativeUrl;
@@ -27,5 +27,12 @@ export class MedicalExamsService {
       headers: this.getSimpleHeader(),
     });
   }
-  
+
+  deleteExamAppointment({ cpf }: { cpf: string }): Observable<any> {
+    return this.brokerBackend.request({
+      httpMethod: 'DELETE',
+      relativeUrl: `${this.relativeUrl}/${cpf}`,
+      headers: this.getSimpleHeader(),
+    });
+  }
 }
