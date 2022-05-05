@@ -1,6 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { lastValueFrom } from 'rxjs';
+import { PatientsListService } from '../patients-list.service';
+export interface Patient {
+  name: string;
+  cpf: string;
+  cep: string;
+  gender: string;
+  address: string;
+  date_of_birth: string;
+  phone_number: string;
+}
 
 @Component({
   selector: 'app-edit-patient-dialog',
@@ -8,14 +19,19 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./edit-patient-dialog.component.sass'],
 })
 export class EditPatientDialogComponent implements OnInit {
-  public name = '';
-  public cpf = '';
-  public cep = '';
-  public gender = '';
-  public address = '';
-  public birthday_date = '';
-  public health_insurance_id = '';
-  public phone_number = '';
+  constructor(
+    private patientsService: PatientsListService,
+    @Inject(MAT_DIALOG_DATA) public data: Patient,
+    public dialogRef: MatDialogRef<EditPatientDialogComponent>
+  ) {}
+
+  public name = this.data.name;
+  public cpf = this.data.cpf;
+  public cep = this.data.cep;
+  public gender = this.data.gender;
+  public address = this.data.address;
+  public date_of_birth = this.data.date_of_birth;
+  public phone_number = this.data.phone_number;
   public selectedSex = '';
   public sexOptions: { label: string; id: string }[] = [
     {
@@ -36,36 +52,40 @@ export class EditPatientDialogComponent implements OnInit {
     this.selectedSex = event.value;
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     const {
       name,
       cpf,
       cep,
       address,
-      health_insurance_id,
-      birthday_date,
+      date_of_birth,
       selectedSex,
       phone_number,
     } = this;
-    console.log('this', this);
-    const registerData = {
+
+    const patient = {
       name,
-      cpf,
       address,
-      health_insurance_id,
-      birthday_date,
+      date_of_birth,
       cep,
-      gender: selectedSex,
+      gender: selectedSex || this.gender,
       phone_number,
     };
 
-    console.log('registerData', registerData);
-  }
+    try {
+      await this.patientsService.editPatient(cpf, patient);
+      console.log('deu certo a requisição de edição')
+    } catch (err) {
+      console.log('Erro ao listar os pacientes', err);
+    }
 
-  constructor(public dialogRef: MatDialogRef<EditPatientDialogComponent>) {}
+    this.closeDialog();
+    console.log('patient', patient);
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
+
   ngOnInit(): void {}
 }

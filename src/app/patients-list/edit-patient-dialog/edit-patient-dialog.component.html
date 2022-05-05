@@ -15,7 +15,7 @@
   
         <mat-form-field appearance="outline">
           <mat-label>CPF</mat-label>
-          <input matInput [(ngModel)]="cpf" name="cpf" required />
+          <input disabled matInput [(ngModel)]="cpf" name="cpf" required />
         </mat-form-field>
   
         <mat-form-field appearance="outline">
@@ -30,7 +30,7 @@
   
         <mat-form-field appearance="outline" style="margin-top: 1rem">
           <mat-label>Sexo</mat-label>
-          <mat-select #typeSex (selectionChange)="setSelectedSexId($event)">
+          <mat-select  [(value)]="gender" #typeSex (selectionChange)="setSelectedSexId($event)">
             <mat-option *ngFor="let sex of sexOptions" [value]="sex.id">
               {{ sex.label }}
             </mat-option>
@@ -41,7 +41,7 @@
           <mat-label>Data de Aniversário</mat-label>
           <input
             readonly
-            [(ngModel)]="birthday_date"
+            [(ngModel)]="date_of_birth"
             matInput
             [matDatepicker]="picker"
             [ngModelOptions]="{ standalone: true }"
@@ -61,14 +61,6 @@
           <input matInput [(ngModel)]="cep" name="cep" />
         </mat-form-field>
   
-        <mat-form-field appearance="outline">
-          <mat-label>ID do Plano de Saúde</mat-label>
-          <input
-            matInput
-            [(ngModel)]="health_insurance_id"
-            name="health_insurance_id"
-          />
-        </mat-form-field>
   
         <div class="footer-buttons" style="margin-top: 1rem">
           <button mat-raised-button color="primary" type="submit">

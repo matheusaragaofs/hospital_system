@@ -7,17 +7,15 @@ import { EditPatientDialogComponent } from './edit-patient-dialog/edit-patient-d
 import { PatientsListService } from './patients-list.service';
 import { lastValueFrom, Observable } from 'rxjs';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
-export interface PeriodicElement {
+export interface Patient {
   name: string;
   cpf: string;
   cep?: string;
   gender: string;
   address: string;
-  birthday_date: string;
-  health_insurance_id: string;
+  date_of_birth: string;
   phone_number: string;
 }
-
 
 @Component({
   selector: 'app-patients-list',
@@ -32,7 +30,7 @@ export class PatientsListComponent implements OnInit {
   displayedColumns: string[] = ['cpf', 'name', 'date_of_birth', 'actions'];
   dataSource: any = [];
   searchError: string = '';
-  public patientFound:boolean = false;
+  public patientFound: boolean = false;
   public searchByCpf: string = '';
 
   formatDate(date: string) {
@@ -68,7 +66,7 @@ export class PatientsListComponent implements OnInit {
       await lastValueFrom(
         this.patientsListService.findPatientByCpf({ cpf: this.searchByCpf })
       ).then((result) => {
-         this.patientFound = true;
+        this.patientFound = true;
         return (this.dataSource = [result.body]);
       });
     } catch (err) {
@@ -90,16 +88,16 @@ export class PatientsListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
 
-  openEditPatientDialog(): void {
-    const dialogRef =  this.matDialog.open(EditPatientDialogComponent, {
+  openEditPatientDialog(patient: Patient): void {
+    const dialogRef = this.matDialog.open(EditPatientDialogComponent, {
       width: '600px',
       maxHeight: '500px',
+      data: patient,
     });
     dialogRef.afterClosed().subscribe(() => this.refreshData());
-
   }
   openDeletePatientDialog({ cpf }: { cpf: string }): void {
-    const dialogRef =this.matDialog.open(DeletePatientDialogComponent, {
+    const dialogRef = this.matDialog.open(DeletePatientDialogComponent, {
       data: {
         cpf,
       },
@@ -107,7 +105,6 @@ export class PatientsListComponent implements OnInit {
       height: '170px',
     });
     dialogRef.afterClosed().subscribe(() => this.refreshData());
-
   }
 
   openViewPatientDialog(data: any): void {
