@@ -20,7 +20,7 @@ export class DeletePatientWaitingListDialogComponent implements OnInit {
       (data: Response) => console.log('Usuário deletado com sucecsso!'),
       (err: any) => console.log('Erro ao listar os pacientes', err)
     );
-    window.location.reload();
+      this.closeDialog()
 
   }
 
