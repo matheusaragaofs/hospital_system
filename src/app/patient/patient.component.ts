@@ -88,12 +88,6 @@ export class PatientComponent implements OnInit {
       return (this.searchError = 'Paciente não encontrado, tente outro Cpf...');
     }
   }
-
-  resetData(): void {
-    this.getPatients();
-    window.location.reload();
-  }
-
   setPatientAttended(cpf: string) {
     this.patientsService.setPatientAttended(cpf).subscribe(
       (data: any) => {
@@ -121,20 +115,25 @@ export class PatientComponent implements OnInit {
   ) {}
 
   openCreatePatientDialog(): void {
-    this.matDialog.open(PatientRegisterDialogComponent, {
+    const dialogRef = this.matDialog.open(PatientRegisterDialogComponent, {
       width: '600px',
       maxHeight: '500px',
     });
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
 
   openDeletePatientDialog(cpf: string): void {
-    this.matDialog.open(DeletePatientWaitingListDialogComponent, {
-      data: {
-        cpf,
-      },
-      width: '300px',
-      height: '170px',
-    });
+    const dialogRef = this.matDialog.open(
+      DeletePatientWaitingListDialogComponent,
+      {
+        data: {
+          cpf,
+        },
+        width: '300px',
+        height: '170px',
+      }
+    );
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
 
   openViewPatientDialog(data: WaitingListPatient): void {
@@ -145,7 +144,7 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  async getPatients(): Promise<any> {
+  async refreshData(): Promise<any> {
     try {
       await lastValueFrom(this.patientsService.findAllPatients({})).then(
         (result) => {
@@ -158,6 +157,6 @@ export class PatientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPatients();
+    this.refreshData();
   }
 }
