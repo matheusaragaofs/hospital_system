@@ -1,113 +1,42 @@
 import { Component, OnInit, Inject } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { PatientRegisterDialogComponent } from './patient-register-dialog/patient-register-dialog.component';
 import { PatientViewDialogComponent } from './patient-view-dialog/patient-view-dialog.component';
+import { PatientsService } from './patients.service';
+import { DeletePatientWaitingListDialogComponent } from './delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
+import { lastValueFrom } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
 
+export type WaitingListPatient = {
+  id: string;
+  patient_cpf: string;
+  attended: boolean;
+  priority: number;
+  created_at: Date;
+  patient: {
+    name: string;
+    date_of_birth: Date;
+    phone_number: string;
+    cep: string;
+    address: string;
+    gender: 'male' | 'female' | 'others';
+  };
+};
+export interface Response {
+  body: WaitingListPatient;
+}
 export interface PeriodicElement {
   name: string;
   cpf: string;
   priority: 'low' | 'medium' | 'high';
+  isServed: boolean;
 }
 export interface DialogData {
   animal: 'panda' | 'unicorn' | 'lion';
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'medium',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'medium',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'high',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-  {
-    cpf: '103.702.204-53',
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    priority: 'low',
-  },
-];
 
 @Component({
   selector: 'app-patients',
@@ -115,45 +44,119 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./patient.component.sass'],
 })
 export class PatientComponent implements OnInit {
-  displayedColumns: string[] = ['cpf', 'name', 'priority', 'actions'];
-  dataSource = ELEMENT_DATA;
-  patient = {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    cpf: '101.234.673-45',
-    rg: '564456111',
-    address: 'Rua Santo Carmo 1',
-    complement: 'Atrás do Viaduto',
-    health_insurance_id: '1',
-    priority: 'high',
-    age: '20'
-  };
+  displayedColumns: string[] = [
+    'position',
+    'cpf',
+    'name',
+    'priority',
+    'served',
+    'actions',
+  ];
+  searchError: string = '';
+  public color: any = '';
+  public isServed: boolean = false;
+  public dataSource: WaitingListPatient | any = [];
+  public patientFound: any = '';
 
-  constructor(public matDialog: MatDialog) {}
+  keyPressNumbers(event: any) {
+    this.searchError = '';
+    var charCode = event.which ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
+  public searchByCpf: string = '';
+
+  async searchPatientByCpf(): Promise<any> {
+    console.log(this.searchByCpf);
+    if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11)
+      return (this.searchError = 'Digite um Cpf válido');
+
+    try {
+      await lastValueFrom(
+        this.patientsService.findPatientByCpf({ cpf: this.searchByCpf })
+      ).then((result) => {
+        this.patientFound = result.body;
+        return (this.dataSource = [result.body]);
+      });
+    } catch (err) {
+      console.log('error aqui entrou');
+      return (this.searchError = 'Paciente não encontrado, tente outro Cpf...');
+    }
+  }
+  setPatientAttended(cpf: string) {
+    this.patientsService.setPatientAttended(cpf).subscribe(
+      (data: any) => {
+        console.log(data);
+      },
+      (err: any) => console.log('Erro ao setar o paciente como atendido', err)
+    );
+    window.location.reload();
+  }
+
+  setPriority(event: any): void {
+    console.log('event', event);
+
+    this.searchByCpf = '';
+    const priority = Number(event.value);
+    this.patientsService.findAllPatients({ filter: priority }).subscribe(
+      (data: Response) => (this.dataSource = data.body),
+      (err: any) => console.log('Erro ao listar os pacientes', err)
+    );
+  }
+  public patients: any = [];
+  constructor(
+    public matDialog: MatDialog,
+    private patientsService: PatientsService
+  ) {}
 
   openCreatePatientDialog(): void {
-    this.matDialog.open(PatientRegisterDialogComponent, {
-      width: '800px',
-      // height: '400px',
+    const dialogRef = this.matDialog.open(PatientRegisterDialogComponent, {
+      width: '600px',
+      maxHeight: '500px',
     });
-  }
-  openEditPatientDialog(): void {
-    this.matDialog.open(PatientRegisterDialogComponent, {
-      data: {
-        edit: true,
-        patient: this.patient,
-      },
-      width: '800px',
-    });
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
 
-  openViewPatientDialog(): void {
+  openDeletePatientDialog(cpf: string): void {
+    const dialogRef = this.matDialog.open(
+      DeletePatientWaitingListDialogComponent,
+      {
+        data: {
+          cpf,
+        },
+        width: '300px',
+        height: '170px',
+      }
+    );
+    dialogRef.afterClosed().subscribe(() => this.refreshData());
+  }
+
+  openViewPatientDialog(data: WaitingListPatient): void {
     this.matDialog.open(PatientViewDialogComponent, {
       width: '600px',
-      data: {
-        patient: this.patient,
-      },
+      maxHeight: '500px',
+      data,
     });
   }
 
-  ngOnInit(): void {}
+  async refreshData(): Promise<any> {
+    try {
+      await lastValueFrom(this.patientsService.findAllPatients({})).then(
+        (result) => {
+          this.dataSource = result.body;
+        }
+      );
+    } catch (err) {
+      console.log('Erro ao listar os pacientes', err);
+    }
+  }
+
+  ngOnInit(): void {
+    this.refreshData();
+  }
 }

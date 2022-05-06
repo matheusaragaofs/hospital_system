@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
-
-type PriorityOptions = { label: string; value: 'high' | 'medium' | 'low' };
+import { FormControl, Validators } from '@angular/forms';
+import { PatientsService } from '../patients.service';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
+type PriorityOptions = { label: string; value: string };
 
 @Component({
   selector: 'patient-register-dialog',
@@ -10,15 +12,49 @@ type PriorityOptions = { label: string; value: 'high' | 'medium' | 'low' };
   styleUrls: ['./patient-register-dialog.component.sass'],
 })
 export class PatientRegisterDialogComponent implements OnInit {
-  public name = '';
-  public cpf = '';
-  public rg = '';
-  public address = '';
-  public complement = '';
-  public cep = '';
-  public health_insurance_id = '';
-  public priority = {};
-  public age: number = 0;
+  public patient: any = false;
+  public errors: any = {
+    patientAlreadyExist: '',
+    patientNotFound: '',
+  };
+  constructor(
+    public dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
+    private patientsService: PatientsService
+  ) {}
+
+  public errorMessage: string | undefined = '';
+  public priority!: number;
+  public showPatientInfo: boolean = false;
+  public cpf = new FormControl('', [
+    Validators.required,
+    Validators.minLength(11),
+    Validators.maxLength(11),
+  ]);
+
+  formatDate(date: string) {
+    const formatedDate = date,
+      [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
+    return `${dd}/${mm}/${yyyy}`;
+  }
+
+  getErrorMessage() {
+    if (this.cpf.hasError('required')) {
+      return 'CPF obrigatório.';
+    }
+    return 'Não é um CPF válido';
+  }
+
+  keyPressNumbers(event: any) {
+    this.errors = {};
+    var charCode = event.which ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   public priorityOptions: PriorityOptions[] = [
     { label: 'Alta', value: 'high' },
@@ -30,27 +66,65 @@ export class PatientRegisterDialogComponent implements OnInit {
     this.priority = event.value;
   }
 
-  onSubmit(): void {
-    const { name, cpf, rg, address, cep, health_insurance_id, priority, age } =
-      this;
-
-    const registerData = {
-      name,
-      cpf,
-      rg,
-      address,
-      cep,
-      health_insurance_id,
-      priority,
-      age,
+  async onSubmit(): Promise<any> {
+    const { cpf, priority } = this;
+    const priorityMap: any = {
+      high: 2,
+      medium: 1,
+      low: 0,
     };
 
-    console.log(registerData);
+    try {
+      await this.patientsService.addPatient({
+        cpf: cpf.value,
+        priority: priorityMap[priority],
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+    this.closeDialog()
   }
 
-  constructor(
-    public dialogRef: MatDialogRef<PatientRegisterDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+  async findPatientByCpf(): Promise<any> {
+    const { cpf } = this;
+
+    let patientFound: any = '';
+    let patientInWaitingList: any = '';
+
+    try {
+      await lastValueFrom(
+        this.patientsService.findPatientRegisterByCpf({ cpf: cpf.value })
+      ).then((result) => (patientFound = result.body));
+    } catch (error) {
+      this.errors.patientNotFound = '';
+    }
+
+    try {
+      await lastValueFrom(
+        this.patientsService.findPatientByCpf({ cpf: cpf.value })
+      ).then((result) => (patientInWaitingList = result.body));
+    } catch (error) {
+      this.errors.patientAlreadyExist = '';
+    }
+
+    if (patientFound && patientInWaitingList) {
+      this.errors.patientNotFound = '';
+      this.errors.patientAlreadyExist = 'Paciente já existe';
+      return (this.showPatientInfo = false);
+    }
+
+    if (!patientFound) {
+      this.errors.patientAlreadyExist = '';
+      this.errors.patientNotFound = 'Paciente não encontrado';
+      return (this.showPatientInfo = false);
+    }
+
+    if (patientFound && !patientInWaitingList) {
+      console.log('ENTROU AQUI', patientFound);
+      this.showPatientInfo = true;
+      return (this.patient = patientFound);
+    }
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
