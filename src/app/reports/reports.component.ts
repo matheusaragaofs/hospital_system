@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 
 import {
   ApexAxisChartSeries,
@@ -36,6 +37,36 @@ export class ReportsComponent implements OnInit {
   toggleCompareDoctor(): void {
     this.selectSecondDoctor = !this.selectSecondDoctor
   }
+
+  generateReport():void {
+    window.print()
+  }
+  selectedDoctor: string = ''
+  doctorOptions = [
+
+    {
+      label:'Dr. João Gomes',
+      id:1
+    },
+    {
+      label:'Dr. Matheus',
+      id:1
+    },
+    {
+      label:'Dr. Wesley',
+      id:1
+    },
+    {
+      label:'Dr. Lucas',
+      id:1
+    },
+  ]
+  setSelectDoctor(event: MatSelectChange): void {
+    this.selectedDoctor = event.value;
+  }
+
+
+
   constructor() {
     this.chartOptions = {
       series: [
