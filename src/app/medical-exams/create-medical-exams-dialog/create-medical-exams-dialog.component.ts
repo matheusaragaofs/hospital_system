@@ -15,7 +15,7 @@ import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 })
 export class CreateMedicalExamsDialogComponent implements OnInit {
   public exam: string = '';
-  public doctor_name: string = '';
+  public doctor_name: any = false;
   public scheduled_at = '';
 
   public patient: any = false;

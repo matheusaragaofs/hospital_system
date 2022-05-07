@@ -138,8 +138,8 @@ export class PatientComponent implements OnInit {
         data: {
           cpf,
         },
-        width: '300px',
-        height: '170px',
+        width: '350px',
+        height: '160px',
       }
     );
     dialogRef.afterClosed().subscribe(() => this.refreshData());
@@ -148,7 +148,7 @@ export class PatientComponent implements OnInit {
   openViewPatientDialog(data: WaitingListPatient): void {
     this.matDialog.open(PatientViewDialogComponent, {
       width: '600px',
-      maxHeight: '500px',
+      maxHeight: '550px',
       data,
     });
   }

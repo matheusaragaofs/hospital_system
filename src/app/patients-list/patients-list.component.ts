@@ -98,8 +98,8 @@ export class PatientsListComponent implements OnInit {
       data: {
         cpf,
       },
-      width: '300px',
-      height: '170px',
+      width: '350px',
+      height: '160px',
     });
     dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
