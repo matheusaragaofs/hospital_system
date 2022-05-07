@@ -75,8 +75,8 @@ export class MedicalExamsComponent implements OnInit {
       data: {
         cpf,
       },
-      width: '300px',
-      height: '120px',
+      width: '350px',
+      height: '160px',
     });
 
     dialogRef.afterClosed().subscribe(() => this.refreshData());
@@ -84,8 +84,8 @@ export class MedicalExamsComponent implements OnInit {
 
   openViewMedicalExamDialog(data: MedicalExam): void {
     this.matDialog.open(ViewMedicalExamsDialogComponent, {
-      width: '400px',
-      height: '490px',
+      width: '600px',
+      maxHeight: '500px',
       data,
     });
   }

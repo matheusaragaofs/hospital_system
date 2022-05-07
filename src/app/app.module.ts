@@ -37,8 +37,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
 import { NgApexchartsModule } from "ng-apexcharts";
+import {MatStepperModule} from '@angular/material/stepper';
 
 import { BrokerBackendService } from './broker-backend.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -98,8 +98,7 @@ import { InfoDialogComponent } from './info-dialog/info-dialog.component';
     MatDialogModule,
     MatGridListModule,
     ReactiveFormsModule,
-    // MatDialog,
-    // MatDialogRef,
+    MatStepperModule,
     MatRadioModule,
     MatTableModule,
     MatSlideToggleModule,
