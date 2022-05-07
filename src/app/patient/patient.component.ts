@@ -72,7 +72,6 @@ export class PatientComponent implements OnInit {
   public searchByCpf: string = '';
 
   async searchPatientByCpf(): Promise<any> {
-    console.log(this.searchByCpf);
     if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11)
       return (this.searchError = 'Digite um Cpf válido');
 
@@ -84,14 +83,12 @@ export class PatientComponent implements OnInit {
         return (this.dataSource = [result.body]);
       });
     } catch (err) {
-      console.log('error aqui entrou');
       return (this.searchError = 'Paciente não encontrado, tente outro Cpf...');
     }
   }
   setPatientAttended(cpf: string) {
     this.patientsService.setPatientAttended(cpf).subscribe(
       (data: any) => {
-        console.log(data);
       },
       (err: any) => console.log('Erro ao setar o paciente como atendido', err)
     );
@@ -99,7 +96,6 @@ export class PatientComponent implements OnInit {
   }
 
   setPriority(event: any): void {
-    console.log('event', event);
 
     this.searchByCpf = '';
     const priority = Number(event.value);

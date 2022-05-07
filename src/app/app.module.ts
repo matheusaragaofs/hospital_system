@@ -6,10 +6,11 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,  ReactiveFormsModule} from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import {MatGridListModule} from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -37,6 +38,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+import { NgApexchartsModule } from "ng-apexcharts";
 
 import { BrokerBackendService } from './broker-backend.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -92,13 +95,19 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     MatMenuModule,
     MatButtonToggleModule,
     MatIconModule,
+    FormsModule,
     MatButtonModule,
     MatDialogModule,
+    MatGridListModule,
+    ReactiveFormsModule,
+    // MatDialog,
+    // MatDialogRef,
     MatRadioModule,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    NgApexchartsModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
