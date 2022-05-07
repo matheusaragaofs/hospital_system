@@ -10,6 +10,7 @@
       color="primary"
       (click)="openCreateMedicalExamDialog()"
       class="register-btn"
+      data-cy="new-exam-btn"
     >
       Novo Exame
     </button>
@@ -85,14 +86,14 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" data-cy="acoes">
           Ações
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openViewMedicalExamDialog(element)">
+          <button mat-menu-item (click)="openViewMedicalExamDialog(element)" data-cy="view">
             Visualizar
           </button>
-          <button mat-menu-item (click)="openDeleteMedicalExamDialog(element.patient_cpf)">
+          <button mat-menu-item (click)="openDeleteMedicalExamDialog(element.patient_cpf)" data-cy="delete">
             Deletar
           </button>
         </mat-menu>
