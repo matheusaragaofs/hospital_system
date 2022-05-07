@@ -29,8 +29,11 @@ mat-table
   .mat-header-row 
       display: table-row
 
-.header-container 
-    padding:0.3rem
+.header-container
+    padding: 0 20px
+    mat-error
+        font-size: 12px
+        margin-left: 8px
 
 .register-btn 
     margin-right:1rem
@@ -66,9 +69,10 @@ td.mat-cell.cdk-cell.cdk-column-name.mat-column-name.ng-star-inserted
 .priority-search-container
     width: 100px important
 
-@media (max-width: 690px)
+@media (max-width: 1010px)
     .search-input
         transform: translateY(5px) !important
+        width: 95vw !important
 @media (max-width: 562px)
     .priority-search-container
         flex-direction: column !important
@@ -79,7 +83,7 @@ td.mat-cell.cdk-cell.cdk-column-name.mat-column-name.ng-star-inserted
         font-size: 12px !important
         padding-right: 6px !important
  
-@media (max-width: 690px) 
+@media (max-width: 1010px) 
   .header-container
     margin-top: 5px
     flex-direction: column !important
@@ -95,11 +99,14 @@ td.mat-cell.cdk-cell.cdk-column-name.mat-column-name.ng-star-inserted
     margin-top: 5px
     width: 100%
     transform: translateY(0px)
+
+@media (max-width: 360px)
+    .priority-buttons
+        transform: scale(0.95)
     
 .patient-served
     background: #dbd9d3
     button 
-        // background: #9bafd7
     td 
         color: #7b7874
         

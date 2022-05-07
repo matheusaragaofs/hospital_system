@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { FormControl, Validators } from '@angular/forms';
 import { PatientsService } from '../patients.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { checkNumberInput } from 'src/app/utils/checkNumberInput';
+import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 type PriorityOptions = { label: string; value: string };
 
 @Component({
@@ -19,6 +20,7 @@ export class PatientRegisterDialogComponent implements OnInit {
     patientNotFound: '',
   };
   constructor(
+    public infoDialog: MatDialog,
     public dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
     private patientsService: PatientsService
   ) {}
@@ -72,6 +74,11 @@ export class PatientRegisterDialogComponent implements OnInit {
       await this.patientsService.addPatient({
         cpf: cpf.value,
         priority: priorityMap[priority],
+      });
+      openInfoDialog({
+        dialogRef: this.infoDialog,
+        operation: 'create',
+        type: 'success',
       });
     } catch (error) {
       console.log('error', error);
