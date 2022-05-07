@@ -73,7 +73,6 @@ export class EditMedicalExamsDialogComponent implements OnInit {
      scheduledDate
     };
 
-    console.log(registerData);
   }
 
   constructor(

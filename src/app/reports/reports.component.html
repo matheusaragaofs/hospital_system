@@ -1,162 +1,146 @@
-<div fxLayout="column" fxLayoutAlign="center center">
-    <div
-      fxFill
-      class="header-container"
-      fxLayout="column"
-    >
-
-    <div fxLayout="row" class="header-buttons" fxLayoutAlign="start center">
-        <button mat-raised-button color="primary" (click)="generateReport()">Gerar relatório</button>
+<div
+  fxLayout="column"
+  class="main-div-test"
+  fxFill
+  fxLayoutAlign="center center"
+>
+  <div fxFill class="header-container" fxLayout="column">
+    <div fxLayout="column" class="header-buttons" fxLayoutAlign="start start">
+      <h1>Dashboard</h1>
+      <div fxLayout="row">
+        <button
+          [disabled]="!firstDoctor"
+          mat-raised-button
+          color="primary"
+          (click)="saveReports()"
+        >
+          Gerar relatório
+        </button>
         <button
           mat-raised-button
           color="primary"
+          [disabled]="!firstDoctor"
           (click)="toggleCompareDoctor()"
           style="margin-left: 10px"
         >
           Comparar
         </button>
+        <button
+          mat-raised-button
+          color="primary"
+          *ngIf="firstDoctor"
+          (click)="resetDoctors()"
+          style="margin-left: 10px"
+        >
+          Resetar
+        </button>
       </div>
-
-
-    <mat-form-field class="no-bottom"  appearance="outline">
-        <mat-label>Selecione o médico</mat-label>
-        <mat-select
-          required
-          (selectionChange)="setSelectDoctor($event)"
-        >
-          <mat-option
-            *ngFor="let doctor of doctorOptions"
-            [value]="doctor.label"
-          >
-            {{ doctor.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-    <mat-form-field  class="no-bottom"  appearance="outline" *ngIf="selectSecondDoctor">
-        <mat-label>Selecione o segundo médico</mat-label>
-        <mat-select
-          required
-          (selectionChange)="setSelectDoctor($event)"
-        >
-          <mat-option
-            *ngFor="let doctor of doctorOptions"
-            [value]="doctor.label"
-          >
-            {{ doctor.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-
     </div>
 
-  <mat-grid-list
-    cols="2"
-    rowHeight="2:1"
-    class="grid-layout-custom"
-    [gutterSize]="'50px'"
-  >
-    <mat-grid-tile>
-
-
-      <div
-        id="chart-1"
-        fxLayout="row"
-        fxLayoutAlign="space-around stretch"
-        fxFill
+    <mat-form-field class="no-bottom" appearance="outline">
+      <mat-label>Selecione o médico</mat-label>
+      <mat-select
+        (selectionChange)="setFirstDoctor($event)"
+        [(ngModel)]="firstDoctor"
       >
-        <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [dataLabels]="chartOptions.dataLabels"
-          [plotOptions]="chartOptions.plotOptions"
-          [yaxis]="chartOptions.yaxis"
-          [xaxis]="chartOptions.xaxis"
-          [fill]="chartOptions.fill"
-          [title]="chartOptions.title"
-        ></apx-chart>
-      </div>
+        <mat-option *ngFor="let doctor of doctorOptions.first" [value]="doctor">
+          {{ doctor.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-
-
-    </mat-grid-tile>
-    <mat-grid-tile>
-
-
-
-
-      <div
-        id="chart-2"
-        fxLayout="row"
-        fxLayoutAlign="space-around stretch"
-        fxFill
+    <mat-form-field
+      class="no-bottom"
+      appearance="outline"
+      *ngIf="showSecondDoctor"
+    >
+      <mat-label>Selecione o segundo médico</mat-label>
+      <mat-select
+        (selectionChange)="setSecondDoctor($event)"
+        [(ngModel)]="secondDoctor"
       >
-        <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [dataLabels]="chartOptions.dataLabels"
-          [plotOptions]="chartOptions.plotOptions"
-          [yaxis]="chartOptions.yaxis"
-          [xaxis]="chartOptions.xaxis"
-          [fill]="chartOptions.fill"
-          [title]="chartOptions.title"
-        ></apx-chart>
+        <mat-option
+          *ngFor="let doctor of doctorOptions.second"
+          [value]="doctor"
+        >
+          {{ doctor.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="report-print-text">Hospital System - Relatório médico</div>
+  <div class="charts">
+    <div
+      *ngIf="firstDoctor"
+      class="first-doctor-container"
+      fxLayout="column"
+      fxLayoutAlign="space-evenly center"
+    >
+      <div class="doctor-name">{{ firstDoctor.label }}</div>
+
+      <div class="doctor-chart" fxLayout="row" fxLayoutAlign="center center">
+        <div id="chart-1" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="patientsAvg.first"
+            [chart]="chartOptionsAvgPatientsAvg.chart"
+            [dataLabels]="chartOptionsAvgPatientsAvg.dataLabels"
+            [plotOptions]="chartOptionsAvgPatientsAvg.plotOptions"
+            [yaxis]="chartOptionsAvgPatientsAvg.yaxis"
+            [xaxis]="chartOptionsAvgPatientsAvg.xaxis"
+            [fill]="chartOptionsAvgPatientsAvg.fill"
+            [title]="chartOptionsAvgPatientsAvg.title"
+          ></apx-chart>
+        </div>
+        <div id="chart-2" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="prioritiesAvg.first"
+            [chart]="chartOptionsVisitsAvg.chart"
+            [dataLabels]="chartOptionsVisitsAvg.dataLabels"
+            [plotOptions]="chartOptionsVisitsAvg.plotOptions"
+            [yaxis]="chartOptionsVisitsAvg.yaxis"
+            [xaxis]="chartOptionsVisitsAvg.xaxis"
+            [fill]="chartOptionsVisitsAvg.fill"
+            [title]="chartOptionsVisitsAvg.title"
+          ></apx-chart>
+        </div>
       </div>
+    </div>
 
+    <div
+      class="second-doctor-container"
+      *ngIf="secondDoctor && showSecondDoctor"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+    >
+      <div class="doctor-name">{{ secondDoctor.label }}</div>
+      <div fxLayout="row" class="doctor-chart" fxLayoutAlign="center center">
+        <div id="chart-3" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="patientsAvg.second"
+            [chart]="chartOptionsAvgPatientsAvg.chart"
+            [dataLabels]="chartOptionsAvgPatientsAvg.dataLabels"
+            [plotOptions]="chartOptionsAvgPatientsAvg.plotOptions"
+            [yaxis]="chartOptionsAvgPatientsAvg.yaxis"
+            [xaxis]="chartOptionsAvgPatientsAvg.xaxis"
+            [fill]="chartOptionsAvgPatientsAvg.fill"
+            [title]="chartOptionsAvgPatientsAvg.title"
+          ></apx-chart>
+        </div>
 
-
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-
-
-
-      <div
-        id="chart-3"
-        fxLayout="row"
-        fxLayoutAlign="space-around stretch"
-        fxFill
-      >
-        <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [dataLabels]="chartOptions.dataLabels"
-          [plotOptions]="chartOptions.plotOptions"
-          [yaxis]="chartOptions.yaxis"
-          [xaxis]="chartOptions.xaxis"
-          [fill]="chartOptions.fill"
-          [title]="chartOptions.title"
-        ></apx-chart>
+        <div id="chart-4" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="prioritiesAvg.second"
+            [chart]="chartOptionsVisitsAvg.chart"
+            [dataLabels]="chartOptionsVisitsAvg.dataLabels"
+            [plotOptions]="chartOptionsVisitsAvg.plotOptions"
+            [yaxis]="chartOptionsVisitsAvg.yaxis"
+            [xaxis]="chartOptionsVisitsAvg.xaxis"
+            [fill]="chartOptionsVisitsAvg.fill"
+            [title]="chartOptionsVisitsAvg.title"
+          ></apx-chart>
+        </div>
       </div>
-
-
-
-    </mat-grid-tile>
-    <mat-grid-tile>
-
-
-
-      <div
-        id="chart-2"
-        fxLayout="row"
-        fxLayoutAlign="space-around stretch"
-        fxFill
-      >
-        <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [dataLabels]="chartOptions.dataLabels"
-          [plotOptions]="chartOptions.plotOptions"
-          [yaxis]="chartOptions.yaxis"
-          [xaxis]="chartOptions.xaxis"
-          [fill]="chartOptions.fill"
-          [title]="chartOptions.title"
-        ></apx-chart>
-      </div>
-
-
-      
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 </div>

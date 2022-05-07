@@ -74,13 +74,12 @@ export class EditPatientDialogComponent implements OnInit {
 
     try {
       await this.patientsService.editPatient(cpf, patient);
-      console.log('deu certo a requisição de edição')
+      console.log('Sucesso ao realizar edição')
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }
 
     this.closeDialog();
-    console.log('patient', patient);
   }
 
   closeDialog(): void {

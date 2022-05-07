@@ -120,7 +120,6 @@ export class PatientRegisterDialogComponent implements OnInit {
     }
 
     if (patientFound && !patientInWaitingList) {
-      console.log('ENTROU AQUI', patientFound);
       this.showPatientInfo = true;
       return (this.patient = patientFound);
     }
