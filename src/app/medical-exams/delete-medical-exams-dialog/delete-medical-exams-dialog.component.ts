@@ -19,7 +19,7 @@ export class DeleteMedicalExamsDialogComponent implements OnInit {
   deletePatient(): void {
     this.medicalExamsService.deleteExamAppointment({ cpf: this.cpf }).subscribe(
       (data: Response) => console.log('Usuário deletado com sucecsso!'),
-      (err: any) => console.log('Erro ao listar os pacientes', err)
+      (err: any) => console.log('Erro ao deletar o paciente', err)
     );
       this.closeDialog()
   }

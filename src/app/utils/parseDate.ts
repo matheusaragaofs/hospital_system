@@ -1,4 +1,4 @@
-export function formatDate({ date, showTime }: { date: string; showTime?: boolean }) {
+export default function parseDate({ date, showTime }: { date: string; showTime?: boolean }) {
   if (!date) return  
   const formatedDate = date,
       [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);

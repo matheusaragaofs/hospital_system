@@ -1,7 +1,8 @@
 <div fxFlex fxLayout="row wrap">
   <form
+    [formGroup]="form"
+    #formDir="ngForm"
     fxFlex
-    #patientRegisterForm="ngForm"
     fxLayout="column"
     (ngSubmit)="onSubmit()"
     name = "create-patient-dialog"
@@ -11,60 +12,102 @@
     <div style="padding-top: 30px">
       <mat-form-field appearance="outline">
         <mat-label>Nome</mat-label>
-        <input  matInput [(ngModel)]="name" name="name" required />
+        <input
+          (keypress)="checkAlphaInput($event)"
+          formControlName="name"
+          matInput
+        />
+        <mat-error *ngIf="validateField('name')"
+          >O nome é obrigatório</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>CPF</mat-label>
-        <input matInput [(ngModel)]="cpf" name="cpf" required maxlength="11" />
+        <input
+          minlength="11"
+          maxlength="11"
+          matInput
+          formControlName="cpf"
+          (keypress)="checkNumberInput($event)"
+        />
+        <mat-error *ngIf="validateField('cpf')">O CPF é obrigatório</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Telefone</mat-label>
         <input
           matInput
-          maxlength=11
-          [(ngModel)]="phone_number"
-          name="phone_number"
-          required
+          minlength="11"
+          maxlength="11"
+          (keypress)="checkNumberInput($event)"
+          formControlName="phone_number"
         />
+        <mat-error *ngIf="validateField('phone_number')"
+          >O Telefone é obrigatório</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="margin-top: 1rem">
         <mat-label>Sexo</mat-label>
-        <mat-select required #typeSex (selectionChange)="setGender($event)">
+        <mat-select
+          formControlName="gender"
+          required
+          #typeSex
+          (selectionChange)="setGender($event)"
+        >
           <mat-option *ngFor="let sex of genders" [value]="sex.id">
             {{ sex.label }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="validateField('phone_number')"
+          >O sexo é obrigatório</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Data de Aniversário</mat-label>
         <input
           readonly
-          required
-          [(ngModel)]="date_of_birth"
+          formControlName="date_of_birth"
           matInput
           [matDatepicker]="picker"
-          [ngModelOptions]="{ standalone: true }"
         />
 
-        <mat-datepicker-toggle style="position: absolute; right:0; top: -29px" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          style="position: absolute; right: 0; top: -29px"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="validateField('date_of_birth')"
+          >Data de aniversário é obrigatória</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Endereço</mat-label>
-        <input required matInput [(ngModel)]="address" name="address" />
+        <input
+          matInput
+          formControlName="address"
+          (keypress)="checkAlphaInput($event)"
+        />
+        <mat-error *ngIf="validateField('address')"
+          >O endereço é obrigatório</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>CEP</mat-label>
-        <input maxlength="8"  matInput [(ngModel)]="cep" name="cep" />
+        <input
+          minlength="8"
+          maxlength="8"
+          matInput
+          formControlName="cep"
+          (keypress)="checkNumberInput($event)"
+        />
+        <mat-error *ngIf="validateField('cep')">O CEP é obrigatório</mat-error>
       </mat-form-field>
-
-
 
       <div class="footer-buttons" style="margin-top: 1rem">
         <button mat-raised-button color="primary" type="submit" name="btn-confirm">

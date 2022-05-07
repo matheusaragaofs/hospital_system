@@ -57,6 +57,7 @@ import { CreatePatientDialogComponent } from './patients-list/create-patient-dia
 import { EditPatientDialogComponent } from './patients-list/edit-patient-dialog/edit-patient-dialog.component';
 import { ViewPatientDialogComponent } from './patients-list/view-patient-dialog/view-patient-dialog.component';
 import { DeletePatientDialogComponent } from './patients-list/delete-patient-dialog/delete-patient-dialog.component';
+import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +78,7 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     EditPatientDialogComponent,
     ViewPatientDialogComponent,
     DeletePatientDialogComponent,
+    InfoDialogComponent,
   ],
   entryComponents: [PatientRegisterDialogComponent],
   imports: [

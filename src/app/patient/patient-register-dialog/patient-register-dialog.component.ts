@@ -4,6 +4,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { FormControl, Validators } from '@angular/forms';
 import { PatientsService } from '../patients.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { checkNumberInput } from 'src/app/utils/checkNumberInput';
 type PriorityOptions = { label: string; value: string };
 
 @Component({
@@ -46,14 +47,7 @@ export class PatientRegisterDialogComponent implements OnInit {
 
   keyPressNumbers(event: any) {
     this.errors = {};
-    var charCode = event.which ? event.which : event.keyCode;
-    // Only Numbers 0-9
-    if (charCode < 48 || charCode > 57) {
-      event.preventDefault();
-      return false;
-    } else {
-      return true;
-    }
+    checkNumberInput(event);
   }
 
   public priorityOptions: PriorityOptions[] = [
@@ -82,7 +76,7 @@ export class PatientRegisterDialogComponent implements OnInit {
     } catch (error) {
       console.log('error', error);
     }
-    this.closeDialog()
+    this.closeDialog();
   }
 
   async findPatientByCpf(): Promise<any> {

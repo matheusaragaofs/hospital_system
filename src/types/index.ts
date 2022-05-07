@@ -14,5 +14,10 @@ export interface MedicalExam {
   exam: string;
   doctor_name: string;
   scheduled_at: string;
-  patient: Omit<Patient,'cpf'>;
+  patient: Omit<Patient, 'cpf'>;
+}
+
+export interface InfoDialogProps {
+  type: 'success' | 'error';
+  operation: 'create' | 'edit' | 'delete';
 }

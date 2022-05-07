@@ -7,9 +7,7 @@ $custom-app-secondary: mat-palette($mat-blue)
 $custom-theme: mat-light-theme($custom-app-primary, $custom-app-secondary)
 @include angular-material-theme($custom-theme)
 
-$custom-typography: mat-typography-config($font-family: 'Poppins')
 
-@include angular-material-typography($custom-typography)
 
 h1
     text-align: center
@@ -17,36 +15,3 @@ h1
 body
     margin: 0
     padding: 0
-    font-family: 'Poppins'
-html
-    font-family: 'Poppins'
-*
-    font-family: 'Poppins'
-
-@font-face
-    font-family: 'Poppins'
-    src: url('assets/fonts/Poppins-Medium.woff') format('woff')
-    font-weight: 500
-    font-style: normal
-    font-display: swap
-
-@font-face
-    font-family: 'Poppins'
-    src: url('assets/fonts/Poppins-ExtraLight.woff') format('woff')
-    font-weight: 200
-    font-style: normal
-    font-display: swap
-
-@font-face
-    font-family: 'Poppins'
-    src: url('assets/fonts/Poppins-Bold.woff') format('woff')
-    font-weight: bold
-    font-style: normal
-    font-display: swap
-
-@font-face
-    font-family: 'Poppins'
-    src: url('assets/fonts/Poppins-Regular.woff') format('woff')
-    font-weight: normal
-    font-style: normal
-    font-display: swap

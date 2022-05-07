@@ -5,17 +5,10 @@ import { CreatePatientDialogComponent } from './create-patient-dialog/create-pat
 import { DeletePatientDialogComponent } from './delete-patient-dialog/delete-patient-dialog.component';
 import { EditPatientDialogComponent } from './edit-patient-dialog/edit-patient-dialog.component';
 import { PatientsListService } from './patients-list.service';
-import { lastValueFrom, Observable } from 'rxjs';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
-export interface Patient {
-  name: string;
-  cpf: string;
-  cep?: string;
-  gender: string;
-  address: string;
-  date_of_birth: string;
-  phone_number: string;
-}
+import { Patient } from '../../types';
+import { lastValueFrom } from 'rxjs';
+import parseDate from '../utils/parseDate';
+import { checkNumberInput } from '../utils/checkNumberInput';
 
 @Component({
   selector: 'app-patients-list',
@@ -27,17 +20,14 @@ export class PatientsListComponent implements OnInit {
     public matDialog: MatDialog,
     private patientsListService: PatientsListService
   ) {}
+
   displayedColumns: string[] = ['cpf', 'name', 'date_of_birth', 'actions'];
   dataSource: any = [];
   searchError: string = '';
+  public checkNumberInput = checkNumberInput;
   public patientFound: boolean = false;
   public searchByCpf: string = '';
-
-  formatDate(date: string) {
-    const formatedDate = date,
-      [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);
-    return `${dd}/${mm}/${yyyy}`;
-  }
+  public formatDate = parseDate;
 
   async refreshData(): Promise<any> {
     try {
@@ -53,23 +43,29 @@ export class PatientsListComponent implements OnInit {
 
   cleanSearch(): void {
     this.searchByCpf = '';
+    this.searchError = '';
     this.refreshData();
     this.patientFound = false;
   }
 
   async searchPatientByCpf(): Promise<any> {
-    if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11)
-      return (this.searchError = 'Digite um Cpf válido');
+    if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11) {
+      console.log('this serachc cpf', this.searchByCpf);
+      console.log('this.serac error ', this.searchError);
+      return (this.searchError = 'CPF inexistente');
+    }
 
     try {
       await lastValueFrom(
         this.patientsListService.findPatientByCpf({ cpf: this.searchByCpf })
       ).then((result) => {
         this.patientFound = true;
+        this.searchError = '';
         return (this.dataSource = [result.body]);
       });
     } catch (err) {
-      return (this.searchError = 'Paciente não encontrado, tente outro Cpf...');
+      console.log('err', err);
+      return (this.searchError = 'CPF inexistente');
     }
   }
 
@@ -105,7 +101,7 @@ export class PatientsListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.refreshData());
   }
 
-  openViewPatientDialog(data: any): void {
+  openViewPatientDialog(data: Patient): void {
     this.matDialog.open(ViewPatientDialogComponent, {
       data,
       width: '600px',
