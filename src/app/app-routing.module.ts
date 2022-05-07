@@ -20,7 +20,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'patient',
+    path: 'waiting-list',
     component: PatientComponent,
     // canActivate: [AuthGuard]
   },
