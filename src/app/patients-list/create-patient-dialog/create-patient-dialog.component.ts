@@ -6,11 +6,18 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { PatientsListService } from '../patients-list.service';
 import { checkAlphaInput } from '../../utils/checkAlphaInput';
 import { checkNumberInput } from '../../utils/checkNumberInput';
+import { InfoDialogComponent } from 'src/app/info-dialog/info-dialog.component';
+import { openInfoDialog } from '../../utils/infoDialogMessage';
+
 @Component({
   selector: 'app-create-patient-dialog',
   templateUrl: './create-patient-dialog.component.html',
@@ -33,7 +40,7 @@ export class CreatePatientDialogComponent implements OnInit {
     },
   ];
   public checkAlphaInput = checkAlphaInput;
-  public checkNumberInput = checkNumberInput
+  public checkNumberInput = checkNumberInput;
 
   form!: FormGroup;
   submitted: boolean = false;
@@ -41,6 +48,7 @@ export class CreatePatientDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private patientsService: PatientsListService,
+    public infoDialog: MatDialog,
     public dialogRef: MatDialogRef<CreatePatientDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
 
@@ -71,6 +79,11 @@ export class CreatePatientDialogComponent implements OnInit {
 
     try {
       await this.patientsService.addPatient(patientData);
+      openInfoDialog({
+        dialogRef: this.infoDialog,
+        operation: 'create',
+        type: 'success',
+      });
     } catch (error) {
       console.log('error', error);
     }

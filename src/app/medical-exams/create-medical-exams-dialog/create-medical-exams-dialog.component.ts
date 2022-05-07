@@ -181,17 +181,14 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       doctor_name,
       scheduled_at,
     };
-    console.log('data', data)
     await this.medicalExamService.scheduleExam(data);
     this.closeDialog()
   }
 
   setSelectedExam(event: MatSelectChange): void {
-    console.log('selected Exam', event.value);
     this.exam = event.value;
   }
   setSelectedDoctorId(event: MatSelectChange): void {
-    console.log('selected doctor', event.value);
     this.doctor_name = event.value;
   }
 

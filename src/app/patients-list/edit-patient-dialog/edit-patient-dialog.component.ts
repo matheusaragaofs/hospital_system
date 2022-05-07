@@ -5,12 +5,17 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { checkAlphaInput } from 'src/app/utils/checkAlphaInput';
 import { checkNumberInput } from 'src/app/utils/checkNumberInput';
 import { PatientsListService } from '../patients-list.service';
 import { Patient } from '../../../types';
+import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 
 @Component({
   selector: 'app-edit-patient-dialog',
@@ -20,6 +25,7 @@ import { Patient } from '../../../types';
 export class EditPatientDialogComponent implements OnInit {
   constructor(
     private patientsService: PatientsListService,
+    public infoDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: Patient,
     public dialogRef: MatDialogRef<EditPatientDialogComponent>
   ) {}
@@ -64,7 +70,6 @@ export class EditPatientDialogComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
@@ -89,9 +94,13 @@ export class EditPatientDialogComponent implements OnInit {
 
     try {
       await this.patientsService.editPatient(cpf, patient);
-      console.log('Sucesso ao realizar edição');
+      openInfoDialog({
+        dialogRef: this.infoDialog,
+        operation: 'edit',
+        type: 'success',
+      });
     } catch (err) {
-      console.log('Erro ao listar os pacientes', err);
+      console.log('Erro ao editar paciente', err);
     }
 
     this.closeDialog();

@@ -44,7 +44,9 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <mat-error *ngIf="searchError">{{ searchError }}</mat-error>
+    <mat-error *ngIf="searchByCpf">{{
+      searchError
+    }}</mat-error>
   </div>
   <div class="table-responsive">
     <table
