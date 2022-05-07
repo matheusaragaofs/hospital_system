@@ -28,6 +28,7 @@ export class PatientsListComponent implements OnInit {
   public patientFound: boolean = false;
   public searchByCpf: string = '';
   public formatDate = parseDate;
+  public loading: boolean = true;
 
   async refreshData(): Promise<any> {
     try {
@@ -36,6 +37,8 @@ export class PatientsListComponent implements OnInit {
           this.dataSource = result.body;
         }
       );
+      this.loading = false;
+
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }
@@ -70,6 +73,7 @@ export class PatientsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.refreshData();
   }
 

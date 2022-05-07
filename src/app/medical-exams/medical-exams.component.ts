@@ -27,7 +27,7 @@ export class MedicalExamsComponent implements OnInit {
     public matDialog: MatDialog,
     private medicalExamsService: MedicalExamsService
   ) {}
-
+  public loading: boolean = true;
   public searchByCpf: string = '';
   searchError: string = '';
   public patientFound: any = '';
@@ -93,6 +93,7 @@ export class MedicalExamsComponent implements OnInit {
           this.dataSource = result.body;
         }
       );
+      this.loading = false;
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }

@@ -59,6 +59,7 @@ export class PatientComponent implements OnInit {
   public dataSource: WaitingListPatient | any = [];
   public patientFound: any = '';
   public checkNumberInput = checkNumberInput 
+  public loading: boolean = true;
 
   cleanSearch(): void {
     this.searchByCpf = '';
@@ -105,6 +106,8 @@ export class PatientComponent implements OnInit {
   }
 
   setPriority(event: any): void {
+    console.log("dataSource", this.dataSource)
+    console.log("dataSource", this.dataSource.length === 0)
     this.searchByCpf = '';
     const priority = Number(event.value);
     this.patientsService.findAllPatients({ filter: priority }).subscribe(
@@ -149,12 +152,14 @@ export class PatientComponent implements OnInit {
   }
 
   async refreshData(): Promise<any> {
+    
     try {
       await lastValueFrom(this.patientsService.findAllPatients({})).then(
         (result) => {
           this.dataSource = result.body;
         }
-      );
+        );
+        this.loading = false;
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }
