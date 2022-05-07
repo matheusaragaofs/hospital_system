@@ -4,6 +4,7 @@
     #patientRegisterForm="ngForm"
     fxLayout="column"
     (ngSubmit)="onSubmit()"
+    cy-data="register-dialog"
   >
     <h1 style="align-self: flex-start">
       Registro de Paciente na Fila de Espera
@@ -73,6 +74,7 @@
           required
           #priorityValue
           (selectionChange)="getPrioritySelected($event)"
+          
         >
           <mat-option
             *ngFor="let priority of priorityOptions"

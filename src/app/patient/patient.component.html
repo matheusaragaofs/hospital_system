@@ -10,6 +10,7 @@
       color="primary"
       (click)="openCreatePatientDialog()"
       class="register-btn"
+      cy-data='register-btn'
     >
       Cadastrar
     </button>
@@ -44,6 +45,7 @@
           placeholder="Pesquisar por CPF"
           matInput
           type="search"
+          data-cy="search-cpf"
         />
 
         <button
@@ -51,6 +53,7 @@
           matSuffix
           (click)="searchPatientByCpf()"
           aria-label="search"
+          data-cy="search-btn"
         >
           <mat-icon>search</mat-icon>
         </button>
@@ -114,7 +117,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" data-cy="acoes">
             Ações
           </button>
           <mat-menu #menu="matMenu">
