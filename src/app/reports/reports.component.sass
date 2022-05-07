@@ -37,7 +37,8 @@ mat-button
 
 .report-print-text
     display: none
-
+.compare-btn, .reset-btn
+    margin-left: 10px
     
 @media (max-width: 700px)
     .doctor-chart
@@ -46,7 +47,12 @@ mat-button
         margin: 1rem 0
     #chart-1, #chart-2 
         margin-left: 0 
-
+    .dash-buttons
+        transform: translateX(-10px)
+    .compare-btn, .reset-btn
+    .mat-raised-button
+        transform: scale(0.89)
+        margin-left: 3px
 .col-layout
     flex-direction: column !important
 .row-layout

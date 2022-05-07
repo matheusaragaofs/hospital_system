@@ -45,48 +45,45 @@ export class ReportsComponent implements OnInit {
   saveReports(): void {
     window.print();
   }
+
+  public doctorsList = [
+    {
+      label: 'Dr. Matheus',
+      id: 1,
+      patientsAvg: [20, 31, 22, 23, 13.2, 23.3, 12.2],
+      prioritiesAvg: [25.3, 11, 4],
+    },
+    {
+      label: 'Dr. Wesley',
+      id: 2,
+      patientsAvg: [13, 21.2, 13.2, 22, 22.1, 36, 32],
+      prioritiesAvg: [33.2, 15, 7],
+    },
+    {
+      label: 'Dr. Lucas',
+      id: 3,
+      patientsAvg: [10, 21, 12, 33, 43.1, 33.3, 22.2],
+      prioritiesAvg: [22.3, 10.3, 4.2],
+    },
+    {
+      label: 'Dr. Hael',
+      id: 4,
+      patientsAvg: [14, 21.6, 13.1, 23.4, 23.1, 12.3, 12.4],
+      prioritiesAvg: [31.3, 11.3, 2.3],
+    },
+    {
+      label: 'Dr. Tomas',
+      id: 5,
+      patientsAvg: [15, 25.1, 17, 23.3, 33.1, 21.3, 17.2],
+      prioritiesAvg: [22.3, 6.3, 3.7],
+    },
+  ];
+
   selectedDoctor: string = '';
+
   doctorOptions = {
-    first: [
-      {
-        label: 'Dr. Matheus',
-        id: 2,
-        patientsAvg: [20, 31, 22, 23, 13.2, 23.3, 12.2],
-        prioritiesAvg: [25.3, 11, 4],
-      },
-      {
-        label: 'Dr. Wesley',
-        id: 3,
-        patientsAvg: [13, 21.2, 13.2, 22, 22.1, 36, 32],
-        prioritiesAvg: [33.2, 15, 7],
-      },
-      {
-        label: 'Dr. Lucas',
-        id: 4,
-        patientsAvg: [10, 21, 12, 33, 43.1, 33.3, 22.2],
-        prioritiesAvg: [22.3, 10.3, 4.2],
-      },
-    ],
-    second: [
-      {
-        label: 'Dr. Matheus',
-        id: 2,
-        patientsAvg: [20, 31, 22, 23, 13.2, 23.3, 12.2],
-        prioritiesAvg: [25.3, 11, 4],
-      },
-      {
-        label: 'Dr. Wesley',
-        id: 3,
-        patientsAvg: [13, 21.2, 13.2, 22, 22.1, 36, 32],
-        prioritiesAvg: [33.2, 15, 7],
-      },
-      {
-        label: 'Dr. Lucas',
-        id: 4,
-        patientsAvg: [10, 21, 12, 33, 43.1, 33.3, 22.2],
-        prioritiesAvg: [22.3, 10.3, 4.2],
-      },
-    ],
+    first: this.doctorsList,
+    second: this.doctorsList,
   };
   public patientsAvg: any = [];
   public prioritiesAvg: any = [];
@@ -113,16 +110,22 @@ export class ReportsComponent implements OnInit {
 
   setFirstDoctor(event: MatSelectChange): void {
     this.firstDoctor = event.value;
+    if (!this.secondDoctor) {
+      this.doctorOptions.second = this.doctorOptions.second.filter(
+        (el) => el !== this.firstDoctor
+      );
+    }
+
     this.setChartSeriesData({ position: 'first' });
   }
   setSecondDoctor(event: MatSelectChange): void {
-    this.secondDoctor = event.value;
-
     this.setChartSeriesData({ position: 'second' });
   }
   resetDoctors(): void {
     this.firstDoctor = '';
     this.secondDoctor = '';
+    this.doctorOptions.first = this.doctorsList
+    this.doctorOptions.second = this.doctorsList
     this.showSecondDoctor = false;
   }
   constructor() {
