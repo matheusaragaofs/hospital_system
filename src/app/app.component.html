@@ -5,19 +5,19 @@
     </span>
     <span  fxLayout="row" fxShow="false" fxShow.gt-sm>
         
-        <button mat-button routerLink="/patients-list">
+        <button mat-button routerLink="/patients-list" name="btn-patient-list">
             <mat-icon>person</mat-icon>
             Lista de Pacientes
         </button>
-        <button mat-button routerLink="/patient">
+        <button mat-button routerLink="/patient" name="btn-patient">
             <mat-icon>person</mat-icon>
             Fila de Espera
         </button>
-        <button mat-button routerLink="/medicalExams">
+        <button mat-button routerLink="/medicalExams" name="btn-exams">
             <mat-icon>medical_services</mat-icon>
             Marcação de Exames
         </button>
-        <button mat-button routerLink="/reports">
+        <button mat-button routerLink="/reports" name="btn-reports">
             <mat-icon>table_view</mat-icon>
             Relatório Médicos
         </button>
@@ -32,7 +32,7 @@
             <mat-icon>power_settings_new</mat-icon>
             Login
         </button>
-        <button mat-button *ngIf="isAuthenticated" (click)="logout()">
+        <button mat-button *ngIf="isAuthenticated" (click)="logout()" name = 'logout'>
             <mat-icon>exit_to_app</mat-icon>
             Logout
         </button>
