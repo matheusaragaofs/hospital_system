@@ -7,7 +7,7 @@
   <div fxFill class="header-container" fxLayout="column">
     <div fxLayout="column" class="header-buttons" fxLayoutAlign="start start">
       <h1>Dashboard</h1>
-      <div fxLayout="row">
+      <div fxLayout="row" class="dash-buttons">
         <button
           [disabled]="!firstDoctor"
           mat-raised-button
@@ -18,21 +18,21 @@
           Gerar relatório
         </button>
         <button
+        class="compare-btn"
           mat-raised-button
           color="primary"
           [disabled]="!firstDoctor"
           (click)="toggleCompareDoctor()"
-          style="margin-left: 10px"
           data-cy="compare-btn"
         >
           Comparar
         </button>
         <button
           mat-raised-button
+          class="reset-btn"
           color="primary"
           *ngIf="firstDoctor"
           (click)="resetDoctors()"
-          style="margin-left: 10px"
           data-cy='reset-btn'
         >
           Resetar
@@ -45,6 +45,7 @@
       <mat-select
         (selectionChange)="setFirstDoctor($event)"
         [(ngModel)]="firstDoctor"
+        [disabled]="!!firstDoctor"
       >
         <mat-option *ngFor="let doctor of doctorOptions.first" [value]="doctor">
           {{ doctor.label }}
