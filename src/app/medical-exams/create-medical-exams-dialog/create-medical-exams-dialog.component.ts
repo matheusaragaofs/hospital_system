@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { lastValueFrom } from 'rxjs';
 import { PatientsListService } from 'src/app/patients-list/patients-list.service';
 import { MedicalExamsComponent } from '../medical-exams.component';
 import { MedicalExamsService } from '../medical-exams.service';
 import parseDate from '../../utils/parseDate';
+import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 @Component({
   selector: 'app-create-medical-exams-dialog',
   templateUrl: './create-medical-exams-dialog.component.html',
@@ -181,6 +182,11 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       doctor_name,
       scheduled_at,
     };
+    openInfoDialog({
+      dialogRef: this.infoDialog,
+      operation: 'create',
+      type: 'success',
+    });
     await this.medicalExamService.scheduleExam(data);
     this.closeDialog()
   }
@@ -193,6 +199,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   }
 
   constructor(
+    public infoDialog: MatDialog,
     private patientsService: PatientsListService,
     private medicalExamService: MedicalExamsService,
     public dialogRef: MatDialogRef<CreateMedicalExamsDialogComponent>

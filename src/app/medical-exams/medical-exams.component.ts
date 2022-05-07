@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
-import { PatientRegisterDialogComponent } from '../patient/patient-register-dialog/patient-register-dialog.component';
-import { PatientViewDialogComponent } from '../patient/patient-view-dialog/patient-view-dialog.component';
 import { CreateMedicalExamsDialogComponent } from './create-medical-exams-dialog/create-medical-exams-dialog.component';
 import { DeleteMedicalExamsDialogComponent } from './delete-medical-exams-dialog/delete-medical-exams-dialog.component';
 import { MedicalExamsService } from './medical-exams.service';
 import { ViewMedicalExamsDialogComponent } from './view-medical-exams-dialog/view-medical-exams-dialog.component';
 import { MedicalExam } from 'src/types';
+import { checkNumberInput } from '../utils/checkNumberInput';
 @Component({
   selector: 'app-medical-exams',
   templateUrl: './medical-exams.component.html',
@@ -23,16 +22,7 @@ export class MedicalExamsComponent implements OnInit {
     'actions',
   ];
   dataSource: any = [];
-  patient = {
-    name: 'JORGE AUGUSTO ALMEIDA FILHO',
-    cpf: '101.234.673-45',
-    schedule_date: '20/11/22',
-    phone_number: '123213123123',
-    birthday_date: '23/02/2001',
-    doctor_name: 'Dr Gaus',
-    exam_type: 'Hemograma',
-  };
-
+  public checkNumberInput = checkNumberInput;
   constructor(
     public matDialog: MatDialog,
     private medicalExamsService: MedicalExamsService
