@@ -21,6 +21,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { HomeComponent } from './home/home.component';
 import { PatientComponent } from './patient/patient.component';
 import { ReportsComponent } from './reports/reports.component';
@@ -57,6 +59,8 @@ import { EditPatientDialogComponent } from './patients-list/edit-patient-dialog/
 import { ViewPatientDialogComponent } from './patients-list/view-patient-dialog/view-patient-dialog.component';
 import { DeletePatientDialogComponent } from './patients-list/delete-patient-dialog/delete-patient-dialog.component';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
+import { OktaAuth } from '@okta/okta-auth-js';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,6 +115,7 @@ import { InfoDialogComponent } from './info-dialog/info-dialog.component';
     MatDatepickerModule,
     MatNativeDateModule,
     HttpClientModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthService,
@@ -118,7 +123,14 @@ import { InfoDialogComponent } from './info-dialog/info-dialog.component';
     PatientRegisterDialogComponent,
     HttpClientModule,
     BrokerBackendService,
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    {
+      provide: OktaAuth,
+      useValue: new OktaAuth({
+        issuer: 'https://dev-85301456.okta.com/oauth2/default',
+        clientId: '0oa4u21kmfotH8WSa5d7',
+      })
+    }
   ],
   bootstrap: [AppComponent],
 })

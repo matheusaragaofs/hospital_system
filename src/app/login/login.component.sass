@@ -10,7 +10,7 @@ mat-card
     border: 0
     padding: 0px
 
-mat-form-field 
+mat-form-field
     display: block
 
 mat-icon
@@ -19,9 +19,12 @@ mat-icon
 .login-container
     background-color: primary
     height: 100vh
+    width: 100vw
     background-repeat: no-repeat
-    background-size:  cover
+    background-size: cover
     background-image: url("../../assets/login-bg.png")
+    z-index: 0
+    position: absolute
 
 .hospital-text
     font-size: 18px
@@ -36,3 +39,11 @@ mat-icon
     width: 350px
 .login-btn
     margin-top: 1rem
+
+.spinner
+  z-index: 1
+  position: absolute
+
+.blur
+  filter: blur(4px)
+

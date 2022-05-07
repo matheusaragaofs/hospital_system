@@ -1,38 +1,51 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { BehaviorSubject, catchError, from, map, Observable, tap } from 'rxjs';
+import { AuthTransaction, OktaAuth } from '@okta/okta-auth-js';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  public isAuthenticated: boolean = false;
-  public authEmitter = new EventEmitter<boolean>()
+export class AuthService implements OnDestroy {
+  private _authSub$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isAuthenticated = false
 
-  constructor(private router: Router) { }
-
-  login(email: string, password: string): boolean {
-    if (email === "lukita" && password === "111") {
-      this.isAuthenticated = true;
-      this.authEmitter.emit(true);
-      this.router.navigate(['/']);
-
-      return true
-    } else {
-      this.isAuthenticated = false;
-      this.authEmitter.emit(false);
-
-      return false
-    };
+  get isAuthenticated$(): Observable<boolean> {
+    return this._authSub$.asObservable();
   }
 
-  get getIsAuthenticated() {
-    return this.isAuthenticated;
+  constructor(private _router: Router, private _authClient: OktaAuth) {
+    this._authClient.session.exists().then(exists => this._authSub$.next(exists));
   }
 
-  logout(): boolean {
-    this.authEmitter.emit(false)
-    this.router.navigate(['/login'])
+  private handleSignInResponse(transaction: AuthTransaction): void {
+    if (transaction.status !== 'SUCCESS') {
+      throw new Error(`We cannot handle the ${transaction.status} status`);
+    }
 
-    return false
+    this._authSub$.next(true)
+    this._authClient.session.setCookieAndRedirect(transaction.sessionToken);
+  }
+
+  login(username: string, password: string): Observable<void> {
+    return from(this._authClient.signInWithCredentials({ username, password })).pipe(
+      map((t: AuthTransaction) => this.handleSignInResponse(t))
+    );
+  }
+
+  logout(redirect: string): Observable<void> {
+    return from(this._authClient.signOut()).pipe(
+      tap(_ => (this._authSub$.next(false), this._router.navigate([redirect]))),
+      catchError(err => {
+        console.error(err);
+        throw new Error('Unable to sign out');
+      })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this._authSub$.next(false);
+    this._authSub$.complete();
   }
 }
