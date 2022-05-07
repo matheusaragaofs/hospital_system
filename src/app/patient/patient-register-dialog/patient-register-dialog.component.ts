@@ -82,8 +82,7 @@ export class PatientRegisterDialogComponent implements OnInit {
     } catch (error) {
       console.log('error', error);
     }
-
-    window.location.reload();
+    this.closeDialog()
   }
 
   async findPatientByCpf(): Promise<any> {
@@ -121,7 +120,6 @@ export class PatientRegisterDialogComponent implements OnInit {
     }
 
     if (patientFound && !patientInWaitingList) {
-      console.log('ENTROU AQUI', patientFound);
       this.showPatientInfo = true;
       return (this.patient = patientFound);
     }

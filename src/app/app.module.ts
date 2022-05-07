@@ -6,10 +6,11 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,  ReactiveFormsModule} from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import {MatGridListModule} from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -38,6 +39,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
+import { NgApexchartsModule } from "ng-apexcharts";
+
 import { BrokerBackendService } from './broker-backend.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
@@ -48,7 +51,6 @@ import {
 } from '@angular-material-components/datetime-picker';
 import { DeleteMedicalExamsDialogComponent } from './medical-exams/delete-medical-exams-dialog/delete-medical-exams-dialog.component';
 import { ViewMedicalExamsDialogComponent } from './medical-exams/view-medical-exams-dialog/view-medical-exams-dialog.component';
-import { EditPatientWaitingListDialogComponent } from './patient/edit-patient-waiting-list-dialog/edit-patient-waiting-list-dialog.component';
 import { DeletePatientWaitingListDialogComponent } from './patient/delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
 import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CreatePatientDialogComponent } from './patients-list/create-patient-dialog/create-patient-dialog.component';
@@ -69,7 +71,6 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     CreateMedicalExamsDialogComponent,
     DeleteMedicalExamsDialogComponent,
     ViewMedicalExamsDialogComponent,
-    EditPatientWaitingListDialogComponent,
     DeletePatientWaitingListDialogComponent,
     PatientsListComponent,
     CreatePatientDialogComponent,
@@ -92,13 +93,19 @@ import { DeletePatientDialogComponent } from './patients-list/delete-patient-dia
     MatMenuModule,
     MatButtonToggleModule,
     MatIconModule,
+    FormsModule,
     MatButtonModule,
     MatDialogModule,
+    MatGridListModule,
+    ReactiveFormsModule,
+    // MatDialog,
+    // MatDialogRef,
     MatRadioModule,
     MatTableModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    NgApexchartsModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
