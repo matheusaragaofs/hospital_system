@@ -4,6 +4,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { FormControl, Validators } from '@angular/forms';
 import { PatientsService } from '../patients.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { checkNumberInput } from 'src/app/utils/checkNumberInput';
 type PriorityOptions = { label: string; value: string };
 
 @Component({
@@ -46,14 +47,7 @@ export class PatientRegisterDialogComponent implements OnInit {
 
   keyPressNumbers(event: any) {
     this.errors = {};
-    var charCode = event.which ? event.which : event.keyCode;
-    // Only Numbers 0-9
-    if (charCode < 48 || charCode > 57) {
-      event.preventDefault();
-      return false;
-    } else {
-      return true;
-    }
+    checkNumberInput(event);
   }
 
   public priorityOptions: PriorityOptions[] = [
@@ -75,20 +69,14 @@ export class PatientRegisterDialogComponent implements OnInit {
     };
 
     try {
-      await lastValueFrom(
-        this.patientsService.addPatient({
-          cpf: cpf.value,
-          priority: priorityMap[priority],
-        })
-      ).then((result) =>
-        console.log(
-          'Adição de paciente na fila de espera realizada com sucesso'
-        )
-      );
+      await this.patientsService.addPatient({
+        cpf: cpf.value,
+        priority: priorityMap[priority],
+      });
     } catch (error) {
       console.log('error', error);
     }
-    this.closeDialog()
+    this.closeDialog();
   }
 
   async findPatientByCpf(): Promise<any> {
@@ -99,16 +87,16 @@ export class PatientRegisterDialogComponent implements OnInit {
 
     try {
       await lastValueFrom(
-        this.patientsService.findPatientRegisterByCpf({cpf: cpf.value})
+        this.patientsService.findPatientRegisterByCpf({ cpf: cpf.value })
       ).then((result) => (patientFound = result.body));
     } catch (error) {
       this.errors.patientNotFound = '';
     }
 
     try {
-      await lastValueFrom(this.patientsService.findPatientByCpf({ cpf: cpf.value })).then(
-        (result) => (patientInWaitingList = result.body)
-      );
+      await lastValueFrom(
+        this.patientsService.findPatientByCpf({ cpf: cpf.value })
+      ).then((result) => (patientInWaitingList = result.body));
     } catch (error) {
       this.errors.patientAlreadyExist = '';
     }
@@ -126,7 +114,6 @@ export class PatientRegisterDialogComponent implements OnInit {
     }
 
     if (patientFound && !patientInWaitingList) {
-      console.log('ENTROU AQUI', patientFound);
       this.showPatientInfo = true;
       return (this.patient = patientFound);
     }

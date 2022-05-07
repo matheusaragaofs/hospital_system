@@ -1,19 +1,23 @@
-<mat-toolbar *ngIf="isAuthenticated" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+<mat-toolbar class="hse-nav-menu"  *ngIf="isAuthenticated" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
     <span>
         <button mat-button routerLink="/">{{ title }}</button>
         <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
     </span>
     <span  fxLayout="row" fxShow="false" fxShow.gt-sm>
         
-        <button mat-button routerLink="/waiting-list">
+        <button mat-button routerLink="/patients-list" name="btn-patient-list">
+            <mat-icon>person</mat-icon>
+            Lista de Pacientes
+        </button>
+        <button mat-button routerLink="/waiting-list" name="btn-patient">
             <mat-icon>person</mat-icon>
             Fila de Espera
         </button>
-        <button mat-button routerLink="/medicalExams">
+        <button mat-button routerLink="/medicalExams" name="btn-exams">
             <mat-icon>medical_services</mat-icon>
             Marcação de Exames
         </button>
-        <button mat-button routerLink="/reports">
+        <button mat-button routerLink="/reports" name="btn-reports">
             <mat-icon>table_view</mat-icon>
             Relatório Médicos
         </button>
@@ -28,7 +32,7 @@
             <mat-icon>power_settings_new</mat-icon>
             Login
         </button>
-        <button mat-button *ngIf="isAuthenticated" (click)="logout()">
+        <button mat-button *ngIf="isAuthenticated" (click)="logout()" name = 'logout'>
             <mat-icon>exit_to_app</mat-icon>
             Logout
         </button>
@@ -46,6 +50,10 @@
     <button mat-menu-item routerLink="/profile">
       <mat-icon>account_circle</mat-icon>
       Perfil
+    </button>
+    <button mat-menu-item routerLink="/patients-list">
+        <mat-icon>person</mat-icon>
+        Lista de Pacientes
     </button>
     <button mat-menu-item routerLink="/waiting-list">
         <mat-icon>person</mat-icon>

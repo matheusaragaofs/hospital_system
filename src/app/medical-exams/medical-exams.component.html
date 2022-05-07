@@ -10,15 +10,39 @@
       color="primary"
       (click)="openCreateMedicalExamDialog()"
       class="register-btn"
+      data-cy="new-exam-btn"
     >
       Novo Exame
     </button>
-    <mat-form-field class="search-input"  fxFlex="100" appearance="outline">
+    <mat-form-field class="search-input" appearance="outline">
       <mat-label>Pesquisar paciente por CPF</mat-label>
       <input
-        placeholder="Pesquisar por CPF..."
+        maxlength="11"
+        [(ngModel)]="searchByCpf"
+        placeholder="Pesquisar por CPF"
         matInput
+        type="search"
       />
+
+      <button
+        mat-button
+        matSuffix
+        (click)="searchPatientByCpf()"
+        aria-label="search"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      
+      <button
+        mat-button
+        matSuffix
+        *ngIf="searchByCpf || patientFound"  
+        (click)="cleanSearch()"
+        aria-label="search"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="searchError">{{ searchError }}</mat-error>
     </mat-form-field>
   </div>
   
@@ -29,22 +53,27 @@
     [dataSource]="dataSource"
     class="mat-elevation-z8"
   >
+    <!-- CPF Column -->
+    <ng-container matColumnDef="cpf">
+      <th mat-header-cell *matHeaderCellDef>CPF</th>
+      <td mat-cell *matCellDef="let element">{{ element.patient_cpf }}</td>
+    </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nome</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.patient.name }}</td>
     </ng-container>
 
     <!-- Schedule Column -->
     <ng-container matColumnDef="schedule_date">
-      <th mat-header-cell *matHeaderCellDef>Horário</th>
-      <td mat-cell *matCellDef="let element">{{ element.schedule_date }}</td>
+      <th mat-header-cell *matHeaderCellDef>Data/Horário</th>
+      <td mat-cell *matCellDef="let element">{{ formatDate(element.scheduled_at) }}</td>
     </ng-container>
 
     <!-- Exam Column -->
     <ng-container matColumnDef="exam_type">
       <th mat-header-cell *matHeaderCellDef>Exame</th>
-      <td mat-cell *matCellDef="let element">{{ element.exam_type }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.exam }}</td>
     </ng-container>
 
     <!-- Doctor Column -->
@@ -57,17 +86,14 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" data-cy="acoes">
           Ações
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openViewMedicalExamDialog()">
+          <button mat-menu-item (click)="openViewMedicalExamDialog(element)" data-cy="view">
             Visualizar
           </button>
-          <button mat-menu-item (click)="openEditMedicalExamDialog()">
-            Editar
-          </button>
-          <button mat-menu-item (click)="openDeleteMedicalExamDialog()">
+          <button mat-menu-item (click)="openDeleteMedicalExamDialog(element.patient_cpf)" data-cy="delete">
             Deletar
           </button>
         </mat-menu>
