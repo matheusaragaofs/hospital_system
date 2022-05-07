@@ -18,32 +18,35 @@
       <mat-label>Pesquisar paciente por CPF</mat-label>
       <input
         maxlength="11"
+        (keypress)="checkNumberInput($event)"
         [(ngModel)]="searchByCpf"
         placeholder="Pesquisar por CPF"
         matInput
         type="search"
       />
-
       <button
         mat-button
         matSuffix
+        *ngIf="searchByCpf"
         (click)="searchPatientByCpf()"
         aria-label="search"
       >
         <mat-icon>search</mat-icon>
       </button>
-      
+
       <button
         mat-button
         matSuffix
-        *ngIf="searchByCpf || patientFound"  
+        *ngIf="searchByCpf || patientFound"
         (click)="cleanSearch()"
         aria-label="search"
       >
         <mat-icon>close</mat-icon>
       </button>
-      <mat-error *ngIf="searchError">{{ searchError }}</mat-error>
     </mat-form-field>
+    <mat-error *ngIf="searchByCpf">{{
+      searchError
+    }}</mat-error>
   </div>
   
   <div class="table-responsive">
