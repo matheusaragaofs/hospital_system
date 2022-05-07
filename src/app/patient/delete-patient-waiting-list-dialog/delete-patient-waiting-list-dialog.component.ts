@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 import { PatientsService } from '../patients.service';
 
 @Component({
@@ -10,18 +15,28 @@ import { PatientsService } from '../patients.service';
 export class DeletePatientWaitingListDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    public infoDialog: MatDialog,
     private patientsService: PatientsService,
     public dialogRef: MatDialogRef<DeletePatientWaitingListDialogComponent> // @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
 
   public cpf = this.data.cpf;
-  deletePatient(): void {
-    this.patientsService.deletePatient(this.cpf).subscribe(
-      (data: Response) => console.log('Usuário deletado com sucecsso!'),
-      (err: any) => console.log('Erro ao listar os pacientes', err)
-    );
-      this.closeDialog()
 
+  deletePatient(): void {
+    try {
+      this.patientsService.deletePatient(this.cpf).subscribe(
+        (data: Response) => console.log('Usuário deletado com sucecsso!'),
+        (err: any) => console.log('Erro ao listar os pacientes', err)
+      );
+      openInfoDialog({
+        dialogRef: this.infoDialog,
+        operation: 'delete',
+        type: 'success',
+      });
+      this.closeDialog();
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   ngOnInit(): void {}

@@ -9,6 +9,7 @@ import { PatientsService } from './patients.service';
 import { DeletePatientWaitingListDialogComponent } from './delete-patient-waiting-list-dialog/delete-patient-waiting-list-dialog.component';
 import { lastValueFrom } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
+import { checkNumberInput } from '../utils/checkNumberInput';
 
 export type WaitingListPatient = {
   id: string;
@@ -57,6 +58,14 @@ export class PatientComponent implements OnInit {
   public isServed: boolean = false;
   public dataSource: WaitingListPatient | any = [];
   public patientFound: any = '';
+  public checkNumberInput = checkNumberInput 
+
+  cleanSearch(): void {
+    this.searchByCpf = '';
+    this.searchError = '';
+    this.refreshData();
+    this.patientFound = false;
+  }
 
   keyPressNumbers(event: any) {
     this.searchError = '';
@@ -89,14 +98,13 @@ export class PatientComponent implements OnInit {
   setPatientAttended(cpf: string) {
     this.patientsService.setPatientAttended(cpf).subscribe(
       (data: any) => {
+        this.refreshData();
       },
       (err: any) => console.log('Erro ao setar o paciente como atendido', err)
     );
-    window.location.reload();
   }
 
   setPriority(event: any): void {
-
     this.searchByCpf = '';
     const priority = Number(event.value);
     this.patientsService.findAllPatients({ filter: priority }).subscribe(
