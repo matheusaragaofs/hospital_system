@@ -4,16 +4,8 @@ import axios from 'axios';
 import { Observable } from 'rxjs';
 import { BrokerBackendService } from '../broker-backend.service';
 import { environment } from '../../environments/environment';
+import { Patient } from 'src/types';
 
-interface Patient {
-  name: string;
-  cpf?: string;
-  address: string;
-  date_of_birth: string;
-  cep: string;
-  gender: string;
-  phone_number: string;
-}
 @Injectable({
   providedIn: 'root',
 })
@@ -61,7 +53,7 @@ export class PatientsListService {
         };
       });
   }
-  async editPatient(cpf: string, body: Patient): Promise<any> {
+  async editPatient(cpf: string, body: Omit<Patient,'cpf'>): Promise<any> {
     return await axios
       .put(`${this.url}/${cpf}`, body)
       .then((res) => {

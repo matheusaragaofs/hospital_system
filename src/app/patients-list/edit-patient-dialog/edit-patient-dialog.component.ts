@@ -1,17 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
-import { lastValueFrom } from 'rxjs';
+import { checkAlphaInput } from 'src/app/utils/checkAlphaInput';
+import { checkNumberInput } from 'src/app/utils/checkNumberInput';
 import { PatientsListService } from '../patients-list.service';
-export interface Patient {
-  name: string;
-  cpf: string;
-  cep: string;
-  gender: string;
-  address: string;
-  date_of_birth: string;
-  phone_number: string;
-}
+import { Patient } from '../../../types';
 
 @Component({
   selector: 'app-edit-patient-dialog',
@@ -25,6 +24,18 @@ export class EditPatientDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<EditPatientDialogComponent>
   ) {}
 
+  form!: FormGroup;
+  public checkAlphaInput = checkAlphaInput;
+  public checkNumberInput = checkNumberInput;
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls!;
+  }
+
+  validateField(attr: string) {
+    return this.f?.[attr]?.invalid;
+  }
+
   public name = this.data.name;
   public cpf = this.data.cpf;
   public cep = this.data.cep;
@@ -33,7 +44,7 @@ export class EditPatientDialogComponent implements OnInit {
   public date_of_birth = this.data.date_of_birth;
   public phone_number = this.data.phone_number;
   public selectedSex = '';
-  public sexOptions: { label: string; id: string }[] = [
+  public genders: { label: string; id: string }[] = [
     {
       label: 'Masculino',
       id: 'male',
@@ -48,11 +59,15 @@ export class EditPatientDialogComponent implements OnInit {
     },
   ];
 
-  setSelectedSexId(event: MatSelectChange): void {
-    this.selectedSex = event.value;
+  setGender(event: MatSelectChange): void {
+    this.gender = event.value;
   }
 
   async onSubmit(): Promise<void> {
+    console.log(this.form.value);
+    if (this.form.invalid) {
+      return;
+    }
     const {
       name,
       cpf,
@@ -74,7 +89,7 @@ export class EditPatientDialogComponent implements OnInit {
 
     try {
       await this.patientsService.editPatient(cpf, patient);
-      console.log('Sucesso ao realizar edição')
+      console.log('Sucesso ao realizar edição');
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }
@@ -86,5 +101,20 @@ export class EditPatientDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      name: new FormControl(this.data.name, Validators.required),
+      address: new FormControl(this.data.address, Validators.required),
+      cep: new FormControl(this.data.cep, Validators.required),
+      date_of_birth: new FormControl(
+        this.data.date_of_birth,
+        Validators.required
+      ),
+      phone_number: new FormControl(
+        this.data.phone_number,
+        Validators.required
+      ),
+      gender: new FormControl(this.data.gender, Validators.required),
+    });
+  }
 }

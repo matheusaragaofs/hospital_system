@@ -6,7 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { PatientsListService } from 'src/app/patients-list/patients-list.service';
 import { MedicalExamsComponent } from '../medical-exams.component';
 import { MedicalExamsService } from '../medical-exams.service';
-import { formatDate } from '../../utils/formatDate';
+import parseDate from '../../utils/parseDate';
 @Component({
   selector: 'app-create-medical-exams-dialog',
   templateUrl: './create-medical-exams-dialog.component.html',
@@ -163,7 +163,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
     if (patientFound && !examAppointment) {
       this.showPatientInfo = true;
       this.patient = patientFound;
-      this.patient.date_of_birth = formatDate({
+      this.patient.date_of_birth = parseDate({
         date: this.patient?.date_of_birth,
       });
       return;

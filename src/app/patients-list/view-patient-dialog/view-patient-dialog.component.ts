@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Patient } from 'src/types';
 
 @Component({
   selector: 'app-view-patient-dialog',
@@ -7,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./view-patient-dialog.component.sass'],
 })
 export class ViewPatientDialogComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Patient) {}
 
   formatDate(date: string) {
     const formatedDate = date,
