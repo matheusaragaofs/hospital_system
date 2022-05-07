@@ -4,6 +4,7 @@
     #patientRegisterForm="ngForm"
     fxLayout="column"
     (ngSubmit)="onSubmit()"
+    data-cy='dialog-new-exam'
   >
     <h1 style="align-self: flex-start">Marcação de Exame</h1>
 
@@ -35,6 +36,7 @@
       style="width: 100px"
       color="primary"
       type="button"
+      data-cy="search-btn"
     >
       Pesquisar
     </button>
@@ -71,6 +73,7 @@
           required
           #typeExams
           (selectionChange)="setSelectedExam($event)"
+          data-cy="exam-select"
         >
           <mat-option *ngFor="let exam of exams" [value]="exam.id">
             {{ exam.label }}
@@ -85,6 +88,7 @@
           [disabled]="!exam"
           #typeDoctors
           (selectionChange)="setSelectedDoctorId($event)"
+          data-cy="doctor-select"
         >
           <mat-option
             *ngFor="let doctor of doctors[exam]"
@@ -115,7 +119,7 @@
       </mat-form-field>
 
       <div class="footer-buttons" style="margin-top: 1rem">
-        <button mat-raised-button color="primary" type="submit">
+        <button mat-raised-button color="primary" type="submit" data-cy="submit-btn">
           Confirmar
         </button>
         <button
