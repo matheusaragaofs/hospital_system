@@ -51,7 +51,6 @@ export class PatientsService {
     cpf: string;
     priority: number;
   }): Promise<any> {
-    console.log('Body PATIENT SERVICE', cpf, priority);
     return await axios
       .post('http://localhost:3333/waiting-list', {
         cpf,

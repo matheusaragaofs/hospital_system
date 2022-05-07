@@ -38,7 +38,7 @@ const routes: Routes = [
   {
     path: 'reports',
     component: ReportsComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'profile',

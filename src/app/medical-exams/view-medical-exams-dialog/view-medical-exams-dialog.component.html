@@ -9,11 +9,11 @@
     <p>{{cpf}}</p>
 
     <mat-label>Data de Nascimento</mat-label>
-    <p>{{birthday_date}}</p>
+    <p>{{formatDate({date: date_of_birth})}}</p>
 
 
     <mat-label>Horário/Data</mat-label>
-    <p>{{schedule_date}}</p>
+    <p>{{formatDate({date: scheduled_date, showTime: true})}}</p>
 
     <mat-label>Telefone</mat-label>
     <p>{{phone_number}}</p>
