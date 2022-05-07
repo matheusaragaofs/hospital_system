@@ -1,4 +1,4 @@
-<mat-toolbar class="hse-nav-menu"  *ngIf="isAuthenticated" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+<mat-toolbar class="hse-nav-menu" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
     <span>
         <button mat-button routerLink="/">{{ title }}</button>
         <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
@@ -13,7 +13,7 @@
             <mat-icon>list icon</mat-icon>
             Fila de Espera
         </button>
-        <button mat-button routerLink="/medicalExams" name="btn-exams">
+        <button mat-button routerLink="/medical-exams" name="btn-exams">
             <mat-icon>medical_services</mat-icon>
             Marcação de Exames
         </button>
@@ -24,10 +24,6 @@
     </span>
 
     <span  fxLayout="row" fxShow="false" fxShow.gt-sm>  
-        <button mat-button routerLink="/profile">
-            <mat-icon>account_circle</mat-icon>
-            Perfil
-        </button>
         <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
             <mat-icon>power_settings_new</mat-icon>
             Login
@@ -47,10 +43,6 @@
       <mat-icon>home</mat-icon>
       Home
     </button>
-    <button mat-menu-item routerLink="/profile">
-      <mat-icon>account_circle</mat-icon>
-      Perfil
-    </button>
     <button mat-menu-item routerLink="/patients-list">
         <mat-icon>list icon</mat-icon>
         Lista de Pacientes
@@ -59,17 +51,13 @@
         <mat-icon>person</mat-icon>
         Fila de Espera
     </button>
-    <button mat-menu-item routerLink="/medicalExams">
+    <button mat-menu-item routerLink="/medical-exams">
         <mat-icon>medical_services</mat-icon>
         Marcação de Exames
     </button>
     <button mat-menu-item routerLink="/reports">
         <mat-icon>table_view</mat-icon>
         Relatório Médicos
-    </button>
-    <button mat-menu-item routerLink="/login" *ngIf="!isAuthenticated">
-      <mat-icon>power_settings_new</mat-icon>
-      Login
     </button>
     <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()">
       <mat-icon>exit_to_app</mat-icon>

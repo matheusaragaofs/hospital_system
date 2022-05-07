@@ -7,7 +7,6 @@ import { MedicalExamsComponent } from './medical-exams/medical-exams.component';
 import { ReportsComponent } from './reports/reports.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
-import { ProfileComponent } from './profile/profile.component';
 import {PatientsListComponent} from './patients-list/patients-list.component'
 
 const routes: Routes = [
@@ -23,28 +22,23 @@ const routes: Routes = [
   {
     path: 'waiting-list',
     component: PatientComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'patients-list',
     component: PatientsListComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
-    path: 'medicalExams',
+    path: 'medical-exams',
     component: MedicalExamsComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'reports',
     component: ReportsComponent,
-    //canActivate: [AuthGuard]
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
     canActivate: [AuthGuard]
-  }
+  },
 ];
 
 @NgModule({

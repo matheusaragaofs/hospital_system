@@ -7,12 +7,17 @@ import { MedicalExamsService } from './medical-exams.service';
 import { ViewMedicalExamsDialogComponent } from './view-medical-exams-dialog/view-medical-exams-dialog.component';
 import { MedicalExam } from 'src/types';
 import { checkNumberInput } from '../utils/checkNumberInput';
+import { cpfMask } from '../utils/cpfMask';
 @Component({
   selector: 'app-medical-exams',
   templateUrl: './medical-exams.component.html',
   styleUrls: ['./medical-exams.component.sass'],
 })
 export class MedicalExamsComponent implements OnInit {
+  constructor(
+    public matDialog: MatDialog,
+    private medicalExamsService: MedicalExamsService
+  ) {}
   displayedColumns: string[] = [
     'cpf',
     'name',
@@ -21,15 +26,13 @@ export class MedicalExamsComponent implements OnInit {
     'doctor_name',
     'actions',
   ];
-  dataSource: any = [];
+  
+  public dataSource: any = [];
   public checkNumberInput = checkNumberInput;
-  constructor(
-    public matDialog: MatDialog,
-    private medicalExamsService: MedicalExamsService
-  ) {}
-
+  public cpfMask = cpfMask;
+  public loading: boolean = true;
   public searchByCpf: string = '';
-  searchError: string = '';
+  public searchError: string = '';
   public patientFound: any = '';
 
   async searchPatientByCpf(): Promise<any> {
@@ -93,6 +96,7 @@ export class MedicalExamsComponent implements OnInit {
           this.dataSource = result.body;
         }
       );
+      this.loading = false;
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }

@@ -2,8 +2,8 @@ form
     padding: 20px
 
 mat-card
-    min-width: 270px
-    width: 300px
+    max-width: 600px
+    max-height: 400px
     margin: 2em auto
     text-align: center
     border-radius: 15px
@@ -17,11 +17,22 @@ mat-icon
     transform: scale(1.5)
 
 .login-container
+    background-color: primary
+    height: 100vh
+    background-repeat: no-repeat
+    background-size:  cover
+    background-image: url("../../assets/login-bg.png")
+
+.hospital-text
+    font-size: 18px
     display: flex
     justify-content: center
     align-items: center
-    height: 97vh
+    height: 35px
+    padding: 10px
 
-.header-title
-    display: flex
-    justify-content: center
+.login-card
+    height: 350px
+    width: 350px
+.login-btn
+    margin-top: 1rem

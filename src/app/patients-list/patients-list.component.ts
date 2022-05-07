@@ -9,6 +9,7 @@ import { Patient } from '../../types';
 import { lastValueFrom } from 'rxjs';
 import parseDate from '../utils/parseDate';
 import { checkNumberInput } from '../utils/checkNumberInput';
+import { cpfMask } from '../utils/cpfMask';
 
 @Component({
   selector: 'app-patients-list',
@@ -28,7 +29,8 @@ export class PatientsListComponent implements OnInit {
   public patientFound: boolean = false;
   public searchByCpf: string = '';
   public formatDate = parseDate;
-
+  public loading: boolean = true;
+  public cpfMask = cpfMask
   async refreshData(): Promise<any> {
     try {
       await lastValueFrom(this.patientsListService.findAllPatients()).then(
@@ -36,6 +38,8 @@ export class PatientsListComponent implements OnInit {
           this.dataSource = result.body;
         }
       );
+      this.loading = false;
+
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }
@@ -50,8 +54,6 @@ export class PatientsListComponent implements OnInit {
 
   async searchPatientByCpf(): Promise<any> {
     if (this.searchByCpf.length === 0 || this.searchByCpf.length < 11) {
-      console.log('this serachc cpf', this.searchByCpf);
-      console.log('this.serac error ', this.searchError);
       return (this.searchError = 'CPF inexistente');
     }
 
@@ -70,6 +72,7 @@ export class PatientsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.refreshData();
   }
 

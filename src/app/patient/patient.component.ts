@@ -10,6 +10,7 @@ import { DeletePatientWaitingListDialogComponent } from './delete-patient-waitin
 import { lastValueFrom } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { checkNumberInput } from '../utils/checkNumberInput';
+import { cpfMask } from '../utils/cpfMask';
 
 export type WaitingListPatient = {
   id: string;
@@ -53,12 +54,14 @@ export class PatientComponent implements OnInit {
     'served',
     'actions',
   ];
+  public cpfMask = cpfMask;
   searchError: string = '';
   public color: any = '';
   public isServed: boolean = false;
   public dataSource: WaitingListPatient | any = [];
   public patientFound: any = '';
   public checkNumberInput = checkNumberInput 
+  public loading: boolean = true;
 
   cleanSearch(): void {
     this.searchByCpf = '';
@@ -105,6 +108,8 @@ export class PatientComponent implements OnInit {
   }
 
   setPriority(event: any): void {
+    console.log("dataSource", this.dataSource)
+    console.log("dataSource", this.dataSource.length === 0)
     this.searchByCpf = '';
     const priority = Number(event.value);
     this.patientsService.findAllPatients({ filter: priority }).subscribe(
@@ -149,12 +154,14 @@ export class PatientComponent implements OnInit {
   }
 
   async refreshData(): Promise<any> {
+    
     try {
       await lastValueFrom(this.patientsService.findAllPatients({})).then(
         (result) => {
           this.dataSource = result.body;
         }
-      );
+        );
+        this.loading = false;
     } catch (err) {
       console.log('Erro ao listar os pacientes', err);
     }

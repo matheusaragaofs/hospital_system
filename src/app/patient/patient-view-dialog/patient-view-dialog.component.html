@@ -6,7 +6,7 @@
     <p>{{patientData.patient.name}}</p>
     
     <mat-label>CPF</mat-label>
-    <p>{{patientData.patient_cpf}}</p>
+    <p>{{cpfMask(patientData.patient_cpf)}}</p>
 
     <div>
         <mat-label  >Prioridade</mat-label>
@@ -20,13 +20,13 @@
     <p>{{formatDate(patientData.patient.date_of_birth)}}</p>
 
     <mat-label>Telefone</mat-label>
-    <p>{{patientData.patient.phone_number}}</p>
+    <p>{{phoneMask(patientData.patient.phone_number)}}</p>
 
     <mat-label>Endereço</mat-label>
     <p>{{patientData.patient.address}}</p>
 
     <mat-label>CEP</mat-label>
-    <p>{{patientData.patient.cep}}</p>
+    <p>{{cepMask(patientData.patient.cep)}}</p>
 
 
 </div>

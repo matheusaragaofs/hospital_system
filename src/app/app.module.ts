@@ -28,7 +28,6 @@ import { LoginComponent } from './login/login.component';
 
 import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
-import { ProfileComponent } from './profile/profile.component';
 import { PatientRegisterDialogComponent } from './patient/patient-register-dialog/patient-register-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PatientViewDialogComponent } from './patient/patient-view-dialog/patient-view-dialog.component';
@@ -65,7 +64,6 @@ import { InfoDialogComponent } from './info-dialog/info-dialog.component';
     PatientComponent,
     ReportsComponent,
     LoginComponent,
-    ProfileComponent,
     PatientRegisterDialogComponent,
     PatientViewDialogComponent,
     MedicalExamsComponent,

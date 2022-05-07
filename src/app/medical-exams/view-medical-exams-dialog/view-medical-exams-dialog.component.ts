@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { cpfMask } from 'src/app/utils/cpfMask';
+import { phoneMask } from 'src/app/utils/phoneMask';
 import { MedicalExam } from 'src/types';
 
 @Component({
@@ -9,7 +11,8 @@ import { MedicalExam } from 'src/types';
 })
 export class ViewMedicalExamsDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: MedicalExam) {}
-
+  public cpfMask = cpfMask
+  public phoneMask = phoneMask
   formatDate({ date, showTime }: { date: string; showTime?: boolean }) {
     const formatedDate = date,
       [yyyy, mm, dd, hh, mi] = date.split(/[/:\-T]/);

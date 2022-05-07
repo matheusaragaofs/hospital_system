@@ -6,7 +6,7 @@
     <p>{{name}}</p>
 
     <mat-label>CPF</mat-label>
-    <p>{{cpf}}</p>
+    <p>{{cpfMask(cpf)}}</p>
 
     <mat-label>Data de Nascimento</mat-label>
     <p>{{formatDate({date: date_of_birth})}}</p>
@@ -16,7 +16,7 @@
     <p>{{formatDate({date: scheduled_date, showTime: true})}}</p>
 
     <mat-label>Telefone</mat-label>
-    <p>{{phone_number}}</p>
+    <p>{{phoneMask(phone_number)}}</p>
 
     <mat-label>Médico</mat-label>
     <p>{{doctor_name}}</p>

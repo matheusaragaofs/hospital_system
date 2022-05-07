@@ -4,6 +4,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { cpfMask } from 'src/app/utils/cpfMask';
 import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 import { MedicalExamsService } from '../medical-exams.service';
 
@@ -21,7 +22,10 @@ export class DeleteMedicalExamsDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DeleteMedicalExamsDialogComponent>
   ) {}
 
+
+  public cpfMask = cpfMask
   public cpf = this.data.cpf;
+  
   deletePatient(): void {
     try {
       this.medicalExamsService
