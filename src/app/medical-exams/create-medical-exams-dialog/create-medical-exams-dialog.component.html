@@ -6,19 +6,31 @@
     (ngSubmit)="onSubmit()"
   >
     <h1 style="align-self: flex-start">Marcação de Exame</h1>
-    
+
     <mat-form-field appearance="outline">
       <mat-label>Pesquisar Paciente por CPF</mat-label>
       <input
+        type="text"
+        (keypress)="keyPressNumbers($event)"
+        maxlength="11"
+        minlength="11"
         matInput
+        [formControl]="cpf"
         placeholder="Digite o CPF..."
-        [(ngModel)]="cpf"
         name="cpf"
         required
       />
+      <mat-error *ngIf="cpf.invalid">{{ getErrorMessage() }}</mat-error>
     </mat-form-field>
+    <mat-error *ngIf="!cpf.invalid && errors.patientNotFound">{{
+      errors.patientNotFound
+    }}</mat-error>
+    <mat-error *ngIf="!cpf.invalid && errors.patientAlreadyExist">{{
+      errors.patientAlreadyExist
+    }}</mat-error>
     <button
-      (click)="togglePatientFound()"
+      (click)="findPatientByCpf()"
+      [disabled]="cpf.invalid"
       mat-raised-button
       style="width: 100px"
       color="primary"
@@ -26,33 +38,40 @@
     >
       Pesquisar
     </button>
-  
-    <div style="padding-top: 30px;"*ngIf="patientFound">
-      <div >
+
+    <div style="padding-top: 30px" *ngIf="showPatientInfo">
+      <div>
         <mat-form-field appearance="outline">
-        <mat-label>Nome</mat-label>
-        <input matInput disabled value='Antonio Forgeras'>
+          <mat-label>Nome</mat-label>
+          <input matInput disabled value="{{patient?.name}}" />
         </mat-form-field>
-  
+
         <mat-form-field appearance="outline">
-        <mat-label>CPF</mat-label>
-        <input matInput disabled value='123.213.512-12'>
+          <mat-label>CPF</mat-label>
+          <input matInput disabled value="{{patient?.cpf}}" />
         </mat-form-field>
-  
+
+        <mat-form-field  appearance="outline">
+          <mat-label>Data de Nascimento</mat-label>
+          <input 
+          matInput
+          disabled
+          value="{{patient?.date_of_birth }}"
+           >
+          </mat-form-field>
+
         <mat-form-field appearance="outline">
-        <mat-label>Data de Nascimento</mat-label>
-        <input matInput disabled value='23/12/2002'>
+          <mat-label>Telefone</mat-label>
+          <input matInput disabled value="{{patient?.phone_number}}" />
         </mat-form-field>
-  
-        <mat-form-field appearance="outline">
-        <mat-label>Telefone</mat-label>
-        <input matInput disabled value='(81) 9 8457-9127'>
-        </mat-form-field>
-  
       </div>
       <mat-form-field appearance="outline" style="margin-top: 1rem">
         <mat-label>Exame</mat-label>
-        <mat-select #typeExams (selectionChange)="setSelectedExam($event)">
+        <mat-select
+          required
+          #typeExams
+          (selectionChange)="setSelectedExam($event)"
+        >
           <mat-option *ngFor="let exam of exams" [value]="exam.id">
             {{ exam.label }}
           </mat-option>
@@ -61,8 +80,16 @@
 
       <mat-form-field appearance="outline" style="margin-top: 1rem">
         <mat-label>Médico</mat-label>
-        <mat-select #typeExams (selectionChange)="setSelectedDoctorId($event)">
-          <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+        <mat-select
+          required
+          [disabled]="!exam"
+          #typeDoctors
+          (selectionChange)="setSelectedDoctorId($event)"
+        >
+          <mat-option
+            *ngFor="let doctor of doctors[exam]"
+            [value]="doctor.label"
+          >
             {{ doctor.label }}
           </mat-option>
         </mat-select>
@@ -72,10 +99,11 @@
         <input
           matInput
           readonly
+          required
           [ngxMatDatetimePicker]="picker"
           placeholder="Dia/Horário"
-          [(ngModel)]="scheduledDate"
-          name="scheduledDate"
+          [(ngModel)]="scheduled_at"
+          name="scheduled_at"
           [ngModelOptions]="{ standalone: true }"
         />
 
