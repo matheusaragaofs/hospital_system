@@ -4,6 +4,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { cpfMask } from 'src/app/utils/cpfMask';
 import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 import { PatientsService } from '../patients.service';
 
@@ -21,6 +22,8 @@ export class DeletePatientWaitingListDialogComponent implements OnInit {
   ) {}
 
   public cpf = this.data.cpf;
+  public cpfMask = cpfMask;
+
 
   deletePatient(): void {
     try {

@@ -10,6 +10,7 @@ import { DeletePatientWaitingListDialogComponent } from './delete-patient-waitin
 import { lastValueFrom } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { checkNumberInput } from '../utils/checkNumberInput';
+import { cpfMask } from '../utils/cpfMask';
 
 export type WaitingListPatient = {
   id: string;
@@ -53,6 +54,7 @@ export class PatientComponent implements OnInit {
     'served',
     'actions',
   ];
+  public cpfMask = cpfMask;
   searchError: string = '';
   public color: any = '';
   public isServed: boolean = false;

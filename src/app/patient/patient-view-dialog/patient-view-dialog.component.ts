@@ -5,6 +5,9 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { cepMask } from 'src/app/utils/cepMask';
+import { cpfMask } from 'src/app/utils/cpfMask';
+import { phoneMask } from 'src/app/utils/phoneMask';
 
 @Component({
   selector: 'app-patient-view-dialog',
@@ -12,6 +15,10 @@ import {
   styleUrls: ['./patient-view-dialog.component.sass'],
 })
 export class PatientViewDialogComponent implements OnInit {
+  public cpfMask = cpfMask;
+  public phoneMask = phoneMask;
+  public cepMask = cepMask;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
   formatDate(date: string) {
     const formatedDate = date,
