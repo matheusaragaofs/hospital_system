@@ -86,7 +86,6 @@
         <input
           matInput
           formControlName="address"
-          (keypress)="checkAlphaInput($event)"
         />
         <mat-error *ngIf="validateField('address')"
           >O endereço é obrigatório</mat-error
