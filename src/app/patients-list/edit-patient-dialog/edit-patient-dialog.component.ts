@@ -73,15 +73,10 @@ export class EditPatientDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const {
-      name,
-      cpf,
-      cep,
-      address,
-      date_of_birth,
-      selectedSex,
-      phone_number,
-    } = this;
+
+    const { name, cep, address, date_of_birth, selectedSex, phone_number } =
+      this.form.value;
+    const { cpf } = this;
 
     const patient = {
       name,
@@ -92,6 +87,7 @@ export class EditPatientDialogComponent implements OnInit {
       phone_number,
     };
 
+    console.log('patient', patient);
     try {
       await this.patientsService.editPatient(cpf, patient);
       openInfoDialog({
