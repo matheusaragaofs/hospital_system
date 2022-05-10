@@ -8,6 +8,7 @@ import { MedicalExamsComponent } from '../medical-exams.component';
 import { MedicalExamsService } from '../medical-exams.service';
 import parseDate from '../../utils/parseDate';
 import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
+import { MedicalExam } from 'src/types';
 @Component({
   selector: 'app-create-medical-exams-dialog',
   templateUrl: './create-medical-exams-dialog.component.html',
@@ -18,6 +19,11 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   public doctor_name: any = false;
   public scheduled_at = '';
 
+  myFilter = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6;
+  };
   public patient: any = false;
   public patientFound: boolean = false;
   public exams: { label: string; id: string }[] = [
@@ -38,6 +44,19 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       id: 'electrocardiogram',
     },
   ];
+
+  public availableTimes: { label: string; value: number }[] = Array.from(
+    { length: 11 },
+    (a, hour) => {
+      const startHour = 8;
+
+      return {
+        label: `${startHour + hour}:00`,
+        value: startHour + hour,
+      };
+    }
+  );
+
   public doctors: { [key: string]: { label: string; id: number }[] } = {
     x_ray: [
       {
@@ -167,12 +186,65 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       this.patient.date_of_birth = parseDate({
         date: this.patient?.date_of_birth,
       });
+
+      this.getAllExams();
+
       return;
     }
   }
+  public selectedHour: number = 0;
+
+  public selectedRoom : string = '';
+
+  setSelectedRoom(event: MatSelectChange): void{
+    this.selectedRoom = event.value
+  }
+
+  disabledEvenHours(hour: any) {
+    const dates = [12, 14, 15];
+    return dates.includes(hour);
+  }
+  public rooms: string[] = ['D1', 'D2', 'E1', 'E2'];
+
+  setHoursToDate({ date, hour }: { date: string; hour: number }): Date {
+    const dateFormat = new Date(date);
+    const brazilUtc = 3;
+    const filteredDates = this.allExams.filter(
+      (exam) => new Date(exam.scheduled_at) === dateFormat
+    );
+    console.log(filteredDates);
+    const parsedDate = new Date(dateFormat.setHours(hour - brazilUtc, 0, 0));
+    return parsedDate;
+  }
+
+  public allExams!: MedicalExam[];
+
+  async getAllExams() {
+    try {
+      await lastValueFrom(this.medicalExamService.findAllExams()).then(
+        (result) => {
+          return (this.allExams = result.body);
+        }
+      );
+    } catch (error) {
+      this.errors.patientNotFound = '';
+    }
+  }
+  // async getAllExams(): Promise<any> {
+  //   try {
+  //     await lastValueFrom(this.medicalExamService.findAllExams()).then(
+  //       (result: any) => {
+  //         console.log('result', result.body)
+  //         this.allExams = result.body;
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log('Erro ao listar os exames', err);
+  //   }
+  // }
 
   async onSubmit(): Promise<void> {
-    const { scheduled_at, doctor_name, exam } = this;
+    const { scheduled_at, doctor_name, exam, selectedHour } = this;
 
     const parsedExam = this.exams.find((el) => el.id === exam)?.label ?? '';
 
@@ -180,19 +252,30 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       cpf: this.patient.cpf,
       exam: parsedExam,
       doctor_name,
-      scheduled_at,
+      scheduled_at: this.setHoursToDate({
+        date: scheduled_at,
+        hour: selectedHour,
+      }),
     };
+    console.log('dataPARSED', data);
+
     openInfoDialog({
       dialogRef: this.infoDialog,
       operation: 'create',
       type: 'success',
     });
     await this.medicalExamService.scheduleExam(data);
-    this.closeDialog()
+    this.closeDialog();
   }
 
   setSelectedExam(event: MatSelectChange): void {
     this.exam = event.value;
+  }
+
+  setSelectedHour(event: MatSelectChange): void {
+    console.log(this.allExams);
+    console.log('event. value', event.value);
+    this.selectedHour = event.value;
   }
   setSelectedDoctorId(event: MatSelectChange): void {
     this.doctor_name = event.value;
@@ -209,5 +292,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllExams();
+  }
 }

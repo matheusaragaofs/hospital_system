@@ -4,7 +4,7 @@
     #patientRegisterForm="ngForm"
     fxLayout="column"
     (ngSubmit)="onSubmit()"
-    data-cy='dialog-new-exam'
+    data-cy="dialog-new-exam"
   >
     <h1 style="align-self: flex-start">Marcação de Exame</h1>
 
@@ -45,26 +45,22 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput disabled value="{{patient?.name}}" />
+          <input matInput disabled value="{{ patient?.name }}" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>CPF</mat-label>
-          <input matInput disabled value="{{patient?.cpf}}" />
+          <input matInput disabled value="{{ patient?.cpf }}" />
         </mat-form-field>
 
-        <mat-form-field  appearance="outline">
+        <mat-form-field appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
-          <input 
-          matInput
-          disabled
-          value="{{patient?.date_of_birth }}"
-           >
-          </mat-form-field>
+          <input matInput disabled value="{{ patient?.date_of_birth }}" />
+        </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Telefone</mat-label>
-          <input matInput disabled value="{{patient?.phone_number}}" />
+          <input matInput disabled value="{{ patient?.phone_number }}" />
         </mat-form-field>
       </div>
       <mat-form-field appearance="outline" style="margin-top: 1rem">
@@ -80,6 +76,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
 
       <mat-form-field appearance="outline" style="margin-top: 1rem">
         <mat-label>Médico</mat-label>
@@ -99,30 +96,74 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
+<mat-card>
+  <h2>Reserva de sala</h2>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dia do Exame</mat-label>
         <input
-          matInput
           readonly
-           [disabled]="!doctor_name"
-          required
-          [ngxMatDatetimePicker]="picker"
-          placeholder="Dia/Horário"
-          [(ngModel)]="scheduled_at"
+          [disabled]="!doctor_name"
+          placeholder="DD/MM/YYYY"
           name="scheduled_at"
-          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="scheduled_at"
+          matInput
+          [matDatepicker]="picker"
         />
 
         <mat-datepicker-toggle
+          style="position: absolute; right: 0; top: -29px"
           matSuffix
-          [for]="$any(picker)"
+          [for]="picker"
         ></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+
+      <mat-form-field appearance="outline" style="margin-top: 1rem">
+        <mat-label>Salas disponíveis</mat-label>
+        <mat-select
+          required
+          #typeDoctors
+          (selectionChange)="setSelectedRoom($event)"
+        >
+          <mat-option
+            *ngFor="let room of rooms"
+            [value]="room"
+          >
+            {{ room }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="margin-top: 1rem">
+        <mat-label>Horários disponíveis</mat-label>
+        <mat-select
+          required
+          #typeDoctors
+          (selectionChange)="setSelectedHour($event)"
+        >
+          <mat-option
+            [disabled]="disabledEvenHours(hour.value)"
+            *ngFor="let hour of availableTimes"
+            [value]="hour.value"
+          >
+            {{ hour.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      
+    </mat-card>
 
       <div class="footer-buttons" style="margin-top: 1rem">
         <button
-          [disabled]="!scheduled_at"
-        mat-raised-button color="primary" type="submit" data-cy="submit-btn">
+          [disabled]="!selectedHour"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          data-cy="submit-btn"
+        >
           Confirmar
         </button>
         <button
