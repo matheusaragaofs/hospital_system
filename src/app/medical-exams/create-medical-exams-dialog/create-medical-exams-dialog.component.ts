@@ -9,7 +9,7 @@ import { MedicalExamsService } from '../medical-exams.service';
 import parseDate from '../../utils/parseDate';
 import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 import { MedicalExam } from 'src/types';
-import { ScheduledDates , ScheduledDatesWithRooms } from './teste';
+import { ScheduledDates, ScheduledDatesWithRooms } from './teste';
 
 @Component({
   selector: 'app-create-medical-exams-dialog',
@@ -20,6 +20,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   public exam: string = '';
   public doctor_name: any = false;
   public scheduled_at = '';
+  public isDateSelected: boolean  = false;
 
   myFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
@@ -202,9 +203,25 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
     this.selectedRoom = event.value;
   }
 
-  disabledEvenHours(hour: any) {
-    const dates = [12, 14, 15];
-    return dates.includes(hour);
+  disabledEvenHours(hour: any): any {
+    // this.availableTimes.forEach((element: any) => {
+    //   return  element.value.includes('10:30')
+    // });
+    if (this.isDateSelected) {
+      const date = new Date(this.scheduled_at);
+      const day = date?.getDate();
+      const month = date?.getMonth();
+      const year = date?.getFullYear();
+      const DateParsed = `day_${String(day)}_${String(month + 1)}_${String(
+        year
+      )}`;
+       if (!ScheduledDatesWithRooms[this.selectedRoom]?.hasOwnProperty(DateParsed)) return
+      const HoursScheduleds = ScheduledDatesWithRooms[this.selectedRoom][DateParsed] 
+      // if(!ScheduledDatesWithRooms[this.selectedRoom][DateParsed] && !this.scheduled_at) return
+
+      const data = ['10:30', '12:30'];
+      return HoursScheduleds.includes(hour);
+    }
   }
   public rooms: string[] = ['D1', 'D2', 'E1', 'E2'];
 
@@ -277,8 +294,6 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       year
     )}`;
 
-    console.log('SEThoUR', setHour);
-    console.log('DateParsed', DateParsed);
 
     if (!ScheduledDates[DateParsed])
       ScheduledDates[`${DateParsed}`] = [setHour];
@@ -286,9 +301,9 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       ScheduledDates[`${DateParsed}`].push(setHour);
     }
     console.log('ScheduledDates', ScheduledDates);
-  
-    ScheduledDatesWithRooms[this.selectedRoom]  = ScheduledDates
-    console.log('ScheduledDatesWithRooms', ScheduledDatesWithRooms)
+
+    ScheduledDatesWithRooms[this.selectedRoom] = ScheduledDates;
+    console.log('ScheduledDatesWithRooms', ScheduledDatesWithRooms);
     openInfoDialog({
       dialogRef: this.infoDialog,
       operation: 'create',
@@ -302,8 +317,25 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
     this.exam = event.value;
   }
 
+  onDateChange(event: any) {
+     this.isDateSelected = true;
+ 
+  }
+
   setSelectedTime(event: MatSelectChange): void {
     this.selectedTime = event.value;
+
+    const parsedDate = this.setHoursToDate({
+      date: this.scheduled_at,
+      time: this.selectedTime,
+    });
+
+    const day = parsedDate?.getDate();
+    const month = parsedDate?.getMonth();
+    const year = parsedDate?.getFullYear();
+    const DateParsed = `day_${String(day)}_${String(month + 1)}_${String(
+      year
+    )}`;
   }
   setSelectedDoctorId(event: MatSelectChange): void {
     this.doctor_name = event.value;

@@ -122,6 +122,7 @@
         <input
           readonly
           placeholder="DD/MM/YYYY"
+          (dateChange)="onDateChange($event)"
           name="scheduled_at"
           [(ngModel)]="scheduled_at"
           matInput
@@ -141,11 +142,12 @@
         <mat-label>Horários disponíveis</mat-label>
         <mat-select
           required
+          [disabled]="!scheduled_at"
           #typeDoctors
           (selectionChange)="setSelectedTime($event)"
         >
           <mat-option
-            [disabled]="disabledEvenHours(hour.value)"
+          [disabled]="disabledEvenHours(hour.value)"
             *ngFor="let hour of availableTimes"
             [value]="hour.value"
           >
