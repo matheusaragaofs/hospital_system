@@ -11,7 +11,7 @@
                 <mat-form-field>
                     <mat-label>Digite seu e-mail</mat-label>
 
-                    <input matInput placeholder="Email" type="email" [(ngModel)]="email" name="email" required>
+                    <input matInput placeholder="Email" type="email" [(ngModel)]="email" name="email" data-cy="email" required>
 
                     <mat-error>
                         Por favor, digite um endereço de e-mail válido.
@@ -20,7 +20,7 @@
                 <mat-form-field>
                     <mat-label>Digite sua senha</mat-label>
 
-                    <input matInput placeholder="Senha" type="password" [(ngModel)]="password" name="password" [type]="hide_password ? 'password' : 'text'" required>
+                    <input matInput placeholder="Senha" type="password" [(ngModel)]="password" name="password" data-cy='password' [type]="hide_password ? 'password' : 'text'" required>
 
                     <button mat-icon-button matSuffix (click)="hide_password = !hide_password" [attr.aria-label]="'hide_password password'" [attr.aria-pressed]="hide_password">
                       <mat-icon>{{hide_password ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -31,7 +31,7 @@
                     </mat-error>
                 </mat-form-field>
                 
-                <button mat-raised-button color="primary" class="login-btn" [disabled]="!loginForm.form.valid" >
+                <button mat-raised-button color="primary" class="login-btn" data-cy='login-btn' [disabled]="!loginForm.form.valid" >
                     Login
                 </button>
 

@@ -27,14 +27,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   };
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.isAuthenticated=false
     this._authService.login(this.email, this.password).pipe(
       take(1)
     ).subscribe({
       next: _ => {
         this.loginValid = true;
-        this._router.navigateByUrl('/');
+        this._router.navigateByUrl('/login');
       },
       error: _ => {
         this.loginValid = false;
