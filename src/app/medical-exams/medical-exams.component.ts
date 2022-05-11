@@ -98,7 +98,7 @@ export class MedicalExamsComponent implements OnInit {
       );
       this.loading = false;
     } catch (err) {
-      console.log('Erro ao listar os pacientes', err);
+      console.log('Erro ao listar os exames', err);
     }
   }
 

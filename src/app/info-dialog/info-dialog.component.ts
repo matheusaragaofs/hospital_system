@@ -21,7 +21,15 @@ export class InfoDialogComponent implements OnInit {
       else return (this.message = 'Deleção realizada com Sucesso!');
     }
 
-    if (type === 'error') return (this.message = 'Erro ao realizar a deleção');
+    if (type === 'error') {
+      if (operation === 'create')
+        return (this.message = 'Erro ao realizar o cadastro, CPF já existente');
+      else if (operation === 'edit')
+        return (this.message = 'Erro ao realizar a edição');
+      else return (this.message = 'Erro ao realizar a deleção!');
+    }
+
+
   }
 
   ngOnInit(): void {

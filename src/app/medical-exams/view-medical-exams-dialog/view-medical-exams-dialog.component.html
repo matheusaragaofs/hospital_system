@@ -14,11 +14,14 @@
 
     <mat-label>Horário/Data</mat-label>
     <p>{{formatDate({date: scheduled_date, showTime: true})}}</p>
-
+    
+    <mat-label>Sala</mat-label>
+    <p>{{room}}</p>
+    
     <mat-label>Telefone</mat-label>
     <p>{{phoneMask(phone_number)}}</p>
 
-    <mat-label>Médico</mat-label>
+    <mat-label>Médico solicitante</mat-label>
     <p>{{doctor_name}}</p>
     
     <mat-label>Exame</mat-label>

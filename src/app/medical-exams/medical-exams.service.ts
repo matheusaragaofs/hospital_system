@@ -9,7 +9,7 @@ interface MedicalExam {
     cpf: string;
     exam: string;
     doctor_name: string;
-    scheduled_at: string
+    scheduled_at: Date
 }
 @Injectable({
   providedIn: 'root',

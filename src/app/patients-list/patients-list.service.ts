@@ -54,8 +54,6 @@ export class PatientsListService {
       });
   }
   async editPatient(cpf: string, body: Omit<Patient,'cpf'>): Promise<any> {
-    console.log('CPF axios', cpf)
-    console.log('bodyaxios', body)
     return await axios
       .put(`${this.url}/${cpf}`, body)
       .then((res) => {

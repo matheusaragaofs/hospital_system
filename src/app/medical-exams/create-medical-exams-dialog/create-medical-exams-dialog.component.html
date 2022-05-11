@@ -4,7 +4,7 @@
     #patientRegisterForm="ngForm"
     fxLayout="column"
     (ngSubmit)="onSubmit()"
-    data-cy='dialog-new-exam'
+    data-cy="dialog-new-exam"
   >
     <h1 style="align-self: flex-start">Marcação de Exame</h1>
 
@@ -45,26 +45,22 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput disabled value="{{patient?.name}}" />
+          <input matInput disabled value="{{ patient?.name }}" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>CPF</mat-label>
-          <input matInput disabled value="{{patient?.cpf}}" />
+          <input matInput disabled value="{{ patient?.cpf }}" />
         </mat-form-field>
 
-        <mat-form-field  appearance="outline">
+        <mat-form-field appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
-          <input 
-          matInput
-          disabled
-          value="{{patient?.date_of_birth }}"
-           >
-          </mat-form-field>
+          <input matInput disabled value="{{ patient?.date_of_birth }}" />
+        </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Telefone</mat-label>
-          <input matInput disabled value="{{patient?.phone_number}}" />
+          <input matInput disabled value="{{ patient?.phone_number }}" />
         </mat-form-field>
       </div>
       <mat-form-field appearance="outline" style="margin-top: 1rem">
@@ -82,7 +78,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="margin-top: 1rem">
-        <mat-label>Médico</mat-label>
+        <mat-label>Médico socilicante</mat-label>
         <mat-select
           required
           [disabled]="!exam"
@@ -99,30 +95,71 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
-        <input
-          matInput
-          readonly
-           [disabled]="!doctor_name"
-          required
-          [ngxMatDatetimePicker]="picker"
-          placeholder="Dia/Horário"
-          [(ngModel)]="scheduled_at"
-          name="scheduled_at"
-          [ngModelOptions]="{ standalone: true }"
-        />
+      <mat-card>
+        <h2>Reserva de sala</h2>
 
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="$any(picker)"
-        ></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
-      </mat-form-field>
+        <mat-form-field appearance="outline" style="margin-top: 1rem">
+          <mat-label>Salas disponíveis</mat-label>
+          <mat-select
+            required
+            [disabled]="!doctor_name"
+            #typeDoctors
+            (selectionChange)="setSelectedRoom($event)"
+          >
+            <mat-option *ngFor="let room of rooms" [value]="room">
+              {{ room }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Dia do Exame</mat-label>
+          <input
+            readonly
+            placeholder="DD/MM/YYYY"
+            (dateChange)="onDateChange($event)"
+            name="scheduled_at"
+            [min]="todayDate"
+            [disabled]="!selectedRoom"
+            [(ngModel)]="scheduled_at"
+            matInput
+            [matDatepicker]="picker"
+          />
+          <mat-datepicker-toggle
+            style="position: absolute; right: 0; top: -29px"
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="margin-top: 1rem">
+          <mat-label>Horários disponíveis</mat-label>
+          <mat-select
+            required
+            [disabled]="!scheduled_at"
+            #typeDoctors
+            (selectionChange)="setSelectedTime($event)"
+          >
+            <mat-option
+              [disabled]="disabledHours(hour.value)"
+              *ngFor="let hour of availableTimes"
+              [value]="hour.value"
+            >
+              {{ hour.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card>
 
       <div class="footer-buttons" style="margin-top: 1rem">
         <button
-          [disabled]="!scheduled_at"
-        mat-raised-button color="primary" type="submit" data-cy="submit-btn">
+          [disabled]="!selectedTime"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          data-cy="submit-btn"
+        >
           Confirmar
         </button>
         <button
