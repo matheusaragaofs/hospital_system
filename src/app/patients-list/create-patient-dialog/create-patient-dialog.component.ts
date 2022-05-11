@@ -78,16 +78,24 @@ export class CreatePatientDialogComponent implements OnInit {
     };
 
     try {
-      await this.patientsService.addPatient(patientData);
-      openInfoDialog({
-        dialogRef: this.infoDialog,
-        operation: 'create',
-        type: 'success',
+      await this.patientsService.addPatient(patientData).then((result) => {
+        if (result.error) {
+          return openInfoDialog({
+            dialogRef: this.infoDialog,
+            operation: 'create',
+            type: 'error',
+          });
+        }
+        openInfoDialog({
+          dialogRef: this.infoDialog,
+          operation: 'create',
+          type: 'success',
+        });
+        this.closeDialog();
       });
     } catch (error) {
       console.log('error', error);
     }
-    this.closeDialog();
   }
 
   closeDialog(): void {
