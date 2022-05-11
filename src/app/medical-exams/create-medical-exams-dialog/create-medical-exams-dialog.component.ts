@@ -9,7 +9,7 @@ import { MedicalExamsService } from '../medical-exams.service';
 import parseDate from '../../utils/parseDate';
 import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 import { MedicalExam } from 'src/types';
-import { ScheduledDates } from './teste';
+import { ScheduledDates , ScheduledDatesWithRooms } from './teste';
 
 @Component({
   selector: 'app-create-medical-exams-dialog',
@@ -286,15 +286,16 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       ScheduledDates[`${DateParsed}`].push(setHour);
     }
     console.log('ScheduledDates', ScheduledDates);
-
-
+  
+    ScheduledDatesWithRooms[this.selectedRoom]  = ScheduledDates
+    console.log('ScheduledDatesWithRooms', ScheduledDatesWithRooms)
     openInfoDialog({
       dialogRef: this.infoDialog,
       operation: 'create',
       type: 'success',
     });
     // await this.medicalExamService.scheduleExam(data);
-    this.closeDialog();
+    // this.closeDialog();
   }
 
   setSelectedExam(event: MatSelectChange): void {
