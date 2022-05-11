@@ -20,7 +20,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   public exam: string = '';
   public doctor_name: any = false;
   public scheduled_at = '';
-  public isDateSelected: boolean  = false;
+  public isDateSelected: boolean = false;
 
   myFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
@@ -215,8 +215,12 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       const DateParsed = `day_${String(day)}_${String(month + 1)}_${String(
         year
       )}`;
-       if (!ScheduledDatesWithRooms[this.selectedRoom]?.hasOwnProperty(DateParsed)) return
-      const HoursScheduleds = ScheduledDatesWithRooms[this.selectedRoom][DateParsed] 
+      if (
+        !ScheduledDatesWithRooms[this.selectedRoom]?.hasOwnProperty(DateParsed)
+      )
+        return;
+      const HoursScheduleds =
+        ScheduledDatesWithRooms[this.selectedRoom][DateParsed];
       // if(!ScheduledDatesWithRooms[this.selectedRoom][DateParsed] && !this.scheduled_at) return
 
       const data = ['10:30', '12:30'];
@@ -280,7 +284,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       cpf: this.patient.cpf,
       exam: parsedExam,
       doctor_name,
-      scheduled_at: parsedExam,
+      scheduled_at: parsedDate,
     };
 
     const day = parsedDate.getDate();
@@ -293,7 +297,6 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
     const DateParsed = `day_${String(day)}_${String(month + 1)}_${String(
       year
     )}`;
-
 
     if (!ScheduledDates[DateParsed])
       ScheduledDates[`${DateParsed}`] = [setHour];
@@ -309,8 +312,8 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       operation: 'create',
       type: 'success',
     });
-    // await this.medicalExamService.scheduleExam(data);
-    // this.closeDialog();
+    await this.medicalExamService.scheduleExam(data);
+    this.closeDialog();
   }
 
   setSelectedExam(event: MatSelectChange): void {
@@ -318,8 +321,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   }
 
   onDateChange(event: any) {
-     this.isDateSelected = true;
- 
+    this.isDateSelected = true;
   }
 
   setSelectedTime(event: MatSelectChange): void {
