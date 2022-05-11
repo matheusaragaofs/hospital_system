@@ -32,6 +32,49 @@ describe("Testes da tela de lista de pacientes", () => {
         cy.get("[data-error]").should("not.exist");
     });
 
+    it("Cadastrar um novo paciente corretamente não deve gerar erros", () => {
+        cy.get('[name="btn-add-patient"]').click();
+        cy.get("[data-cy=name]").type("Alexia Schefer");
+        cy.get("[data-cy=cpf]").type("11111111111");
+        cy.get("[data-cy=phone_number]").type("81984258970");
+        cy.get('mat-select').click().get('mat-option').contains('Feminino').click();
+        cy.get("mat-datepicker-toggle").click();
+        cy.get('button').contains('1').click();
+        cy.get("[data-cy=address]").type("Rua Nautico Clube Capibaribe, Recife - PE");
+        cy.get("[data-cy=cep]").type("50450660");
+        cy.get('[name="btn-confirm"]').click();
+        cy.get("[data-error]").should("not.exist");
+    });
+
+    it("Cadastrar um novo paciente corretamente não deve gerar erros", () => {
+        cy.get('[name="btn-add-patient"]').click();
+        cy.get("[data-cy=name]").type("Lucas Schefer");
+        cy.get("[data-cy=cpf]").type("22222222222");
+        cy.get("[data-cy=phone_number]").type("81984258970");
+        cy.get('mat-select').click().get('mat-option').contains('Feminino').click();
+        cy.get("mat-datepicker-toggle").click();
+        cy.get('button').contains('1').click();
+        cy.get("[data-cy=address]").type("Rua Nautico Clube Capibaribe, Recife - PE");
+        cy.get("[data-cy=cep]").type("50450660");
+        cy.get('[name="btn-confirm"]').click();
+        cy.get("[data-error]").should("not.exist");
+    });
+
+    it("Cadastrar um paciente com CPF ja existente na base deve gerar uma dialog box com erro", () => {
+        cy.get('[name="btn-add-patient"]').click();
+        cy.get("[data-cy=name]").type("El Bufalo Parraguez");
+        cy.get("[data-cy=cpf]").type("13051905878");
+        cy.get("[data-cy=phone_number]").type("81984258970");
+        cy.get('mat-select').click().get('mat-option').contains('Masculino').click();
+        cy.get("mat-datepicker-toggle").click();
+        cy.get('button').contains('1').click();
+        cy.get("[data-cy=address]").type("Rua Sport Club do Recife - Ilha do Retiro, Recife - PE");
+        cy.get("[data-cy=cep]").type("50750560");
+        cy.get('[name="btn-confirm"]').click();
+        cy.get('#mat-dialog-2').should("not.exist");
+    });
+
+
 
     it("Deletar um paciente deve fazer ele sumir da lista", () => {
         cy.get('[name="btn-add-patient"]').click();
@@ -52,7 +95,7 @@ describe("Testes da tela de lista de pacientes", () => {
 
         cy.get('[data-cy=delete]').last().click({force: true});
 
-        cy.get('.footer-buttons > .mat-primary > .mat-button-wrapper').click();
+        cy.get('[data-cy=confirm-delete]').click();
 
         cy.get("[data-error]").should("not.exist");
 
