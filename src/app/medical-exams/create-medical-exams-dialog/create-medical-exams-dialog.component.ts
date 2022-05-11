@@ -9,6 +9,8 @@ import { MedicalExamsService } from '../medical-exams.service';
 import parseDate from '../../utils/parseDate';
 import { openInfoDialog } from 'src/app/utils/infoDialogMessage';
 import { MedicalExam } from 'src/types';
+import { ScheduledDates } from './teste';
+
 @Component({
   selector: 'app-create-medical-exams-dialog',
   templateUrl: './create-medical-exams-dialog.component.html',
@@ -45,17 +47,17 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
     },
   ];
 
-  public availableTimes: { label: string; value: number }[] = Array.from(
-    { length: 11 },
-    (a, hour) => {
-      const startHour = 8;
+  // public availableTimes: { label: string; value: number }[] = Array.from(
+  //   { length: 11 },
+  //   (a, hour) => {
+  //     const startHour = 8;
 
-      return {
-        label: `${startHour + hour}:00`,
-        value: startHour + hour,
-      };
-    }
-  );
+  //     return {
+  //       label: `${startHour + hour}:00`,
+  //       value: startHour + hour,
+  //     };
+  //   }
+  // );
 
   public doctors: { [key: string]: { label: string; id: number }[] } = {
     x_ray: [
@@ -192,12 +194,12 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       return;
     }
   }
-  public selectedHour: number = 0;
+  public selectedTime: string = '';
 
-  public selectedRoom : string = '';
+  public selectedRoom: string = '';
 
-  setSelectedRoom(event: MatSelectChange): void{
-    this.selectedRoom = event.value
+  setSelectedRoom(event: MatSelectChange): void {
+    this.selectedRoom = event.value;
   }
 
   disabledEvenHours(hour: any) {
@@ -206,14 +208,17 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
   }
   public rooms: string[] = ['D1', 'D2', 'E1', 'E2'];
 
-  setHoursToDate({ date, hour }: { date: string; hour: number }): Date {
+  setHoursToDate({ date, time }: { date: string; time: string }): Date {
+    const [hour, minute] = time.split(':');
     const dateFormat = new Date(date);
     const brazilUtc = 3;
     const filteredDates = this.allExams.filter(
       (exam) => new Date(exam.scheduled_at) === dateFormat
     );
     console.log(filteredDates);
-    const parsedDate = new Date(dateFormat.setHours(hour - brazilUtc, 0, 0));
+    const parsedDate = new Date(
+      dateFormat.setHours(Number(hour), Number(minute), 0)
+    );
     return parsedDate;
   }
 
@@ -230,41 +235,65 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
       this.errors.patientNotFound = '';
     }
   }
-  // async getAllExams(): Promise<any> {
-  //   try {
-  //     await lastValueFrom(this.medicalExamService.findAllExams()).then(
-  //       (result: any) => {
-  //         console.log('result', result.body)
-  //         this.allExams = result.body;
-  //       }
-  //     );
-  //   } catch (err) {
-  //     console.log('Erro ao listar os exames', err);
-  //   }
-  // }
 
-  async onSubmit(): Promise<void> {
-    const { scheduled_at, doctor_name, exam, selectedHour } = this;
+  public d1_pick_dates: any = {};
+
+  public availableTimes: any = [];
+  getHours() {
+    for (let hora = 8; hora < 18 + 1; hora++) {
+      if (hora === 18)
+        return this.availableTimes.push({
+          label: `${hora}:00`,
+          value: `${hora}:00`,
+        });
+      this.availableTimes.push({ label: `${hora}:00`, value: `${hora}:00` });
+      this.availableTimes.push({ label: `${hora}:30`, value: `${hora}:30` });
+    }
+  }
+
+  async onSubmit(): Promise<any> {
+    const { scheduled_at, doctor_name, exam, selectedTime } = this;
 
     const parsedExam = this.exams.find((el) => el.id === exam)?.label ?? '';
-
+    const parsedDate = this.setHoursToDate({
+      date: scheduled_at,
+      time: selectedTime,
+    });
     const data = {
       cpf: this.patient.cpf,
       exam: parsedExam,
       doctor_name,
-      scheduled_at: this.setHoursToDate({
-        date: scheduled_at,
-        hour: selectedHour,
-      }),
+      scheduled_at: parsedExam,
     };
-    console.log('dataPARSED', data);
+
+    const day = parsedDate.getDate();
+    const month = parsedDate.getMonth();
+    const year = parsedDate.getFullYear();
+    const hour = parsedDate.getHours();
+    const minute = parsedDate.getMinutes();
+
+    const setHour = `${String(hour)}:${minute === 0 ? '00' : String(minute)}`;
+    const DateParsed = `day_${String(day)}_${String(month + 1)}_${String(
+      year
+    )}`;
+
+    console.log('SEThoUR', setHour);
+    console.log('DateParsed', DateParsed);
+
+    if (!ScheduledDates[DateParsed])
+      ScheduledDates[`${DateParsed}`] = [setHour];
+    else {
+      ScheduledDates[`${DateParsed}`].push(setHour);
+    }
+    console.log('ScheduledDates', ScheduledDates);
+
 
     openInfoDialog({
       dialogRef: this.infoDialog,
       operation: 'create',
       type: 'success',
     });
-    await this.medicalExamService.scheduleExam(data);
+    // await this.medicalExamService.scheduleExam(data);
     this.closeDialog();
   }
 
@@ -272,10 +301,8 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
     this.exam = event.value;
   }
 
-  setSelectedHour(event: MatSelectChange): void {
-    console.log(this.allExams);
-    console.log('event. value', event.value);
-    this.selectedHour = event.value;
+  setSelectedTime(event: MatSelectChange): void {
+    this.selectedTime = event.value;
   }
   setSelectedDoctorId(event: MatSelectChange): void {
     this.doctor_name = event.value;
@@ -294,5 +321,7 @@ export class CreateMedicalExamsDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllExams();
+    this.getHours();
+    console.log(this.availableTimes);
   }
 }

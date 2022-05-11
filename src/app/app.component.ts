@@ -11,6 +11,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'HSE';
   isAuthenticated = false;
 
+  
   private _destroySub$ = new Subject<void>();
 
   constructor(private _authService: AuthService) { }
