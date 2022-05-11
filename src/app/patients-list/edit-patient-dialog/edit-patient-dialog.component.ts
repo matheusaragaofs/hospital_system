@@ -87,7 +87,6 @@ export class EditPatientDialogComponent implements OnInit {
       phone_number,
     };
 
-    console.log('patient', patient);
     try {
       await this.patientsService.editPatient(cpf, patient);
       openInfoDialog({

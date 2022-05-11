@@ -108,8 +108,6 @@ export class PatientComponent implements OnInit {
   }
 
   setPriority(event: any): void {
-    console.log("dataSource", this.dataSource)
-    console.log("dataSource", this.dataSource.length === 0)
     this.searchByCpf = '';
     const priority = Number(event.value);
     this.patientsService.findAllPatients({ filter: priority }).subscribe(

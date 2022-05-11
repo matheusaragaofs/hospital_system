@@ -23,6 +23,7 @@ export class ViewMedicalExamsDialogComponent implements OnInit {
 
   public name = this.data.patient.name;
   public cpf = this.data.patient_cpf;
+  public room = 'D1'
   public phone_number = this.data.patient.phone_number;
   public date_of_birth = this.data.patient.date_of_birth;
   public scheduled_date = this.data.scheduled_at;
