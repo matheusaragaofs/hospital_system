@@ -20,6 +20,7 @@
         [formControl]="cpf"
         placeholder="Digite o CPF..."
         name="cpf"
+        data-cy="cpf"
         required
       />
       <mat-error *ngIf="cpf.invalid">{{ getErrorMessage() }}</mat-error>
@@ -37,6 +38,7 @@
       style="width: 100px; margin-top: 4px"
       color="primary"
       type="button"
+
     >
       Pesquisar
     </button>

@@ -33,7 +33,7 @@
       <mat-icon>power_settings_new</mat-icon>
       Login
     </button>
-    <button mat-button *ngIf="isAuthenticated" (click)="logout()" name="logout">
+    <button mat-button *ngIf="isAuthenticated" (click)="logout()" name="logout" data-cy="logout">
       <mat-icon>exit_to_app</mat-icon>
       Logout
     </button>
