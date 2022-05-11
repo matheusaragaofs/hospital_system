@@ -2,12 +2,17 @@
 describe("Testes da tela de relatórios médicos", () => {
     beforeEach(() => {
         cy.visit("http://localhost:4200/login");
-        cy.get("input[name=email]").type("lukita");
-        cy.get("input[name=password]").type("111");
-        cy.get('[name="login-btn"]').click();
+        cy.get('[data-cy=email]').type("test@test.com");
+        cy.get('[data-cy=password]').type("etset@123");
+        cy.get('[data-cy=login-btn]').click();
         cy.get('[name="btn-reports"]').click();
     });
   
+    afterEach(() => {
+        cy.get('[data-cy=logout]').click({force: true});
+        cy.wait(2000);
+    });
+
     it("O botão de comparar não deve ser clicável sem que nenhum médico seja selecionado", () => {
         cy.get('[data-cy=compare-btn]').should('be.disabled');
     });

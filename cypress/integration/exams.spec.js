@@ -2,9 +2,9 @@
 describe("Testes da tela de exames médicos", () => {
     beforeEach(() => {
         cy.visit("http://localhost:4200/login");
-        cy.get("input[name=email]").type("lukita");
-        cy.get("input[name=password]").type("111");
-        cy.get('[name="login-btn"]').click();
+        cy.get('[data-cy=email]').type("test@test.com");
+        cy.get('[data-cy=password]').type("etset@123");
+        cy.get('[data-cy=login-btn]').click();
         cy.get('[name="btn-exams"]').click();
     });
   
@@ -13,14 +13,19 @@ describe("Testes da tela de exames médicos", () => {
         cy.get('#mat-dialog-0').should('be.visible');
     });
 
-    /*
+    afterEach(() => {
+        cy.get('[data-cy=logout]').click({force: true});
+        cy.wait(2000);
+    });
+
+    
     it("Cadastrar um novo exame não deve ser possível sem todos os campos preenchidos", () => {
         cy.get('[data-cy=new-exam-btn]').click();
         cy.get("input[name=cpf]").type("13051905878");
         cy.get('[data-cy=search-btn]').click();
         cy.get('[data-cy=submit-btn]').should('be.disabled');
     });
-    */
+    
 
     it("Cadastrar um novo exame corretamente não deve gerar erros", () => {
         cy.get('[data-cy=new-exam-btn]').click();

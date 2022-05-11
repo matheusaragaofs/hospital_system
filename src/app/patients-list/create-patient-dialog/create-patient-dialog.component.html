@@ -16,6 +16,7 @@
           (keypress)="checkAlphaInput($event)"
           formControlName="name"
           matInput
+          data-cy="name"
         />
         <mat-error *ngIf="validateField('name')"
           >O nome é obrigatório</mat-error
@@ -30,6 +31,7 @@
           matInput
           formControlName="cpf"
           (keypress)="checkNumberInput($event)"
+          data-cy="cpf"
         />
         <mat-error *ngIf="validateField('cpf')">O CPF é obrigatório</mat-error>
       </mat-form-field>
@@ -42,6 +44,7 @@
           maxlength="11"
           (keypress)="checkNumberInput($event)"
           formControlName="phone_number"
+          data-cy="phone_number"
         />
         <mat-error *ngIf="validateField('phone_number')"
           >O Telefone é obrigatório</mat-error
@@ -90,6 +93,7 @@
         <input
           matInput
           formControlName="address"
+          data-cy="address"
         />
         <mat-error *ngIf="validateField('address')"
           >O endereço é obrigatório</mat-error
@@ -103,6 +107,7 @@
           maxlength="8"
           matInput
           formControlName="cep"
+          data-cy="cep"
           (keypress)="checkNumberInput($event)"
         />
         <mat-error *ngIf="validateField('cep')">O CEP é obrigatório</mat-error>
